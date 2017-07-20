@@ -1,0 +1,120 @@
+
+// 样式重置
+*{box-sizing: border-box; padding: 0; margin: 0;}
+html, body{ width: 100%; color: #333; background: #fff; font-size: 0; line-height: 1; font-family: 'Arial','Microsoft YaHei';}
+:focus{ outline: none;}
+ol, ul{ list-style: none;}
+input, button{ -webkit-appearance: none; vertical-align: middle;}
+h1, h2, h3, h4, h5, h6{ font-size: 20px; font-weight: normal; text-decoration: none;}
+table{ border-collapse: separate; border-spacing: 0;}
+a img, img, button{ border:0;}
+a, a:active, a:hover{ outline: 0; text-decoration: none; color: #333;}
+button, select{ cursor: pointer;}
+blockquote, q{ quotes: none;}
+article, aside, details, figcaption, figure, footer, header, nav, section, summary{ display: block;}
+b, i, em , ins, strong, small, big, p{ font-size: 14px; font-weight: normal; font-style: normal; text-decoration: none;}
+
+// 滚动条美化
+::-webkit-scrollbar{ width: 7px; height: 7px;}
+::-webkit-scrollbar-track-piece{ background: #ddd; border-radius: 8px;}
+::-webkit-scrollbar-thumb{ height: 7px; background: #999; border-radius: 8px;}
+::-webkit-scrollbar-thumb:hover{background: #666;}
+
+// 选中文本颜色与背景色
+::selection{ color:#fff; background:#666;}
+
+// 自定义颜色
+@blue:#20A0FF;
+@blue-hover:#58B7FF;
+@blue-active:#1D8CE0;
+
+@green:#13CE66;
+@green-hover:#25e481;
+@green-active:#09ba57;
+
+@yellow:#F7BA2A;
+@yellow-hover:#f9cb33;
+@yellow-active:#f39a19;
+
+@red:#FF4949;
+@red-hover:#ff6262;
+@red-active:#ff3636;
+
+@gray1:#333;
+@gray2:#666;
+@gray3:#999;
+@gray4:#ddd;
+@gray5:#f5f5f5;
+@white:#fff;
+
+// 基本类
+.zui-pull-l{ float: left;}
+.zui-pull-r{ float: right;}
+.zui-txt-l{ text-align: left;}
+.zui-txt-c{ text-align: center;}
+.zui-txt-r{ text-align: right;}
+.zui-hidden{ display: none;}
+.zui-show{ display: inline-block;}
+.zui-clearfix{ display:block; clear:both;}
+.zui-clearfix:after{ content:"."; display:block; height:0; clear:both; visibility:hidden;}
+
+// button样式、input样式、背景样式
+.zui-btn:hover, .zui-btn:active, .zui-bg-blue, .zui-bg-green, .zui-bg-yellow, .zui-bg-red{
+    color: @white;
+}
+.zui-bg-blue{ background: @blue;}
+.zui-bg-blue.zui-btn:hover{ background: @blue-hover;}
+.zui-bg-blue.zui-btn:active{ background: @blue-active;}
+
+.zui-bg-green{ background: @green;}
+.zui-bg-green.zui-btn:hover{ background: @green-hover;}
+.zui-bg-green.zui-btn:active{ background: @green-active;}
+
+.zui-bg-yellow{ background: @yellow;}
+.zui-bg-yellow.zui-btn:hover{ background: @yellow-hover;}
+.zui-bg-yellow.zui-btn:active{ background: @yellow-active;}
+
+.zui-bg-red{ background: @red;}
+.zui-bg-red.zui-btn:hover{ background: @red-hover;}
+.zui-bg-red.zui-btn:active{ background: @red-active;}
+
+.zui-bg-default.zui-btn{ background: @white; color: @gray1; border: 1px solid @gray4;}
+.zui-bg-default.zui-btn:hover{ color: @blue; border-color: @blue;}
+.zui-bg-default.zui-btn:active{ color: @blue-active; border-color: @blue-active;}
+
+.zui-bg-disabled.zui-btn{ cursor: not-allowed; border: 1px solid @gray3;}
+.zui-bg-disabled.zui-btn:hover,.zui-bg-disabled.zui-btn:active{ color: @gray1; border: 1px solid @gray3;}
+
+.zui-btn{
+    display: inline-block;
+    border-radius: 5px;
+    .zui-txt-c;
+    white-space: nowrap;
+}
+
+.zui-btn+.zui-btn{
+    margin-left: 10px;
+}
+
+
+
+.zui-btn-small{
+    padding: 0 10px;
+    height: 30px;
+    line-height: 28px;
+    font-size: 12px;
+}
+.zui-btn-medium{
+    padding: 0 15px;
+    height: 38px;
+    line-height: 36px;
+    font-size: 14px;
+}
+.zui-btn-big{
+    padding: 0 30px;
+    height: 44px;
+    line-height: 42px;
+    font-size: 14px;
+}
+
+input{ border: 1px solid @gray4; border-radius: 5px;}
