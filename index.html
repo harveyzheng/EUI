@@ -5,22 +5,251 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <link rel="stylesheet" href="/zui-resourse/less/zui.css">
+        <script src="/zui-resourse/js/jquery-3.2.1.min.js"></script>
+        <script src="/zui-resourse/js/zui.js"></script>
     </head>
     <body>
     <div style="padding:10px;">
-        <button class='zui-btn zui-bg-red zui-btn-small'>我也是</button>
-        <button class='zui-btn zui-bg-red zui-btn-medium'>我也是</button>
-        <button class='zui-btn zui-bg-red zui-btn-big'>我也是</button>  
+        <button class='zui-btn zui-bg-yellow zui-size-small'><i class="zui-icon-remove"></i>减少</button>
+        <button class='zui-btn zui-bg-blue zui-size-medium'><i class="zui-icon-add"></i>添加</button>
+        <button class='zui-btn zui-bg-red zui-size-big'><i class="zui-icon-delete"></i>删除</button>  
     </div>
     <div style="padding:10px;">
-        <button class='zui-btn zui-bg-disabled zui-btn-small'>我也是</button>
-        <button class='zui-btn zui-bg-disabled zui-btn-medium'>我也是</button>
-        <button class='zui-btn zui-bg-disabled zui-btn-big'>我也是</button>  
+        <button class='zui-btn zui-bg-yellow zui-size-small'>我也是</button>
+        <button class='zui-btn zui-bg-green zui-size-medium'>我也是</button>
+        <button class='zui-btn zui-bg-blue zui-size-big'>我也是</button>  
     </div>
     <div style="padding:10px;">
-        <button class='zui-btn zui-bg-default zui-btn-small'>我也是</button>
-        <button class='zui-btn zui-bg-default zui-btn-medium'>我也是</button>
-        <button class='zui-btn zui-bg-default zui-btn-big'>我也是</button>  
+        <button class='zui-btn zui-bg-default zui-size-small zui-radius'>我也是</button>
+        <button class='zui-btn zui-bg-default zui-size-medium'>我也是</button>
+        <button class='zui-btn zui-bg-default zui-size-big'>我也是</button>  
     </div>
+    <div>
+        <input type="text" class="zui-input zui-size-small  zui-bg-default" placeholder="请输入账号">
+        <input type="text" class="zui-input zui-size-medium  zui-bg-disabled" placeholder="请输入账号">
+        <input type="text" disabled class="zui-input zui-size-big" placeholder="请输入账号">
+        <input type="text" class="zui-input zui-size-small zui-radius" placeholder="请输入账号" value="1">
+    </div>
+    <dl class="nav zui-ani-fast">
+        <dt>
+            <a href="#">业务管理 ></a>
+            <a href="#">客户管理 ></a>
+            <a href="#">订单管理 ></a>
+            <a href="#">人员管理</a>
+            <a href="#">待办事项</a>
+            <a href="#">系统设置</a>
+        </dt>
+        <dd class=" zui-ani-fast">
+            <a href="#">贷款业务</a>
+            <a href="#">投资业务</a>
+            <a href="#">其他业务</a>
+        </dd>
+        <dd class=" zui-ani-fast">
+            <a href="#">一级客户</a>
+            <a href="#">二级客户</a>
+            <a href="#">平台客户</a>
+        </dd>
+        <dd class=" zui-ani-fast">
+            <a href="#">在线订单</a>
+            <a href="#">其他订单</a>
+            <a href="#">退款订单</a>
+        </dd>
+    </dl>
+    
+    <div class="zui-select" style="margin:10px;">
+        <input class="zui-input zui-size-small" type="text" placeholder="请选择" readonly>
+        <i class="zui-select-arrow"></i>
+        <ul class="zui-option-list">
+            <li zui-val="你好">你好111</li>
+            <li zui-val="你好">你好222</li>
+            <li class="zui-option" zui-val="你好">你好333</li>
+            <li zui-val="你好">你好444</li>
+            <li zui-val="你好">你好555</li>
+            <li zui-val="你好">你好666</li>
+            <li zui-val="你好">你好444</li>
+            <li zui-val="你好">你好555</li>
+            <li zui-val="你好">你好666</li>
+            <li zui-val="你好">你好444</li>
+            <li zui-val="你好">你好555</li>
+            <li zui-val="你好">你好666</li>
+            <li zui-val="你好">你好444</li>
+            <li zui-val="你好">你好555</li>
+            <li zui-val="你好">你好666</li>
+        </ul>
+    </div>
+
+    <div class="zui-radio">
+        <label class="zui-radio-label">
+            <input class="zui-radio-input" type="radio" name="sex" checked value="女">
+            <i class="zui-icon-radio"></i>
+            <span>女</span>
+        </label>
+        <label class="zui-radio-label">
+            <input class="zui-radio-input" type="radio" name="sex" value="男">
+            <i class="zui-icon-radio"></i>
+            <span>男</span>
+        </label>
+    </div>
+    
+    <div class="zui-checkbox">
+        <label class="zui-checkbox-label">
+            <input class="zui-checkbox-input" type="checkbox">
+            <i class="zui-icon-checkbox"></i>
+            <span>一号线</span>
+        </label>
+        <label class="zui-checkbox-label">
+            <input class="zui-checkbox-input" type="checkbox">
+            <i class="zui-icon-checkbox"></i>
+            <span>二号线</span>
+        </label>
+        <label class="zui-checkbox-label">
+            <input class="zui-checkbox-input" type="checkbox">
+            <i class="zui-icon-checkbox"></i>
+            <span>三号线</span>
+        </label>
+        <label class="zui-checkbox-label">
+            <input class="zui-checkbox-input" type="checkbox">
+            <i class="zui-icon-checkbox"></i>
+            <span>四号线</span>
+        </label>
+    </div>
+    <div class="zui-switch">
+        <label class="zui-switch-label">
+            <input class="zui-switch-input" zui-info="开|关" type="checkbox">
+            <div class="zui-switch-view">
+                <i class="zui-icon-switch"></i>
+                <span class="zui-switch-info"></span>
+            </div>
+        </label>
+    </div>
+    <div class="zui-switch">
+        <label class="zui-switch-label">
+            <input class="zui-switch-input" zui-info="打开|关闭" type="checkbox">
+            <div class="zui-switch-view">
+                <i class="zui-icon-switch"></i>
+                <span class="zui-switch-info"></span>
+            </div>
+        </label>
+    </div>
+    <div class="zui-switch">
+        <label class="zui-switch-label">
+            <input class="zui-switch-input" zui-info="ON|OFF" type="checkbox">
+            <div class="zui-switch-view">
+                <i class="zui-icon-switch"></i>
+                <span class="zui-switch-info"></span>
+            </div>
+        </label>
+    </div>
+
+    <textarea class="zui-textarea" placeholder="请输入内容"></textarea>
+
+
+    <button id="btn1" class='zui-btn zui-bg-blue zui-size-medium'>通知窗</button>
+    <button id="btn2" class='zui-btn zui-bg-blue zui-size-medium'>确认窗</button>
+    <button id="btn3" class='zui-btn zui-bg-blue zui-size-medium'>询问窗</button>
+    <button id="btn4" class='zui-btn zui-bg-blue zui-size-medium'>有新消息</button>
+
+
+
+
+    <style>
+        html,body{ height: 100%;}
+        input[type=checkbox]{width: 10px; height: 10px;}
+        .nav{
+            position: fixed;
+            width: 200px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            left: -200px;
+            top: 0;
+            padding-top: 50px;
+        }
+        .nav a{
+            color: #fff;
+            font-size: 16px;
+            line-height: 40px;
+            border-bottom: 1px solid #ddd;
+            display: block;
+             white-space: nowrap;
+             padding: 0 15px;
+        }
+        .nav dd{
+            padding-top: 50px;
+            overflow: hidden;
+            position: absolute;
+            width: 0;
+            left: 200px;
+            height: 100%;
+            top: 0;
+            background: rgba(0, 0, 0, 0.85);
+        }
+    </style>
     </body>
 </html>
+<script>
+$('body').mousemove(function(e) { 
+    var xx = e.originalEvent.x || e.originalEvent.layerX || 0; 
+    if(xx<10){
+        $('.nav').css('left',0);
+    }
+});
+$('.nav').mouseleave(function(){
+    $('.nav').css('left',-200);
+    $('.nav dd').width(0);
+});
+$('.nav dt a').hover(function(){
+    var index=$(this).index();
+    $('.nav dd').eq(index).width(200);
+},function(){
+    var index=$(this).index();
+    $('.nav dd').eq(index).width(0);
+})
+$('.nav dd').hover(function(){
+    $(this).width(200);
+},function(){
+    $(this).width(0);
+})
+
+
+$('#btn1').click(function(){
+    zui.prompt('对不起，你输入的信息不正确，请重新输入！');
+});
+$('#btn2').click(function(){
+    zui.layer({
+        type:'confirm',
+        style:'zui-bg-blue',
+        title:'这是标题',
+        info:'对不起，你输入的信息不正确，请重新输入！'
+    })
+});
+$('#btn3').click(function(){
+    zui.layer({
+        type:'ask',
+        title:'这是标题',
+        info:'对不起，你输入的信息不正确，请重新输入！'
+    })
+});
+$('#btn4').click(function(){
+    zui.layer({
+        type:'message',
+        title:'这是标题',
+        info:'对不起，你输入的信息不正确，请重新输入！'
+    })
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

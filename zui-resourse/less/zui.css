@@ -1,3 +1,4 @@
+@import url('../iconfont/iconfont.css');
 * {
   box-sizing: border-box;
   padding: 0;
@@ -8,8 +9,8 @@ body {
   width: 100%;
   color: #333;
   background: #fff;
-  font-size: 0;
   line-height: 1;
+  font-size: 14px;
   font-family: 'Arial', 'Microsoft YaHei';
 }
 :focus {
@@ -18,11 +19,6 @@ body {
 ol,
 ul {
   list-style: none;
-}
-input,
-button {
-  -webkit-appearance: none;
-  vertical-align: middle;
 }
 h1,
 h2,
@@ -50,10 +46,6 @@ a:hover {
   text-decoration: none;
   color: #333;
 }
-button,
-select {
-  cursor: pointer;
-}
 blockquote,
 q {
   quotes: none;
@@ -76,12 +68,23 @@ em,
 ins,
 strong,
 small,
-big,
-p {
-  font-size: 14px;
+big {
   font-weight: normal;
   font-style: normal;
   text-decoration: none;
+}
+input,
+button {
+  -webkit-appearance: none;
+}
+select,
+input,
+button {
+  vertical-align: middle;
+}
+button,
+select {
+  cursor: pointer;
 }
 ::-webkit-scrollbar {
   width: 7px;
@@ -102,6 +105,42 @@ p {
 ::selection {
   color: #fff;
   background: #666;
+}
+.index-1 {
+  z-index: -1;
+}
+.index1 {
+  z-index: 1;
+}
+.index2 {
+  z-index: 2;
+}
+.index3 {
+  z-index: 3;
+}
+.index4 {
+  z-index: 4;
+}
+.index5 {
+  z-index: 5;
+}
+.index10 {
+  z-index: 10;
+}
+.index20 {
+  z-index: 20;
+}
+.index30 {
+  z-index: 30;
+}
+.index100 {
+  z-index: 100;
+}
+.index200 {
+  z-index: 200;
+}
+.index300 {
+  z-index: 300;
 }
 .zui-pull-l {
   float: left;
@@ -135,6 +174,15 @@ p {
   clear: both;
   visibility: hidden;
 }
+.zui-ani-fast {
+  transition: all 0.2s linear;
+}
+.zui-ani-normal {
+  transition: all 0.4s linear;
+}
+.zui-ani-slow {
+  transition: all 0.8s linear;
+}
 .zui-btn:hover,
 .zui-btn:active,
 .zui-bg-blue,
@@ -143,8 +191,20 @@ p {
 .zui-bg-red {
   color: #fff;
 }
+.zui-size-small [class^="zui-icon-"] {
+  margin-right: 3px;
+  font-size: 14px;
+}
+.zui-size-medium [class^="zui-icon-"] {
+  margin-right: 5px;
+  font-size: 16px;
+}
+.zui-size-big [class^="zui-icon-"] {
+  margin-right: 7px;
+  font-size: 20px;
+}
 .zui-bg-blue {
-  background: #20A0FF;
+  background: #1e9fff;
 }
 .zui-bg-blue.zui-btn:hover {
   background: #58B7FF;
@@ -153,16 +213,16 @@ p {
   background: #1D8CE0;
 }
 .zui-bg-green {
-  background: #13CE66;
+  background: #5fb878;
 }
 .zui-bg-green.zui-btn:hover {
-  background: #25e481;
+  background: #70d08d;
 }
 .zui-bg-green.zui-btn:active {
-  background: #09ba57;
+  background: #4ca763;
 }
 .zui-bg-yellow {
-  background: #F7BA2A;
+  background: #f5b51e;
 }
 .zui-bg-yellow.zui-btn:hover {
   background: #f9cb33;
@@ -174,7 +234,7 @@ p {
   background: #FF4949;
 }
 .zui-bg-red.zui-btn:hover {
-  background: #ff6262;
+  background: #ff7171;
 }
 .zui-bg-red.zui-btn:active {
   background: #ff3636;
@@ -185,8 +245,8 @@ p {
   border: 1px solid #ddd;
 }
 .zui-bg-default.zui-btn:hover {
-  color: #20A0FF;
-  border-color: #20A0FF;
+  color: #1e9fff;
+  border-color: #1e9fff;
 }
 .zui-bg-default.zui-btn:active {
   color: #1D8CE0;
@@ -201,34 +261,284 @@ p {
   color: #333;
   border: 1px solid #999;
 }
+.zui-size-small {
+  padding: 0 10px;
+  height: 30px;
+  line-height: 28px;
+  font-size: 12px;
+}
+.zui-size-medium {
+  padding: 0 15px;
+  height: 38px;
+  line-height: 36px;
+  font-size: 14px;
+}
+.zui-size-big {
+  padding: 0 30px;
+  height: 44px;
+  line-height: 42px;
+  font-size: 16px;
+}
+.zui-input {
+  padding: 0;
+  text-indent: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  color: #333;
+}
+.zui-input[disabled] {
+  cursor: not-allowed;
+}
 .zui-btn {
   display: inline-block;
   border-radius: 5px;
   text-align: center;
   white-space: nowrap;
 }
-.zui-btn + .zui-btn {
+.zui-radius {
+  border-radius: 300px;
+}
+.zui-btn + .zui-btn,
+.zui-input + .zui-btn,
+.zui-input + .zui-input,
+.zui-radio-label + .zui-radio-label,
+.zui-checkbox-label + .zui-checkbox-label {
   margin-left: 10px;
 }
-.zui-btn-small {
+.zui-select {
+  display: inline-block;
+  position: relative;
+}
+.zui-select .zui-input {
+  cursor: pointer;
+}
+.zui-select .zui-option-list {
+  transition: all 0.2s linear;
+  background: #fff;
+  box-shadow: 0 0 7px #ddd;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+  left: 0;
+  opacity: 0;
+  z-index: -1;
+  transform: translateY(25px);
+}
+.zui-select .zui-option-list li {
   padding: 0 10px;
-  height: 30px;
-  line-height: 28px;
+  cursor: pointer;
+}
+.zui-select .zui-option-list li:hover {
+  background: #f5f5f5;
+}
+.zui-select .zui-option-list .zui-option,
+.zui-select .zui-option-list .zui-option:hover {
+  color: #fff;
+  background: #1e9fff;
+}
+.zui-select .zui-size-small + i + .zui-option-list {
+  top: 33px;
+  line-height: 30px;
   font-size: 12px;
 }
-.zui-btn-medium {
-  padding: 0 15px;
-  height: 38px;
-  line-height: 36px;
+.zui-select .zui-size-medium + i + .zui-option-list {
+  top: 40px;
+  line-height: 40px;
   font-size: 14px;
 }
-.zui-btn-big {
-  padding: 0 30px;
-  height: 44px;
-  line-height: 42px;
+.zui-select .zui-size-big + i + .zui-option-list {
+  top: 47px;
+  line-height: 44px;
   font-size: 14px;
 }
-input {
+.zui-select .zui-select-arrow {
+  content: '';
+  position: absolute;
+  right: 10px;
+  border-top: 6px solid #999;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  transition: all 0.2s linear;
+}
+.zui-select .zui-size-small + .zui-select-arrow {
+  top: 11px;
+}
+.zui-select .zui-size-medium + .zui-select-arrow {
+  top: 15px;
+}
+.zui-select .zui-size-big + .zui-select-arrow {
+  top: 18px;
+  border-width: 8px;
+}
+.zui-select.zui-select-open .zui-option-list {
+  left: 0;
+  opacity: 1;
+  transform: translateY(0);
+  z-index: 10;
+}
+.zui-select.zui-select-open .zui-select-arrow {
+  transform: rotate(180deg);
+}
+.zui-radio,
+.zui-checkbox {
+  display: inline-block;
+}
+.zui-radio .zui-radio-label,
+.zui-checkbox .zui-radio-label,
+.zui-radio .zui-checkbox-label,
+.zui-checkbox .zui-checkbox-label {
+  display: inline-block;
+  line-height: 30px;
+  cursor: pointer;
+}
+.zui-radio .zui-radio-input,
+.zui-checkbox .zui-radio-input,
+.zui-radio .zui-checkbox-input,
+.zui-checkbox .zui-checkbox-input {
+  display: none;
+}
+.zui-radio .zui-icon-radio,
+.zui-checkbox .zui-icon-radio,
+.zui-radio .zui-icon-checkbox,
+.zui-checkbox .zui-icon-checkbox {
+  color: #999;
+  vertical-align: top;
+}
+.zui-radio .zui-radio-input + .zui-icon-radio:before,
+.zui-checkbox .zui-radio-input + .zui-icon-radio:before {
+  content: "\e60b";
+}
+.zui-radio .zui-radio-input:checked + .zui-icon-radio:before,
+.zui-checkbox .zui-radio-input:checked + .zui-icon-radio:before {
+  content: "\e62a";
+  color: #1e9fff;
+}
+.zui-radio .zui-checkbox-input + .zui-icon-checkbox:before,
+.zui-checkbox .zui-checkbox-input + .zui-icon-checkbox:before {
+  content: "\e6e4";
+}
+.zui-radio .zui-checkbox-input:checked + .zui-icon-checkbox:before,
+.zui-checkbox .zui-checkbox-input:checked + .zui-icon-checkbox:before {
+  content: "\e6e5";
+  color: #1e9fff;
+}
+.zui-switch {
+  display: inline-block;
+  vertical-align: middle;
+}
+.zui-switch .zui-switch-label {
+  cursor: pointer;
+  user-select: none;
+}
+.zui-switch .zui-switch-label .zui-switch-input {
+  display: none;
+}
+.zui-switch .zui-switch-label .zui-switch-view {
+  transition: all 0.2s linear;
+  position: relative;
+  display: block;
+  width: 60px;
+  height: 24px;
+  line-height: 22px;
+  border-radius: 300px;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  background: #fff;
+}
+.zui-switch .zui-switch-label .zui-switch-view .zui-icon-switch {
+  transition: all 0.2s linear;
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  background: #ddd;
+  border-radius: 300px;
+}
+.zui-switch .zui-switch-label .zui-switch-view .zui-switch-info {
+  display: block;
+  text-align: right;
+  padding: 0 5px;
+}
+.zui-switch .zui-switch-label .zui-switch-input:checked + .zui-switch-view {
+  background: #1e9fff;
+  border-color: #58B7FF;
+}
+.zui-switch .zui-switch-label .zui-switch-input:checked + .zui-switch-view .zui-icon-switch {
+  left: 38px;
+  background: #fff;
+}
+.zui-switch .zui-switch-label .zui-switch-input:checked + .zui-switch-view .zui-switch-info {
+  text-align: left;
+  color: #fff;
+}
+.zui-textarea {
+  min-width: 300px;
+  min-height: 100px;
+  padding: 5px 10px;
+  font-size: 14px;
+  line-height: 20px;
+  resize: vertical;
+}
+.zui-layer {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+.zui-layer .zui-layer-prompt {
+  padding: 15px 20px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  transition: all 0.2s linear;
+  opacity: 0;
+  transform: scale(0.8);
+}
+.zui-layer .zui-layer-prompt.on {
+  opacity: 1;
+  transform: scale(1);
+}
+.zui-layer-shade {
+  background: #333;
+  transition: all 0.2s linear;
+  opacity: 0;
+}
+.zui-layer-shade.on {
+  opacity: 0.5;
+}
+.zui-layer-main {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%);
+  width: 400px;
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 300;
+}
+.zui-layer-main .zui-layer-main-title {
+  padding: 0 10px;
+  position: relative;
+  line-height: 30px;
+}
+.zui-layer-main .zui-layer-main-title .zui-layer-main-close {
+  position: absolute;
+  right: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.zui-layer-main .zui-layer-main-title .zui-layer-main-close:hover {
+  color: #FF4949;
+}
+.zui-layer-main .zui-layer-main-info {
+  background: #fff;
 }

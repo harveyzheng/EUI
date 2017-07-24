@@ -1,0 +1,134 @@
+
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1500874533016'); /* IE9*/
+  src: url('iconfont.eot?t=1500874533016#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1500874533016') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1500874533016') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1500874533016#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+
+[class^="zui-icon-"], [class*=" zui-icon-"] {
+    display: inline-block;
+    font-family:"iconfont" !important;
+    font-size:20px;
+    font-style:normal;
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.zui-icon-love:before { content: "\e602"; }
+
+.zui-icon-personnel:before { content: "\e603"; }
+
+.zui-icon-positioning:before { content: "\e604"; }
+
+.zui-icon-setting:before { content: "\e605"; }
+
+.zui-icon-time:before { content: "\e606"; }
+
+.zui-icon-lock:before { content: "\e607"; }
+
+.zui-icon-unlock:before { content: "\e608"; }
+
+.zui-icon-tel:before { content: "\e609"; }
+
+.zui-icon-phone:before { content: "\e60a"; }
+
+.zui-icon-img:before { content: "\e60e"; }
+
+.zui-icon-share:before { content: "\e614"; }
+
+.zui-icon-message:before { content: "\e616"; }
+
+.zui-icon-editor:before { content: "\e617"; }
+
+.zui-icon-text:before { content: "\e618"; }
+
+.zui-icon-collection:before { content: "\e625"; }
+
+.zui-icon-remind:before { content: "\e626"; }
+
+.zui-icon-home:before { content: "\e627"; }
+
+.zui-icon-date:before { content: "\e628"; }
+
+.zui-icon-search:before { content: "\e62b"; }
+
+.zui-icon-screening:before { content: "\e630"; }
+
+.zui-icon-delete:before { content: "\e637"; }
+
+.zui-icon-question:before { content: "\e63c"; }
+
+.zui-icon-attention:before { content: "\e63d"; }
+
+.zui-icon-close:before { content: "\e63e"; }
+
+.zui-icon-info:before { content: "\e63f"; }
+
+.zui-icon-complete:before { content: "\e640"; }
+
+.zui-icon-remove:before { content: "\e641"; }
+
+.zui-icon-add:before { content: "\e642"; }
+
+.zui-icon-left:before { content: "\e643"; }
+
+.zui-icon-right:before { content: "\e644"; }
+
+.zui-icon-top:before { content: "\e645"; }
+
+.zui-icon-bottom:before { content: "\e646"; }
+
+.zui-icon-refresh:before { content: "\e64a"; }
+
+.zui-icon-information:before { content: "\e64b"; }
+
+.zui-icon-save:before { content: "\e666"; }
+
+.zui-icon-synchro:before { content: "\e676"; }
+
+.zui-icon-guanbi:before { content: "\e60c"; }
+
+.zui-icon-user:before { content: "\e647"; }
+
+.zui-icon-checked1:before { content: "\e6e4"; }
+
+.zui-icon-loading:before { content: "\e63a"; }
+
+.zui-icon-radio2:before { content: "\e62a"; }
+
+.zui-icon-shang:before { content: "\e610"; }
+
+.zui-icon-radio1:before { content: "\e60b"; }
+
+.zui-icon-zuo:before { content: "\e620"; }
+
+.zui-icon-you:before { content: "\e600"; }
+
+.zui-icon-upload:before { content: "\e655"; }
+
+.zui-icon-xia:before { content: "\e660"; }
+
+.zui-icon-checked2:before { content: "\e6e5"; }
+
+.zui-icon-loading{
+    display: inline-block;
+    -webkit-animation: rotate 1s linear infinite;
+    -moz-animation: rotate 1s linear infinite;
+    animation: rotate 1s linear infinite;
+}
+@-webkit-keyframes rotate{
+    from{-webkit-transform: rotate(0deg)}
+    to{-webkit-transform: rotate(360deg)}
+}
+@-moz-keyframes rotate{
+    from{-moz-transform: rotate(0deg)}
+    to{-moz-transform: rotate(360deg)}
+}
+@keyframes rotate{
+    from{transform: rotate(0deg)}
+    to{transform: rotate(360deg)}
+}

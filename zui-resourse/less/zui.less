@@ -1,43 +1,61 @@
-
 // 样式重置
 *{box-sizing: border-box; padding: 0; margin: 0;}
-html, body{ width: 100%; color: #333; background: #fff; font-size: 0; line-height: 1; font-family: 'Arial','Microsoft YaHei';}
+html, body{ width: 100%; color: @gray1; background: @white; line-height: 1; font-size: 14px; font-family: 'Arial','Microsoft YaHei';}
 :focus{ outline: none;}
 ol, ul{ list-style: none;}
-input, button{ -webkit-appearance: none; vertical-align: middle;}
 h1, h2, h3, h4, h5, h6{ font-size: 20px; font-weight: normal; text-decoration: none;}
 table{ border-collapse: separate; border-spacing: 0;}
 a img, img, button{ border:0;}
-a, a:active, a:hover{ outline: 0; text-decoration: none; color: #333;}
-button, select{ cursor: pointer;}
+a, a:active, a:hover{ outline: 0; text-decoration: none; color: @gray1;}
 blockquote, q{ quotes: none;}
 article, aside, details, figcaption, figure, footer, header, nav, section, summary{ display: block;}
-b, i, em , ins, strong, small, big, p{ font-size: 14px; font-weight: normal; font-style: normal; text-decoration: none;}
+b, i, em , ins, strong, small, big{ font-weight: normal; font-style: normal; text-decoration: none;}
+input, button{ -webkit-appearance: none;}
+select, input, button{ vertical-align: middle;}
+button, select{ cursor: pointer;}
 
 // 滚动条美化
 ::-webkit-scrollbar{ width: 7px; height: 7px;}
-::-webkit-scrollbar-track-piece{ background: #ddd; border-radius: 8px;}
-::-webkit-scrollbar-thumb{ height: 7px; background: #999; border-radius: 8px;}
-::-webkit-scrollbar-thumb:hover{background: #666;}
+::-webkit-scrollbar-track-piece{ background: @gray4; border-radius: 8px;}
+::-webkit-scrollbar-thumb{ height: 7px; background: @gray3; border-radius: 8px;}
+::-webkit-scrollbar-thumb:hover{background: @gray2;}
 
 // 选中文本颜色与背景色
-::selection{ color:#fff; background:#666;}
+::selection{ color:@white; background:@gray2;}
+
+// 导入iconfont
+@import url('../iconfont/iconfont.css');
+
+// z-index值设置
+// 1、2、3、4、5用于普通脱离文档流排版，10、20、30用于定位组件，100、200、300用于弹窗
+.index-1{z-index: -1;}
+.index1{z-index: 1;}
+.index2{z-index: 2;}
+.index3{z-index: 3;}
+.index4{z-index: 4;}
+.index5{z-index: 5;}
+.index10{z-index: 10;}
+.index20{z-index: 20;}
+.index30{z-index: 30;}
+.index100{z-index: 100;}
+.index200{z-index: 200;}
+.index300{z-index: 300;}
 
 // 自定义颜色
-@blue:#20A0FF;
+@blue:#1e9fff;
 @blue-hover:#58B7FF;
 @blue-active:#1D8CE0;
 
-@green:#13CE66;
-@green-hover:#25e481;
-@green-active:#09ba57;
+@green:#5fb878;
+@green-hover:#70d08d;
+@green-active:#4ca763;
 
-@yellow:#F7BA2A;
+@yellow:#f5b51e;
 @yellow-hover:#f9cb33;
 @yellow-active:#f39a19;
 
 @red:#FF4949;
-@red-hover:#ff6262;
+@red-hover:#ff7171;
 @red-active:#ff3636;
 
 @gray1:#333;
@@ -58,10 +76,30 @@ b, i, em , ins, strong, small, big, p{ font-size: 14px; font-weight: normal; fon
 .zui-clearfix{ display:block; clear:both;}
 .zui-clearfix:after{ content:"."; display:block; height:0; clear:both; visibility:hidden;}
 
-// button样式、input样式、背景样式
+// 动画延时
+.zui-ani-fast{ transition: all 0.2s linear;}
+.zui-ani-normal{ transition: all 0.4s linear;}
+.zui-ani-slow{ transition: all 0.8s linear;}
+
+
+// button按钮 icon 设置
 .zui-btn:hover, .zui-btn:active, .zui-bg-blue, .zui-bg-green, .zui-bg-yellow, .zui-bg-red{
     color: @white;
 }
+.zui-size-small [class^="zui-icon-"]{
+    margin-right: 3px;
+    font-size: 14px;
+}
+.zui-size-medium [class^="zui-icon-"]{
+    margin-right: 5px;
+    font-size: 16px;
+}
+.zui-size-big [class^="zui-icon-"]{
+    margin-right: 7px;
+    font-size: 20px;
+}
+
+// button样式、input样式、背景样式
 .zui-bg-blue{ background: @blue;}
 .zui-bg-blue.zui-btn:hover{ background: @blue-hover;}
 .zui-bg-blue.zui-btn:active{ background: @blue-active;}
@@ -85,36 +123,242 @@ b, i, em , ins, strong, small, big, p{ font-size: 14px; font-weight: normal; fon
 .zui-bg-disabled.zui-btn{ cursor: not-allowed; border: 1px solid @gray3;}
 .zui-bg-disabled.zui-btn:hover,.zui-bg-disabled.zui-btn:active{ color: @gray1; border: 1px solid @gray3;}
 
-.zui-btn{
+.zui-size-small{ padding: 0 10px; height: 30px; line-height: 28px; font-size: 12px;}
+.zui-size-medium{ padding: 0 15px; height: 38px; line-height: 36px; font-size: 14px;}
+.zui-size-big{ padding: 0 30px; height: 44px; line-height: 42px; font-size: 16px;}
+
+.zui-input{ padding: 0; text-indent: 10px; border: 1px solid @gray4; border-radius: 5px; color: @gray1;}
+.zui-input[disabled]{ cursor: not-allowed;}
+.zui-btn{ display: inline-block; border-radius: 5px; .zui-txt-c; white-space: nowrap;}
+
+.zui-radius{ border-radius: 300px;}
+
+.zui-btn+.zui-btn, .zui-input+.zui-btn, .zui-input+.zui-input, .zui-radio-label+.zui-radio-label, .zui-checkbox-label+.zui-checkbox-label{ margin-left: 10px;}
+
+// select组件
+.zui-select{
     display: inline-block;
-    border-radius: 5px;
-    .zui-txt-c;
-    white-space: nowrap;
+    position: relative;
+    .zui-input{
+        cursor: pointer;
+    }
+    .zui-option-list{
+        .zui-ani-fast;
+        background: @white;
+        box-shadow: 0 0 7px @gray4;
+        border: 1px solid @gray4;
+        border-radius: 4px;
+        position: absolute;
+        .index10;
+        width: 100%;
+        max-height: 300px;
+        overflow-y: auto;
+        left: 0;
+        opacity: 0;
+        .index-1;
+        transform:translateY(25px);
+        li{
+            padding: 0 10px;
+            cursor: pointer;
+        }
+        li:hover{
+            background: @gray5;
+        }
+        .zui-option,.zui-option:hover{
+            .zui-bg-blue;
+        }
+    }
+    .zui-size-small + i + .zui-option-list{ top: 33px; line-height: 30px; font-size: 12px;}
+    .zui-size-medium + i + .zui-option-list{ top: 40px; line-height: 40px; font-size: 14px;}
+    .zui-size-big + i + .zui-option-list{ top: 47px; line-height: 44px; font-size: 14px;}
+    .zui-select-arrow{
+        content: '';
+        .zui-ani-fast;
+        position: absolute;
+        right: 10px;
+        border-top: 6px solid @gray3;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        .zui-ani-fast;
+    }
+    .zui-size-small + .zui-select-arrow{
+        top: 11px;
+    }
+    .zui-size-medium + .zui-select-arrow{
+        top: 15px;
+    }
+    .zui-size-big + .zui-select-arrow{
+        top: 18px;
+        border-width: 8px;
+    }
+}
+// 展开select
+.zui-select.zui-select-open{
+    .zui-option-list{
+        left: 0;
+        opacity: 1;
+        transform:translateY(0);
+        .index10;
+    }
+    .zui-select-arrow{
+        transform:rotate(180deg);
+    }
 }
 
-.zui-btn+.zui-btn{
-    margin-left: 10px;
+// radio组件 和 checkbox组件
+.zui-radio, .zui-checkbox{
+    display: inline-block;
+    .zui-radio-label, .zui-checkbox-label{ display: inline-block; line-height: 30px; cursor: pointer;}
+    .zui-radio-input, .zui-checkbox-input{ display: none;}
+    // icon
+    .zui-icon-radio,.zui-icon-checkbox{ color: @gray3; vertical-align: top;}
+    .zui-radio-input + .zui-icon-radio:before{ content: "\e60b";}
+    .zui-radio-input:checked + .zui-icon-radio:before{ content: "\e62a"; color: @blue;}
+
+    .zui-checkbox-input + .zui-icon-checkbox:before{ content: "\e6e4";}
+    .zui-checkbox-input:checked + .zui-icon-checkbox:before{ content: "\e6e5"; color: @blue;}
 }
 
-
-
-.zui-btn-small{
-    padding: 0 10px;
-    height: 30px;
-    line-height: 28px;
-    font-size: 12px;
+// zui-switch开关按钮组件
+.zui-switch{
+    display: inline-block;
+    vertical-align: middle;
+    .zui-switch-label{
+        cursor: pointer;
+        user-select: none;
+        .zui-switch-input{ display: none;}
+        .zui-switch-view{
+            .zui-ani-fast;
+            position: relative;
+            display:block;
+            width: 60px;
+            height: 24px;
+            line-height: 22px;
+            border-radius: 300px;
+            border: 1px solid @gray4;
+            background: @white;
+            .zui-icon-switch{
+                .zui-ani-fast;
+                position: absolute;
+                top: 2px;
+                left: 3px;
+                width: 18px;
+                height: 18px;
+                background: @gray4;
+                border-radius: 300px;
+            }
+            .zui-switch-info{
+                display: block;
+                text-align: right;
+                padding: 0 5px;
+            }
+        }
+        .zui-switch-input:checked + .zui-switch-view{
+            background: @blue;
+            border-color: @blue-hover;
+            .zui-icon-switch{
+                left: 38px;
+                background: @white;
+            }
+            .zui-switch-info{
+                text-align: left;
+                color: @white;
+            }
+        }
+    }
 }
-.zui-btn-medium{
-    padding: 0 15px;
-    height: 38px;
-    line-height: 36px;
+
+// 文本域定义
+.zui-textarea{
+    min-width: 300px;
+    min-height: 100px;
+    padding: 5px 10px;
     font-size: 14px;
-}
-.zui-btn-big{
-    padding: 0 30px;
-    height: 44px;
-    line-height: 42px;
-    font-size: 14px;
+    line-height: 20px;
+    resize: vertical;
 }
 
-input{ border: 1px solid @gray4; border-radius: 5px;}
+// layer弹窗
+.zui-layer{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    .index100;
+    // 提示窗
+    .zui-layer-prompt{
+        padding: 15px 20px;
+        border-radius: 4px;
+        background: rgba(0, 0, 0, 0.5);
+        color: @white;
+        .zui-ani-fast;
+        opacity: 0;
+        transform:scale(0.8);
+    }
+    .zui-layer-prompt.on{
+        opacity: 1;
+        transform:scale(1);
+    }
+}
+// 阴影背景
+.zui-layer-shade{
+    background: @gray1;
+    .zui-ani-fast;
+    opacity: 0;
+}
+.zui-layer-shade.on{
+    opacity: 0.5;
+}
+// 确认窗
+.zui-layer-main{
+    position: fixed;
+    left: 50%;
+    top:50%;
+    transform:translate(-50%);
+    width: 400px;
+    border-radius: 8px;
+    overflow: hidden;
+    .index300;
+    .zui-layer-main-title{
+        padding: 0 10px;
+        position: relative;
+        line-height: 30px;
+        .zui-layer-main-close{
+            position: absolute;
+            right: 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .zui-layer-main-close:hover{
+            color: @red;
+        }
+    }
+    .zui-layer-main-info{
+        background: @white;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
