@@ -4,58 +4,116 @@
 // 严格模式
 
 var Zui=function(){
-    this.layer=(data)=>{
-        // 先删除已存在窗口
-        if($('.zui-layer').length) $('.zui-layer').remove();
-        // 获取类别
-        const type=data.type;
-        let dom='';
-        if(type=='confirm'){
-            // 确认窗
-            dom='<div class="zui-layer zui-layer-shade"></div>';
-            dom+=
-            '<div class="zui-layer-main">'+
-                '<div class="zui-layer-main-title '+data.style+'">'+data.title+'<i class="zui-layer-main-close zui-icon-guanbi"></i></div>'+
-                '<div class="zui-layer-main-info">'+data.info+'</div>'+
-            '</div>';
-            $('body').append(dom);
-            setTimeout(()=>{
-            $('.zui-layer-shade').addClass('on');
-        },100);
-        }else if(type=='ask'){
-            // 询问窗
-            dom='<div class="zui-layer zui-layer-shade"></div>';
-        }else if(type=='message'){
-            // 询问窗
-            dom='';
-        }
-        return;
-    };
-    // 替代alert的 提示窗
-    this.prompt=(info)=>{
-        // 先删除已存在窗口
-        if($('.zui-layer').length) $('.zui-layer').remove();
-        // 生成dom
-        let dom='<div class="zui-layer"><div class="zui-layer-prompt">'+info+'</div></div>';
-        $('body').append(dom);
-        // 动画效果及延时关闭
-        setTimeout(()=>{
-            $('.zui-layer-prompt').addClass('on');
-        },100);
-        setTimeout(()=>{
-            $('.zui-layer-prompt').delay(2000).removeClass('on');
-        },2800);
-        setTimeout(()=>{
-            $('.zui-layer').remove();
-        },3000);
-        return;
-    };
     return;
 }
+// 确认窗、询问窗
+Zui.prototype.layer=(data)=>{
+    // 先删除已存在窗口
+    if($('.zui-layer').length) $('.zui-layer').remove();
+    // 获取类别
+    const type=data.type;
+    let style=data.style||'blue';
+    let dom='<div class="zui-layer-shade"></div>'+
+                '<div class="zui-layer-main">'+
+                    '<div class="zui-layer-main-title zui-bg-'+style+'">'+data.title+'<i class="zui-layer-main-close zui-icon-guanbi"></i></div>'+
+                    '<div class="zui-layer-main-info">'+data.info+'</div>';
+                    if(type=='alert'){
+                        // 确认窗 按钮组
+                        dom+='<div class="zui-layer-btn" zui-txt="right"><button zui-bg="'+style+'" zui-size="small" class="zui-btn zui-layer-okay">确定<button></div>';
+                    }else if(type=='confirm'){
+                        // 询问窗 按钮组
+                        dom+='<div class="zui-layer-btn" zui-txt="right"><button zui-bg="'+style+'" zui-size="small" class="zui-btn zui-layer-okay">确定</button><button zui-size="small" class="zui-btn zui-bg-default zui-layer-cancel">取消</button></div>';
+                    };
+    dom+='</div>';
+    // 插入dom
+    let that=$(dom);
+    $('body').append(that);
+
+    // 按钮绑定-确定、取消事件
+    let okay=that.find('.zui-layer-okay');
+    let cancel=that.find('.zui-layer-cancel');
+    if(data.okay){
+        okay.on('click',function(){
+            data.okay(data.okayParam);
+        });
+    };
+    if(data.okay){
+        cancel.on('click',function(){
+            data.cancel(data.okayParam);
+        });
+    };
+
+    // 进入动画
+    setTimeout(()=>{
+        that.eq(0).addClass('on');
+        that.eq(1).addClass('on');
+    },100);
+    // 按钮绑定-移除对话框
+    $('.zui-layer-main button,.zui-layer-main-close').on('click',()=>{
+        let type=null;
+        that.eq(0).removeClass('on');
+        that.eq(1).removeClass('on');
+        setTimeout(()=>{
+            that.remove();
+        },200);
+    });
+    return false;
+};
+
+// 自动消失的提示窗
+Zui.prototype.prompt=(info)=>{
+    // 先删除已存在窗口
+    if($('.zui-layer-prompt').length) $('.zui-layer-prompt').remove();
+    // 生成dom
+    let dom='<div class="zui-layer-prompt">'+info+'</div>';
+    $('body').append(dom);
+    // 动画效果及延时关闭
+    setTimeout(()=>{
+        $('.zui-layer-prompt').addClass('on');
+    },100);
+    setTimeout(()=>{
+        $('.zui-layer-prompt').removeClass('on');
+    },2500);
+    setTimeout(()=>{
+        $('.zui-layer-prompt').remove();
+    },2700);
+    return false;
+};
+
+// message消息提示
+Zui.prototype.message=(data)=>{
+    // 生成dom
+    let type=data.type||'消息';
+    let style=data.style||'blue';
+    let dom='<a class="zui-layer-message" href="'+data.url+'">'+
+                '<span class="zui-layer-message-type" zui-bg="'+style+'"><em>'+type+'</em></span>'+
+                '<span class="zui-layer-message-title">'+data.title+'</span>'+
+                '<span class="zui-layer-message-info">'+data.info+'</span>'+
+            '</a>';
+    let that=$(dom);
+    $('body').append(that);
+    
+    // 动态高度
+    let leng=$('.zui-layer-message').length;
+    that.css('top',(leng-1)*100+10);
+
+    // 动画效果及延时关闭
+    setTimeout(()=>{
+        that.addClass('on');
+    },100);
+    setTimeout(()=>{
+        that.removeClass('on');
+    },5000);
+    setTimeout(()=>{
+        that.remove();
+    },5200);
+    return false;
+};
+
 // 实例化Zui
 var zui=new Zui();
 
-
+// 事件绑定
 $(function(){
     // select下拉事件绑定
     $('.zui-select').on('click',function(event){

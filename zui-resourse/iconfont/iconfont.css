@@ -8,7 +8,7 @@
 }
 
 
-[class^="zui-icon-"], [class*=" zui-icon-"] {
+[class^="zui-icon-"], [class*=" zui-icon-"]{
     display: inline-block;
     font-family:"iconfont" !important;
     font-size:20px;
