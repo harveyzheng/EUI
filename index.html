@@ -4,9 +4,9 @@
         <title></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <link rel="stylesheet" href="/zui-resourse/less/zui.css">
-        <script src="/zui-resourse/js/jquery-3.2.1.min.js"></script>
-        <script src="/zui-resourse/js/zui.js"></script>
+        <link rel="stylesheet" href="/zui-resource/less/zui.css">
+        <script src="/zui-resource/js/jquery-3.2.1.min.js"></script>
+        <script src="/zui-resource/js/zui.js"></script>
     </head>
     <body>
     <div style="padding:10px;">
@@ -251,31 +251,13 @@
 <script>
 
 
+var fn=()=>alert(this);
 
 
 
-$('body').mousemove(function(e) { 
-    var xx = e.originalEvent.x || e.originalEvent.layerX || 0; 
-    if(xx<10){
-        $('.nav').css('left',0);
-    }
-});
-$('.nav').mouseleave(function(){
-    $('.nav').css('left',-200);
-    $('.nav dd').width(0);
-});
-$('.nav dt a').hover(function(){
-    var index=$(this).index();
-    $('.nav dd').eq(index).width(200);
-},function(){
-    var index=$(this).index();
-    $('.nav dd').eq(index).width(0);
-})
-$('.nav dd').hover(function(){
-    $(this).width(200);
-},function(){
-    $(this).width(0);
-})
+var fn2=function (){
+    return alert(this);
+}
 
 
 $('#btn1').click(function(){
@@ -300,11 +282,11 @@ $('#btn3').click(function(){
         cancelParam:{},
     });
 });
-function box(){
-    alert('确定')
+function box(id){
+    console.log(id)
 }
-function box2(){
-    alert('取消')
+function box2(id){
+    alert(id)
 }
 $('#btn4').click(function(){
     zui.message({
