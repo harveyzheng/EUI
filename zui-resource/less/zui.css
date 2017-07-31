@@ -1,7 +1,5 @@
 @import url('../iconfont/iconfont.css');
 * {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -75,8 +73,9 @@ big {
   font-style: normal;
   text-decoration: none;
 }
-input,
-button {
+.zui-btn,
+.zui-ipt,
+.zui-radio {
   -webkit-appearance: none;
 }
 select,
@@ -87,6 +86,10 @@ button {
 button,
 select {
   cursor: pointer;
+}
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  color: #999;
 }
 ::-webkit-scrollbar {
   width: 7px;
@@ -106,7 +109,7 @@ select {
 }
 ::selection {
   color: #fff;
-  background: #58B7FF;
+  background: #77DDFF;
 }
 .index-1 {
   z-index: -1;
@@ -145,23 +148,28 @@ select {
   z-index: 300;
 }
 .zui-float-left,
-*[zui-float=left] {
+[zui^="pull-left"],
+[zui*=",pull-left"] {
   float: left !important;
 }
 .zui-float-right,
-*[zui-float=right] {
+[zui^="pull-right"],
+[zui*=",pull-right"] {
   float: right !important;
 }
 .zui-txt-left,
-*[zui-txt=left] {
+[zui^="txt-left"],
+[zui*=",txt-left"] {
   text-align: left !important;
 }
 .zui-txt-center,
-*[zui-txt=center] {
+[zui^="txt-center"],
+[zui*=",txt-center"] {
   text-align: center !important;
 }
 .zui-txt-right,
-*[zui-txt=right] {
+[zui^="txt-right"],
+[zui*=",txt-right"] {
   text-align: right !important;
 }
 .zui-clearfix {
@@ -176,160 +184,192 @@ select {
   visibility: hidden;
 }
 .zui-ani-no,
-*[zui-ani=no] {
+[zui^="anim-no"],
+[zui*=",anim-no"] {
   transition: all 0s;
 }
 .zui-ani-fast,
-*[zui-ani=fast] {
+[zui^="anim-fast"],
+[zui*=",anim-fast"] {
   transition: all 0.2s;
 }
 .zui-ani-normal,
-*[zui-ani=normal] {
+[zui^="anim-normal"],
+[zui*=",anim-normal"] {
   transition: all 0.4s;
 }
 .zui-ani-slow,
-*[zui-ani=slow] {
+[zui^="anim-slow"],
+[zui*=",anim-slow"] {
   transition: all 0.8s;
 }
-.zui-btn:hover,
-.zui-btn:active,
-.zui-bg-blue,
-.zui-bg-green,
-.zui-bg-yellow,
-.zui-bg-red,
-*[zui-bg=blue],
-*[zui-bg=green],
-*[zui-bg=yellow],
-*[zui-bg=red] {
-  color: #fff;
+.zui-h1 {
+  font-size: 40px;
+  line-height: 50px;
 }
-.zui-size-small [class^="zui-icon-"] {
-  margin-right: 3px;
-  font-size: 14px;
+.zui-h2 {
+  font-size: 36px;
+  line-height: 44px;
 }
-.zui-size-medium [class^="zui-icon-"] {
-  margin-right: 5px;
-  font-size: 16px;
+.zui-h3 {
+  font-size: 32px;
+  line-height: 38px;
 }
-.zui-size-big [class^="zui-icon-"] {
-  margin-right: 7px;
-  font-size: 20px;
+.zui-h4 {
+  font-size: 28px;
+  line-height: 32px;
 }
-.zui-bg-blue,
-*[zui-bg=blue] {
-  background: #1e9fff;
-}
-.zui-bg-blue.zui-btn:hover,
-.zui-btn[zui-bg=blue]:hover {
-  background: #58B7FF;
-}
-.zui-bg-blue.zui-btn:active,
-.zui-btn[zui-bg=blue]:active {
-  background: #1D8CE0;
-}
-.zui-bg-green,
-*[zui-bg=green] {
-  background: #5fb878;
-}
-.zui-bg-green.zui-btn:hover,
-.zui-btn[zui-bg=green]:hover {
-  background: #70d08d;
-}
-.zui-bg-green.zui-btn:active,
-.zui-btn[zui-bg=green]:active {
-  background: #4ca763;
-}
-.zui-bg-yellow,
-*[zui-bg=yellow] {
-  background: #f5b51e;
-}
-.zui-bg-yellow.zui-btn:hover,
-.zui-btn[zui-bg=yellow]:hover {
-  background: #f9cb33;
-}
-.zui-bg-yellow.zui-btn:active,
-.zui-btn[zui-bg=yellow]:active {
-  background: #f39a19;
-}
-.zui-bg-red,
-*[zui-bg=red] {
-  background: #FF4949;
-}
-.zui-bg-red.zui-btn:hover,
-.zui-btn[zui-bg=red]:hover {
-  background: #ff7171;
-}
-.zui-bg-red.zui-btn:active,
-.zui-btn[zui-bg=red]:active {
-  background: #ff3636;
-}
-.zui-bg-default.zui-btn {
-  background: #fff;
-  color: #333;
-  border: 1px solid #ddd;
-}
-.zui-bg-default.zui-btn:hover {
-  color: #1e9fff;
-  border-color: #1e9fff;
-}
-.zui-bg-default.zui-btn:active {
-  color: #1D8CE0;
-  border-color: #1D8CE0;
-}
-.zui-bg-disabled.zui-btn {
-  cursor: not-allowed;
-  border: 1px solid #ddd;
-  background: #f5f5f5;
-}
-.zui-bg-disabled.zui-btn:hover,
-.zui-bg-disabled.zui-btn:active {
-  color: #333;
-  border: 1px solid #ddd;
-}
-.zui-size-small,
-*[zui-size=small] {
-  padding: 0 10px;
-  height: 28px;
+.zui-h5 {
+  font-size: 24px;
   line-height: 26px;
-  font-size: 12px;
 }
-.zui-size-medium,
-*[zui-size=medium] {
-  padding: 0 15px;
-  height: 38px;
-  line-height: 36px;
-  font-size: 14px;
-}
-.zui-size-big,
-*[zui-size=big] {
-  padding: 0 30px;
-  height: 44px;
-  line-height: 42px;
-  font-size: 16px;
-}
-.zui-input {
-  padding: 0;
-  text-indent: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  color: #333;
-}
-.zui-input[disabled] {
-  cursor: not-allowed;
-  background: #f5f5f5;
+.zui-h6 {
+  font-size: 20px;
+  line-height: 20px;
 }
 .zui-btn {
   display: inline-block;
   border-radius: 4px;
   text-align: center !important;
   white-space: nowrap;
+  background: #fff;
+  color: #333;
+  border: 1px solid #ddd;
 }
-.zui-radius {
+.zui-btn:hover {
+  color: #66CCFF;
+  border-color: #66CCFF;
+}
+.zui-btn:active {
+  color: #55BBEE;
+  border-color: #55BBEE;
+}
+.zui-btn[zui^="blue"],
+.zui-btn[zui^="green"],
+.zui-btn[zui^="yellow"],
+.zui-btn[zui^="red"],
+.zui-btn[zui*=",blue"],
+.zui-btn[zui*=",green"],
+.zui-btn[zui*=",yellow"],
+.zui-btn[zui*=",red"] {
+  border: none;
+}
+.zui-bg-blue,
+[zui^="blue"],
+[zui*=",blue"] {
+  background: #66CCFF;
+}
+.zui-btn[zui^=blue]:hover,
+.zui-btn[zui*=",blue"]:hover {
+  background: #77DDFF;
+}
+.zui-btn[zui^=blue]:active,
+.zui-btn[zui*=",blue"]:active {
+  background: #55BBEE;
+}
+.zui-bg-green,
+[zui^="green"],
+[zui*=",green"] {
+  background: #66CC99;
+}
+.zui-btn[zui^="green"]:hover,
+.zui-btn[zui*=",green"]:hover {
+  background: #77DDAA;
+}
+.zui-btn[zui^="green"]:active,
+.zui-btn[zui*=",green"]:active {
+  background: #55BB88;
+}
+.zui-bg-yellow,
+[zui^="yellow"],
+[zui*=",yellow"] {
+  background: #FF9900;
+}
+.zui-btn[zui^="yellow"]:hover,
+.zui-btn[zui*=",yellow"]:hover {
+  background: #FFAA11;
+}
+.zui-btn[zui^="yellow"]:active,
+.zui-btn[zui*=",yellow"]:active {
+  background: #EE8800;
+}
+.zui-bg-red,
+[zui^="red"],
+[zui*=",red"] {
+  background: #FF6666;
+}
+.zui-btn[zui^="red"]:hover,
+.zui-btn[zui*=",red"]:hover {
+  background: #FF7777;
+}
+.zui-btn[zui^="red"]:active,
+.zui-btn[zui*=",red"]:active {
+  background: #EE5555;
+}
+.zui-ipt[disabled],
+.zui-btn[disabled] {
+  cursor: not-allowed;
+  border: 1px solid #ddd;
+  background: #f5f5f5;
+}
+.zui-btn[disabled]:hover,
+.zui-btn[disabled]:active {
+  color: #333;
+  border: 1px solid #ddd;
+}
+.zui-bg-blue,
+.zui-bg-green,
+.zui-bg-yellow,
+.zui-bg-red,
+[zui^="blue"],
+[zui*=",blue"],
+[zui^="green"],
+[zui*=",green"],
+[zui^="yellow"],
+[zui*=",yellow"],
+[zui^="red"],
+[zui*=",red"] {
+  color: #fff !important;
+}
+.zui-ipt {
+  padding: 0;
+  text-indent: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  color: #333;
+}
+.zui-size-sm,
+[zui^="sm"],
+[zui*=",sm"] {
+  padding: 0 10px;
+  height: 28px;
+  line-height: 26px;
+  font-size: 12px;
+}
+.zui-size-md,
+[zui^="md"],
+[zui*=",md"] {
+  padding: 0 15px;
+  height: 38px;
+  line-height: 36px;
+  font-size: 14px;
+}
+.zui-size-lg,
+[zui^="lg"],
+[zui*=",lg"] {
+  padding: 0 30px;
+  height: 44px;
+  line-height: 42px;
+  font-size: 16px;
+}
+.zui-radius,
+[zui^="radius"],
+[zui*=",radius"] {
   border-radius: 300px;
 }
 .zui-btn + .zui-btn,
-.zui-input + .zui-btn,
-.zui-input + .zui-input,
+.zui-ipt + .zui-btn,
+.zui-ipt + .zui-ipt,
 .zui-radio-label + .zui-radio-label,
 .zui-checkbox-label + .zui-checkbox-label {
   margin-left: 10px;
@@ -338,7 +378,7 @@ select {
   display: inline-block;
   position: relative;
 }
-.zui-select .zui-input {
+.zui-select .zui-ipt {
   cursor: pointer;
 }
 .zui-select .zui-option-list {
@@ -366,22 +406,22 @@ select {
 }
 .zui-select .zui-option-list .zui-option,
 .zui-select .zui-option-list .zui-option:hover {
-  color: #fff;
-  background: #1e9fff;
+  background: #66CCFF;
+  color: #fff !important;
 }
-.zui-select .zui-size-small + i + .zui-option-list,
+.zui-select .zui-size-sm + i + .zui-option-list,
 .zui-select input[zui-size=small] + i + .zui-option-list {
   top: 33px;
   line-height: 30px;
   font-size: 12px;
 }
-.zui-select .zui-size-medium + i + .zui-option-list,
+.zui-select .zui-size-md + i + .zui-option-list,
 .zui-select input[zui-size=medium] + i + .zui-option-list {
   top: 40px;
   line-height: 40px;
   font-size: 14px;
 }
-.zui-select .zui-size-big + i + .zui-option-list,
+.zui-select .zui-size-lg + i + .zui-option-list,
 .zui-select input[zui-size=big] + i + .zui-option-list {
   top: 47px;
   line-height: 44px;
@@ -396,15 +436,15 @@ select {
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
 }
-.zui-select .zui-size-small + .zui-select-arrow,
+.zui-select .zui-size-sm + .zui-select-arrow,
 .zui-select input[zui-size=small] + .zui-select-arrow {
   top: 11px;
 }
-.zui-select .zui-size-medium + .zui-select-arrow,
+.zui-select .zui-size-md + .zui-select-arrow,
 .zui-select input[zui-size=medium] + .zui-select-arrow {
   top: 15px;
 }
-.zui-select .zui-size-big + .zui-select-arrow,
+.zui-select .zui-size-lg + .zui-select-arrow,
 .zui-select input[zui-size=big] + .zui-select-arrow {
   top: 18px;
   border-width: 8px;
@@ -451,7 +491,7 @@ select {
 .zui-radio .zui-radio-input:checked + .zui-icon-radio:before,
 .zui-checkbox .zui-radio-input:checked + .zui-icon-radio:before {
   content: "\e62a";
-  color: #1e9fff;
+  color: #66CCFF;
 }
 .zui-radio .zui-checkbox-input + .zui-icon-checkbox:before,
 .zui-checkbox .zui-checkbox-input + .zui-icon-checkbox:before {
@@ -460,7 +500,7 @@ select {
 .zui-radio .zui-checkbox-input:checked + .zui-icon-checkbox:before,
 .zui-checkbox .zui-checkbox-input:checked + .zui-icon-checkbox:before {
   content: "\e6e5";
-  color: #1e9fff;
+  color: #66CCFF;
 }
 .zui-switch {
   display: inline-block;
@@ -500,8 +540,8 @@ select {
   padding: 0 5px;
 }
 .zui-switch .zui-switch-label .zui-switch-input:checked + .zui-switch-view {
-  background: #1e9fff;
-  border-color: #58B7FF;
+  background: #66CCFF;
+  border-color: #77DDFF;
 }
 .zui-switch .zui-switch-label .zui-switch-input:checked + .zui-switch-view .zui-icon-switch {
   left: 38px;
@@ -674,8 +714,8 @@ select {
 .zui-list li:last-child {
   border: none;
 }
-.zui-list[zui-style=arrow-right] li:before,
-.zui-list[zui-style=arrow-left] li:before {
+.zui-list[zui-style=arrow-right] ::before,
+.zui-list[zui-style=arrow-left] ::before {
   content: "\e600";
   font-family: "iconfont" !important;
   font-size: 14px;

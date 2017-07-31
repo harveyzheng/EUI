@@ -1,7 +1,8 @@
 // 2017-07-24
-
+;
+$(function(){
+// zui-start
 "use strict";
-// 严格模式
 
 var Zui=function(){
     return;
@@ -94,53 +95,59 @@ Zui.prototype.message=data=>{
     return false;
 };
 
+// radio美化
+Zui.prototype.radio=el=>{
+    
+};
+
 // 实例化Zui
 var zui=new Zui();
 
-// 事件绑定
-$(function(){
-    // select下拉事件绑定
-    $('.zui-select').on('click',function(event){
-        event.stopPropagation();
-        if($(this).hasClass('zui-select-open')){
-            $(this).removeClass('zui-select-open');
+// radio绑定
+zui.radio($('.zui-radio'));
+
+// select下拉事件绑定
+$('.zui-select').on('click',function(event){
+    event.stopPropagation();
+    if($(this).hasClass('zui-select-open')){
+        $(this).removeClass('zui-select-open');
+    }else{
+        $(this).addClass('zui-select-open');
+    };
+});
+
+// select option选定
+$('.zui-option-list li').on('click',function(){
+    $(this).siblings().removeClass('zui-option');
+    $(this).addClass('zui-option');
+    $(this).parent().siblings('.zui-input').val($(this).text());
+});
+
+// body 点击 关闭一些窗口
+$('body').on('click',()=>$('.zui-select').removeClass('zui-select-open'));
+
+// 开关按钮
+$('.zui-switch').each(function(){
+    var inp=$(this).find('.zui-switch-input');
+    var txt=inp.attr('zui-info').split('|');
+    var on=txt[0];
+    var off=txt[1];
+    var info=$(this).find('.zui-switch-info');
+    // 判断info填写内容
+    function cge(){
+        if(inp.is(':checked')){
+            info.text(on);
         }else{
-            $(this).addClass('zui-select-open');
-        };
-    });
+            info.text(off);
+        }
+    };
+    // 初始化
+    cge();
+    // 绑定change
+    inp.change(cge);
+});
 
-    // select option选定
-    $('.zui-option-list li').on('click',function(){
-        $(this).siblings().removeClass('zui-option');
-        $(this).addClass('zui-option');
-        $(this).parent().siblings('.zui-input').val($(this).text());
-    });
-
-    // body 点击 关闭一些窗口
-    $('body').on('click',()=>$('.zui-select').removeClass('zui-select-open'));
-
-    // 开关按钮
-    $('.zui-switch').each(function(){
-        var inp=$(this).find('.zui-switch-input');
-        var txt=inp.attr('zui-info').split('|');
-        var on=txt[0];
-        var off=txt[1];
-        var info=$(this).find('.zui-switch-info');
-        // 判断info填写内容
-        function cge(){
-            if(inp.is(':checked')){
-                info.text(on);
-            }else{
-                info.text(off);
-            }
-        };
-        // 初始化
-        cge();
-        // 绑定change
-        inp.change(cge);
-    })
-})
-
+});// zui-end
 
 
 

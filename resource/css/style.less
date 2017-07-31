@@ -1,5 +1,28 @@
+// 自定义颜色
+@frist:#0656b1;
+@blue:#66CCFF;
+@blue-hover:#77DDFF;
+@blue-active:#55BBEE;
 
-@color1:#093163;
+@green:#66CC99;
+@green-hover:#77DDAA;
+@green-active:#55BB88;
+
+@yellow:#FF9900;
+@yellow-hover:#FFAA11;
+@yellow-active:#EE8800;
+
+@red:#FF6666;
+@red-hover:#FF7777;
+@red-active:#EE5555;
+
+@gray1:#333;
+@gray2:#666;
+@gray3:#999;
+@gray4:#ddd;
+@gray5:#f5f5f5;
+@gray6:#fafafa;
+@white:#fff;
 
 html, body{
     width: 100%;
@@ -10,15 +33,47 @@ html, body{
     width: 100%;
     height: 50px;
     line-height: 50px;
+    padding: 0 20px;
     position: fixed;
     left: 0;
     top: 0;
     z-index: 9999;
-    background: @color1;
+    background: @frist;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     .logo{
-        padding: 10px 20px;
+        padding: 10px 0;
         display: inline-block;
+    }
+    .head-bar{
+        a{
+            color: @white;
+            display: inline-block;
+            vertical-align: top;
+            border-radius: 0;
+            margin-left: 10px;
+        }
+        a.zui-btn{
+            min-width: 50px;
+            height: 50px;
+            padding: 0 15px;
+        }
+    }
+}
+.head-bar-user,.head-bar-message{
+    background: @frist;
+}
+.head-bar-message{
+    font-size: 24px;
+    position: relative;
+    .head-message-num{
+        position: absolute;
+        font-size: 12px;
+        right: 5px;
+        top: 5px;
+        width: 17px;
+        height: 17px;
+        border-radius: 30px;
+        line-height: 17px;
     }
 }
 
@@ -30,29 +85,46 @@ html, body{
     left: -180px;
     top: 0;
     z-index: 9990;
-    background: rgba(5, 30,60, 0.9);
+    background: @frist;
+    opacity: 0.9;
+    a{
+        display: block;
+        color: @white;
+        font-size: 16px;
+        line-height: 40px;
+        padding: 0 15px;
+    }
+    a:hover,a.on{
+        background: @blue;
+    }
     .z-nav-main{
         a{
-            display: block;
-            color: #fff;
-            font-size: 16px;
-            line-height: 40px;
-            padding: 0 15px;
             i{
                 font-size: 14px;
             }
         }
     }
     .z-nav-sub{
-        display: none;
+        position: absolute;
+        width: 0;
+        height: 100%;
+        top: 0;
+        left: 180px;
+        padding-top: 100px;
+        border-left: 1px solid rgba(255, 255, 255, 0.3);
+        background: @frist;
+        overflow: hidden;
+    }
+    .z-nav-sub.open{
+        width: 180px;
     }
     .z-nav-arrow{
         position: fixed;
         left: 0;
         top: 50%;
         transform: translateY(-50%);
-        color: #fff;
-        background: @color1;
+        color: @white;
+        background: @frist;
         width: 15px;
         height: 100px;
         line-height: 100px;
@@ -69,30 +141,125 @@ html, body{
     }
 }
 .z-wrapper{
-    padding: 65px 15px 15px 15px;
+    padding: 50px 5px 5px;
     width: 100%;
     height: 100%;
-    overflow: hidden;
-    background: #edf1f6;
+    
     position: relative;
     .main-title{
         width: 100%;
         height: 50px;
         line-height: 47px;
+        font-size: 16px;
         overflow: hidden;
-        border-top: 2px solid #b6bdca;
-        border-bottom: 1px solid #eee;
-        background: #fff;
-        padding: 0 15px;
+        border-bottom: 1px solid @gray4;
+        background: @white;
     }
-    .z-main{
+    .z-main-wrap{
         width: 100%;
-        padding: 15px;
-        background: #fff;
-        overflow-y: scroll;
+        height: 100%;
+        background: @white;
+        overflow: auto;
         position: relative;
+        .z-main-tool{
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px auto;
+            background: @gray5;
+            overflow: hidden;
+            border: 1px solid @gray4;
+            .zui-btn{
+                i{
+                     margin-right: 5px;
+                }
+            }
+            .z-input-search{
+                width: 240px;
+            }
+        }
+    }
+}
+.z-page{
+    background: @gray5;
+    border: 1px solid @gray4;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 10px auto;
+    height: 50px;
+    line-height: 30px;
+    span{
+        display: inline-block;
+        margin-right: 10px;
+    }
+    select{
+        width: 50px;
+        line-height: 30px;
+        height: 30px;
+        vertical-align: top;
+    }
+    .z-page-btn{
+        li{
+            display: inline-block;
+            margin-right: 10px;
+            a{
+                display: block;
+                background: @white;
+                padding: 0 15px;
+                border-radius: 4px;
+                border: 1px solid @gray4;
+            }
+        }
+        li.active,li:hover{
+            a{
+                color: @white;
+                background: @blue;
+            }
+        }
     }
 }
 
-
-
+// 弹出层
+.z-layer-wrap{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10001;
+    opacity: 0;
+    background: rgba(0,0,0,0.3);
+    .z-layer-main{
+        position: absolute;
+        top: 100%;
+        left: 15%;
+        width: 70%;
+        height: 90%;
+        background: #fff;
+        border-radius: 8px;
+        overflow: auto;
+        .z-layer-tit{
+            background: @gray4;
+            line-height: 40px;
+            padding: 0 10px;
+            font-size: 16px;
+        }
+        .z-layer-close{
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 0 10px;
+            line-height: 40px;
+            font-size: 24px;
+        }
+        .z-layer-close:hover{
+            color: red;
+        }
+        .z-layer-context{
+            padding: 10px;
+        }
+    }
+}
+.z-layer-wrap.open{
+    opacity: 1;
+    .z-layer-main{ top: 5%;}
+}

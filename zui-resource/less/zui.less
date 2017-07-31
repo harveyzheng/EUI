@@ -1,5 +1,5 @@
 // 样式重置
-*{ -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; padding: 0; margin: 0;}
+*{ box-sizing: border-box; padding: 0; margin: 0;}
 html, body{ width: 100%; color: @gray1; background: @white; line-height: 1; font-size: 14px; font-family: 'Arial','Microsoft YaHei';}
 :focus{ outline: none;}
 ol, ul{ list-style: none;}
@@ -10,9 +10,13 @@ a, a:active, a:hover{ outline: 0; text-decoration: none; color: @gray1;}
 blockquote, q{ quotes: none;}
 article, aside, details, figcaption, figure, footer, header, nav, section, summary{ display: block;}
 b, i, em , ins, strong, small, big{ font-weight: normal; font-style: normal; text-decoration: none;}
-input, button{ -webkit-appearance: none;}
+.zui-btn, .zui-ipt, .zui-radio{ -webkit-appearance: none;}
 select, input, button{ vertical-align: middle;}
 button, select{ cursor: pointer;}
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder{
+    color: @gray3;
+}
 
 // 滚动条美化
 ::-webkit-scrollbar{ width: 7px; height: 7px;}
@@ -42,21 +46,21 @@ button, select{ cursor: pointer;}
 .index300{z-index: 300;}
 
 // 自定义颜色
-@blue:#1e9fff;
-@blue-hover:#58B7FF;
-@blue-active:#1D8CE0;
+@blue:#66CCFF;
+@blue-hover:#77DDFF;
+@blue-active:#55BBEE;
 
-@green:#5fb878;
-@green-hover:#70d08d;
-@green-active:#4ca763;
+@green:#66CC99;
+@green-hover:#77DDAA;
+@green-active:#55BB88;
 
-@yellow:#f5b51e;
-@yellow-hover:#f9cb33;
-@yellow-active:#f39a19;
+@yellow:#FF9900;
+@yellow-hover:#FFAA11;
+@yellow-active:#EE8800;
 
-@red:#FF4949;
-@red-hover:#ff7171;
-@red-active:#ff3636;
+@red:#FF6666;
+@red-hover:#FF7777;
+@red-active:#EE5555;
 
 @gray1:#333;
 @gray2:#666;
@@ -66,79 +70,121 @@ button, select{ cursor: pointer;}
 @gray6:#fafafa;
 @white:#fff;
 
-// 基本类
-.zui-float-left, *[zui-float=left]{ float: left !important;}
-.zui-float-right, *[zui-float=right]{ float: right !important;}
-.zui-txt-left, *[zui-txt=left]{ text-align: left !important;}
-.zui-txt-center, *[zui-txt=center]{ text-align: center !important;}
-.zui-txt-right, *[zui-txt=right]{ text-align: right !important;}
+// 基本属性类
+.zui-float-left, [zui^="pull-left"], [zui*=",pull-left"]{ float: left !important;}
+.zui-float-right, [zui^="pull-right"], [zui*=",pull-right"]{ float: right !important;}
+.zui-txt-left, [zui^="txt-left"], [zui*=",txt-left"]{ text-align: left !important;}
+.zui-txt-center, [zui^="txt-center"], [zui*=",txt-center"]{ text-align: center !important;}
+.zui-txt-right, [zui^="txt-right"], [zui*=",txt-right"]{ text-align: right !important;}
 .zui-clearfix{ display:block; clear:both;}
 .zui-clearfix:after{ content:"."; display:block; height:0; clear:both; visibility:hidden;}
 
 // 动画延时
-.zui-ani-no, *[zui-ani=no]{ transition: all 0s;}
-.zui-ani-fast, *[zui-ani=fast]{ transition: all 0.2s;}
-.zui-ani-normal, *[zui-ani=normal]{ transition: all 0.4s;}
-.zui-ani-slow, *[zui-ani=slow]{ transition: all 0.8s;}
+.zui-ani-no, [zui^="anim-no"], [zui*=",anim-no"]{ transition: all 0s;}
+.zui-ani-fast, [zui^="anim-fast"], [zui*=",anim-fast"]{ transition: all 0.2s;}
+.zui-ani-normal, [zui^="anim-normal"], [zui*=",anim-normal"]{ transition: all 0.4s;}
+.zui-ani-slow, [zui^="anim-slow"], [zui*=",anim-slow"]{ transition: all 0.8s;}
 
-// button按钮 icon 设置
-.zui-btn:hover, .zui-btn:active, .zui-bg-blue, .zui-bg-green, .zui-bg-yellow, .zui-bg-red, *[zui-bg=blue], *[zui-bg=green], *[zui-bg=yellow], *[zui-bg=red]{
-    color: @white;
-}
-.zui-size-small [class^="zui-icon-"]{
-    margin-right: 3px;
-    font-size: 14px;
-}
-.zui-size-medium [class^="zui-icon-"]{
-    margin-right: 5px;
-    font-size: 16px;
-}
-.zui-size-big [class^="zui-icon-"]{
-    margin-right: 7px;
-    font-size: 20px;
-}
+// h1-h6
+.zui-h1{ font-size: 40px; line-height: 50px;}
+.zui-h2{ font-size: 36px; line-height: 44px;}
+.zui-h3{ font-size: 32px; line-height: 38px;}
+.zui-h4{ font-size: 28px; line-height: 32px;}
+.zui-h5{ font-size: 24px; line-height: 26px;}
+.zui-h6{ font-size: 20px; line-height: 20px;}
 
 // button样式、input样式、背景样式
-.zui-bg-blue,*[zui-bg=blue]{ background: @blue;}
-.zui-bg-blue.zui-btn:hover,.zui-btn[zui-bg=blue]:hover{ background: @blue-hover;}
-.zui-bg-blue.zui-btn:active,.zui-btn[zui-bg=blue]:active{ background: @blue-active;}
+// 默认按钮
+.zui-btn{
+    display: inline-block; 
+    border-radius: 4px; 
+    .zui-txt-center; 
+    white-space: nowrap; 
+    background: @white; 
+    color: @gray1; 
+    border: 1px solid @gray4;
+}
+.zui-btn:hover{ color: @blue; border-color: @blue;}
+.zui-btn:active{ color: @blue-active; border-color: @blue-active;}
 
-.zui-bg-green,*[zui-bg=green]{ background: @green;}
-.zui-bg-green.zui-btn:hover,.zui-btn[zui-bg=green]:hover{ background: @green-hover;}
-.zui-bg-green.zui-btn:active,.zui-btn[zui-bg=green]:active{ background: @green-active;}
+.zui-btn[zui^="blue"], .zui-btn[zui^="green"], .zui-btn[zui^="yellow"], .zui-btn[zui^="red"],
+.zui-btn[zui*=",blue"], .zui-btn[zui*=",green"], .zui-btn[zui*=",yellow"], .zui-btn[zui*=",red"]{
+    border: none;
+}
 
-.zui-bg-yellow,*[zui-bg=yellow]{ background: @yellow;}
-.zui-bg-yellow.zui-btn:hover,.zui-btn[zui-bg=yellow]:hover{ background: @yellow-hover;}
-.zui-bg-yellow.zui-btn:active,.zui-btn[zui-bg=yellow]:active{ background: @yellow-active;}
+.zui-bg-blue, [zui^="blue"], [zui*=",blue"]{ background: @blue;}
+.zui-btn[zui^=blue]:hover, .zui-btn[zui*=",blue"]:hover{ background: @blue-hover;}
+.zui-btn[zui^=blue]:active, .zui-btn[zui*=",blue"]:active{ background: @blue-active;}
 
-.zui-bg-red,*[zui-bg=red]{ background: @red;}
-.zui-bg-red.zui-btn:hover,.zui-btn[zui-bg=red]:hover{ background: @red-hover;}
-.zui-bg-red.zui-btn:active,.zui-btn[zui-bg=red]:active{ background: @red-active;}
+.zui-bg-green, [zui^="green"],[zui*=",green"]{ background: @green;}
+.zui-btn[zui^="green"]:hover, .zui-btn[zui*=",green"]:hover{ background: @green-hover;}
+.zui-btn[zui^="green"]:active, .zui-btn[zui*=",green"]:active{ background: @green-active;}
 
-.zui-bg-default.zui-btn{ background: @white; color: @gray1; border: 1px solid @gray4;}
-.zui-bg-default.zui-btn:hover{ color: @blue; border-color: @blue;}
-.zui-bg-default.zui-btn:active{ color: @blue-active; border-color: @blue-active;}
+.zui-bg-yellow, [zui^="yellow"],[zui*=",yellow"]{ background: @yellow;}
+.zui-btn[zui^="yellow"]:hover, .zui-btn[zui*=",yellow"]:hover{ background: @yellow-hover;}
+.zui-btn[zui^="yellow"]:active, .zui-btn[zui*=",yellow"]:active{ background: @yellow-active;}
 
-.zui-bg-disabled.zui-btn{ cursor: not-allowed; border: 1px solid @gray4; background: @gray5;}
-.zui-bg-disabled.zui-btn:hover,.zui-bg-disabled.zui-btn:active{ color: @gray1; border: 1px solid @gray4;}
+.zui-bg-red, [zui^="red"],[zui*=",red"]{ background: @red;}
+.zui-btn[zui^="red"]:hover, .zui-btn[zui*=",red"]:hover{ background: @red-hover;}
+.zui-btn[zui^="red"]:active, .zui-btn[zui*=",red"]:active{ background: @red-active;}
 
-.zui-size-small,*[zui-size=small]{ padding: 0 10px; height: 28px; line-height: 26px; font-size: 12px;}
-.zui-size-medium,*[zui-size=medium]{ padding: 0 15px; height: 38px; line-height: 36px; font-size: 14px;}
-.zui-size-big,*[zui-size=big]{ padding: 0 30px; height: 44px; line-height: 42px; font-size: 16px;}
+.zui-ipt[disabled],.zui-btn[disabled]{ cursor: not-allowed; border: 1px solid @gray4; background: @gray5;}
+.zui-btn[disabled]:hover, .zui-btn[disabled]:active{ color: @gray1; border: 1px solid @gray4;}
 
-.zui-input{ padding: 0; text-indent: 10px; border: 1px solid @gray4; border-radius: 5px; color: @gray1;}
-.zui-input[disabled]{ cursor: not-allowed; background: @gray5;}
-.zui-btn{ display: inline-block; border-radius: 4px; .zui-txt-center; white-space: nowrap;}
+// 按钮字体白色
+.zui-bg-blue, .zui-bg-green, .zui-bg-yellow, .zui-bg-red,
+[zui^="blue"], [zui*=",blue"],
+[zui^="green"], [zui*=",green"],
+[zui^="yellow"], [zui*=",yellow"],
+[zui^="red"], [zui*=",red"]{
+    color: @white !important;
+}
 
-.zui-radius{ border-radius: 300px;}
+// input初始化
+.zui-ipt{ 
+    padding: 0; 
+    text-indent: 10px; 
+    border: 1px solid @gray4; 
+    border-radius: 5px; 
+    color: @gray1;
+}
 
-.zui-btn+.zui-btn, .zui-input+.zui-btn, .zui-input+.zui-input, .zui-radio-label+.zui-radio-label, .zui-checkbox-label+.zui-checkbox-label{ margin-left: 10px;}
+// 大小
+.zui-size-sm, [zui^="sm"], [zui*=",sm"]{ 
+    padding: 0 10px; 
+    height: 28px; 
+    line-height: 26px; 
+    font-size: 12px;
+}
+.zui-size-md, [zui^="md"], [zui*=",md"]{ 
+    padding: 0 15px; 
+    height: 38px; 
+    line-height: 36px; 
+    font-size: 14px;
+}
+.zui-size-lg, [zui^="lg"], [zui*=",lg"]{ 
+    padding: 0 30px; 
+    height: 44px; 
+    line-height: 42px; 
+    font-size: 16px;
+}
+
+
+
+
+.zui-radius, [zui^="radius"], [zui*=",radius"]{ 
+    border-radius: 300px;
+}
+
+.zui-btn+.zui-btn, .zui-ipt+.zui-btn, .zui-ipt+.zui-ipt, .zui-radio-label+.zui-radio-label, .zui-checkbox-label+.zui-checkbox-label{ 
+    margin-left: 10px;
+}
 
 // select组件
 .zui-select{
     display: inline-block;
     position: relative;
-    .zui-input{
+    .zui-ipt{
         cursor: pointer;
     }
     .zui-option-list{
@@ -167,9 +213,21 @@ button, select{ cursor: pointer;}
             .zui-bg-blue;
         }
     }
-    .zui-size-small + i + .zui-option-list, input[zui-size=small] + i + .zui-option-list{ top: 33px; line-height: 30px; font-size: 12px;}
-    .zui-size-medium + i + .zui-option-list, input[zui-size=medium] + i + .zui-option-list{ top: 40px; line-height: 40px; font-size: 14px;}
-    .zui-size-big + i + .zui-option-list, input[zui-size=big] + i + .zui-option-list{ top: 47px; line-height: 44px; font-size: 14px;}
+    .zui-size-sm + i + .zui-option-list, input[zui-size=small] + i + .zui-option-list{ 
+        top: 33px; 
+        line-height: 30px; 
+        font-size: 12px;
+    }
+    .zui-size-md + i + .zui-option-list, input[zui-size=medium] + i + .zui-option-list{ 
+        top: 40px; 
+        line-height: 40px; 
+        font-size: 14px;
+    }
+    .zui-size-lg + i + .zui-option-list, input[zui-size=big] + i + .zui-option-list{ 
+        top: 47px; 
+        line-height: 44px; 
+        font-size: 14px;
+    }
     .zui-select-arrow{
         content: '';
         .zui-ani-fast;
@@ -179,17 +237,18 @@ button, select{ cursor: pointer;}
         border-left: 6px solid transparent;
         border-right: 6px solid transparent;
     }
-    .zui-size-small + .zui-select-arrow, input[zui-size=small] + .zui-select-arrow{
+    .zui-size-sm + .zui-select-arrow, input[zui-size=small] + .zui-select-arrow{
         top: 11px;
     }
-    .zui-size-medium + .zui-select-arrow, input[zui-size=medium] + .zui-select-arrow{
+    .zui-size-md + .zui-select-arrow, input[zui-size=medium] + .zui-select-arrow{
         top: 15px;
     }
-    .zui-size-big + .zui-select-arrow, input[zui-size=big] + .zui-select-arrow{
+    .zui-size-lg + .zui-select-arrow, input[zui-size=big] + .zui-select-arrow{
         top: 18px;
         border-width: 8px;
     }
 }
+
 // 展开select
 .zui-select.zui-select-open{
     .zui-option-list{
@@ -207,15 +266,30 @@ button, select{ cursor: pointer;}
 // radio组件 和 checkbox组件
 .zui-radio, .zui-checkbox{
     display: inline-block;
-    .zui-radio-label, .zui-checkbox-label{ display: inline-block; line-height: 30px; cursor: pointer;}
-    .zui-radio-input, .zui-checkbox-input{ display: none;}
+    .zui-radio-label, .zui-checkbox-label{ 
+        display: inline-block; 
+        line-height: 30px; cursor: pointer;
+    }
+    .zui-radio-input, .zui-checkbox-input{ 
+        display: none;
+    }
     // icon
-    .zui-icon-radio,.zui-icon-checkbox{ color: @gray3; vertical-align: top;}
-    .zui-radio-input + .zui-icon-radio:before{ content: "\e60b";}
-    .zui-radio-input:checked + .zui-icon-radio:before{ content: "\e62a"; color: @blue;}
-
-    .zui-checkbox-input + .zui-icon-checkbox:before{ content: "\e6e4";}
-    .zui-checkbox-input:checked + .zui-icon-checkbox:before{ content: "\e6e5"; color: @blue;}
+    .zui-icon-radio,.zui-icon-checkbox{ 
+        color: @gray3; 
+        vertical-align: top;
+    }
+    .zui-radio-input + .zui-icon-radio:before{ 
+        content: "\e60b";
+    }
+    .zui-radio-input:checked + .zui-icon-radio:before{ 
+        content: "\e62a"; color: @blue;
+    }
+    .zui-checkbox-input + .zui-icon-checkbox:before{ 
+        content: "\e6e4";
+    }
+    .zui-checkbox-input:checked + .zui-icon-checkbox:before{ 
+        content: "\e6e5"; color: @blue;
+    }
 }
 
 // zui-switch开关按钮组件
@@ -225,7 +299,9 @@ button, select{ cursor: pointer;}
     .zui-switch-label{
         cursor: pointer;
         user-select: none;
-        .zui-switch-input{ display: none;}
+        .zui-switch-input{ 
+            display: none;
+        }
         .zui-switch-view{
             .zui-ani-fast;
             position: relative;
@@ -444,7 +520,7 @@ button, select{ cursor: pointer;}
 }
 
 .zui-list[zui-style=arrow-right], .zui-list[zui-style=arrow-left]{
-    li:before{
+    ::before{
         content: "\e600";
         font-family:"iconfont" !important;
         font-size: 14px;
