@@ -72,13 +72,70 @@
         <button class="zui-btn" zui="md,radius">按钮</button>
         <button class="zui-btn" zui="lg,radius">按钮</button>
 
-        <p class="zui-h6">radio</p>
-        <input class="zui-radio" type="radio" name="sex" value="男" title="男" checked>
-        <input class="zui-radio" type="radio" name="sex" value="女" title="女">
+        <p class="zui-h6">表单</p>
+        <div style="border:1px solid #ddd">
+            <form class="zui-form">
+                <div class="zui-form-main">
+                    <label class="zui-form-label">输入框</label>
+                    <div class="zui-form-item">
+                        <input class="zui-ipt" zui="md" type="text" placeholder="写点什么吧...">
+                    </div>
+                </div>
+                <div class="zui-form-main">
+                    <label class="zui-form-label">密码框</label>
+                    <div class="zui-form-item">
+                        <input class="zui-ipt" style="width:300px;" zui="md" type="password">
+                        <span class="zui-ipt-info">* 请输入密码</span>
+                    </div>
+                </div>
+                <div class="zui-form-main">
+                    <label class="zui-form-label">单选框</label>
+                    <div class="zui-form-item">
+                        <input class="zui-radio" type="radio" name="sex" value="男" title="男" checked>
+                        <input class="zui-radio" type="radio" name="sex" value="女" title="女">
+                    </div>
+                </div>
+                <div class="zui-form-main">
+                    <label class="zui-form-label">复选框</label>
+                    <div class="zui-form-item">
+                        <input class="zui-checkbox" type="checkbox" name="car1" value="1" title="飞机" checked>
+                        <input class="zui-checkbox" type="checkbox" name="car2" value="2" title="火车">
+                        <input class="zui-checkbox" type="checkbox" name="car3" value="3" title="公交">
+                        <input class="zui-checkbox" type="checkbox" name="car4" value="4" title="地铁">
+                        <input class="zui-checkbox" type="checkbox" name="car5" value="5" title="火箭">
+                    </div>
+                </div>
+                <!-- <div class="zui-form-main">
+                    <label class="zui-form-label">开关按钮</label>
+                    <div class="zui-form-item">
+                         <input class="zui-switch" zui="开|关" type="checkbox"> 
+                    </div>
+                </div> -->
+            </form>
+            
+        </div>
     </div>
     
+
+
+
+
+
+
+
+
+
+<input type="checkbox" name="car3" value="3" title="公交" >
+<input type="checkbox" name="car4" value="4" title="地铁">
+<input type="checkbox" name="car5" value="5" title="火箭">
+
+
+
+
+
+<!-- 
     <div class="zui-select" style="margin:10px;">
-        <input class="zui-input" zui-size="small" type="text" placeholder="请选择" readonly>
+        <input class="zui-input" zui="sm" type="text" placeholder="请选择" readonly>
         <i class="zui-select-arrow"></i>
         <ul class="zui-option-list">
             <li zui-val="你好">你好111</li>
@@ -98,20 +155,6 @@
             <li zui-val="你好">你好666</li>
         </ul>
     </div>
-
-    <div class="zui-radio">
-        <label class="zui-radio-label">
-            <input class="zui-radio-input" type="radio" name="sex2" checked value="女">
-            <i class="zui-icon-radio"></i>
-            <span>女</span>
-        </label>
-        <label class="zui-radio-label">
-            <input class="zui-radio-input" type="radio" name="sex2" value="男">
-            <i class="zui-icon-radio"></i>
-            <span>男</span>
-        </label>
-    </div>
-    
     <div class="zui-checkbox">
         <label class="zui-checkbox-label">
             <input class="zui-checkbox-input" type="checkbox">
@@ -229,6 +272,6 @@
             <li>123</li>
             <li>123</li>
         </ul>
-    </div>
+    </div> -->
     </body>
 </html>

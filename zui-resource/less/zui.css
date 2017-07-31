@@ -331,13 +331,6 @@ textarea::-webkit-input-placeholder {
 [zui*=",red"] {
   color: #fff !important;
 }
-.zui-ipt {
-  padding: 0;
-  text-indent: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  color: #333;
-}
 .zui-size-sm,
 [zui^="sm"],
 [zui*=",sm"] {
@@ -361,6 +354,13 @@ textarea::-webkit-input-placeholder {
   height: 44px;
   line-height: 42px;
   font-size: 16px;
+}
+.zui-ipt {
+  padding: 0;
+  text-indent: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  color: #333;
 }
 .zui-radius,
 [zui^="radius"],
@@ -459,48 +459,73 @@ textarea::-webkit-input-placeholder {
 .zui-select.zui-select-open .zui-select-arrow {
   transform: rotate(180deg);
 }
+.zui-form {
+  display: block;
+  position: relative;
+  padding: 20px;
+  line-height: 38px;
+}
+.zui-form .zui-form-main {
+  margin-bottom: 15px;
+  clear: both;
+}
+.zui-form .zui-form-main .zui-form-label {
+  width: 120px;
+  padding: 0 15px;
+  text-align: right;
+  float: left;
+}
+.zui-form .zui-form-main .zui-form-item {
+  margin: 0 120px;
+}
+.zui-form .zui-form-main .zui-form-item .zui-ipt {
+  width: 100%;
+}
+.zui-form .zui-form-main .zui-form-item .zui-ipt-info {
+  color: #999;
+  margin-left: 10px;
+}
 .zui-radio,
 .zui-checkbox {
-  display: inline-block;
-}
-.zui-radio .zui-radio-label,
-.zui-checkbox .zui-radio-label,
-.zui-radio .zui-checkbox-label,
-.zui-checkbox .zui-checkbox-label {
-  display: inline-block;
-  line-height: 30px;
-  cursor: pointer;
-}
-.zui-radio .zui-radio-input,
-.zui-checkbox .zui-radio-input,
-.zui-radio .zui-checkbox-input,
-.zui-checkbox .zui-checkbox-input {
   display: none;
 }
-.zui-radio .zui-icon-radio,
-.zui-checkbox .zui-icon-radio,
-.zui-radio .zui-icon-checkbox,
-.zui-checkbox .zui-icon-checkbox {
-  color: #999;
+.zui-radio-label,
+.zui-checkbox-lalbel {
+  display: inline-block;
+  cursor: pointer;
+}
+.zui-radio-label span,
+.zui-checkbox-lalbel span {
+  margin-left: 7px;
+}
+.zui-radio-label i.zui-icon-radio,
+.zui-checkbox-lalbel i.zui-icon-radio,
+.zui-radio-label i.zui-icon-checkbox,
+.zui-checkbox-lalbel i.zui-icon-checkbox {
+  color: #ddd;
   vertical-align: top;
 }
-.zui-radio .zui-radio-input + .zui-icon-radio:before,
-.zui-checkbox .zui-radio-input + .zui-icon-radio:before {
+.zui-radio-label .zui-radio + i.zui-icon-radio:before,
+.zui-checkbox-lalbel .zui-radio + i.zui-icon-radio:before {
   content: "\e60b";
 }
-.zui-radio .zui-radio-input:checked + .zui-icon-radio:before,
-.zui-checkbox .zui-radio-input:checked + .zui-icon-radio:before {
+.zui-radio-label .zui-radio:checked + i.zui-icon-radio:before,
+.zui-checkbox-lalbel .zui-radio:checked + i.zui-icon-radio:before {
   content: "\e62a";
   color: #66CCFF;
 }
-.zui-radio .zui-checkbox-input + .zui-icon-checkbox:before,
-.zui-checkbox .zui-checkbox-input + .zui-icon-checkbox:before {
+.zui-radio-label .zui-checkbox + i.zui-icon-checkbox:before,
+.zui-checkbox-lalbel .zui-checkbox + i.zui-icon-checkbox:before {
   content: "\e6e4";
 }
-.zui-radio .zui-checkbox-input:checked + .zui-icon-checkbox:before,
-.zui-checkbox .zui-checkbox-input:checked + .zui-icon-checkbox:before {
+.zui-radio-label .zui-checkbox:checked + i.zui-icon-checkbox:before,
+.zui-checkbox-lalbel .zui-checkbox:checked + i.zui-icon-checkbox:before {
   content: "\e6e5";
   color: #66CCFF;
+}
+.zui-radio + .zui-radio,
+.zui-checkbox + .zui-checkbox {
+  margin-left: 20px;
 }
 .zui-switch {
   display: inline-block;

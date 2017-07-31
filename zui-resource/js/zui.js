@@ -95,16 +95,43 @@ Zui.prototype.message=data=>{
     return false;
 };
 
-// radio美化
-Zui.prototype.radio=el=>{
-    
+// radio处理
+Zui.prototype.marquee=el=>{
+    el.each((i,n)=>{
+        let $n=$(n);
+        let dom;
+        let nm=$n.attr('name')||'';
+        let ckd=$n.attr('checked')||'';
+        let v=$n.val()||'';
+        let tit=$n.attr('title')||'无标题';
+        if($n.hasClass('zui-radio')){
+            // zui-radio
+            dom=
+            '<label class="zui-radio-label">'+
+                '<input class="zui-radio" type="radio" name="'+nm+'"'+ckd+' value="'+v+'">'+
+                '<i class="zui-icon-radio"></i>'+
+                '<span>'+tit+'</span>'+
+            '</label>';
+        }else{
+            // zui-chacked
+            dom=
+            '<label class="zui-checkbox-label">'+
+                '<input class="zui-checkbox" name="'+nm+'"'+ckd+' value="'+v+'">'+
+                '<i class="zui-icon-checkbox"></i>'+
+                '<span>'+tit+'</span>'+
+            '</label>';
+        };
+        $n.replaceWith(dom);
+    });
 };
 
 // 实例化Zui
 var zui=new Zui();
 
-// radio绑定
-zui.radio($('.zui-radio'));
+// radio处理
+zui.marquee($('.zui-radio'));
+// checkbox处理
+zui.marquee($('.zui-checkbox'));
 
 // select下拉事件绑定
 $('.zui-select').on('click',function(event){
