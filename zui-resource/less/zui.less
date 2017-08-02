@@ -2,16 +2,15 @@
 *{ box-sizing: border-box; padding: 0; margin: 0;}
 html, body{ width: 100%; color: @black; background: @white; line-height: 1; font-size: 14px; font-family: 'Arial','Microsoft YaHei';}
 :focus{ outline: none;}
-ol, ul{ list-style: none;}
-h1, h2, h3, h4, h5, h6{ font-size: 20px; font-weight: normal; text-decoration: none;}
+ul{ list-style: none;}
+h1, h2, h3, h4, h5, h6{ font-weight: normal;}
 table{ border-collapse: collapse; border-spacing: 0;}
-a img, img, button{ border:0;}
-a, a:active, a:hover{ outline: 0; text-decoration: none; color: @black; cursor: pointer;}
-blockquote, q{ quotes: none;}
+a img, img, button{ border:none;}
+a, a:active, a:hover{ outline: none; text-decoration: none; color: @black; cursor: pointer;}
 article, aside, details, figcaption, figure, footer, header, nav, section, summary{ display: block;}
-b, i, em , ins, strong, small, big{ font-weight: normal; font-style: normal; text-decoration: none;}
-.zui-btn, .zui-ipt, .zui-radio{ -webkit-appearance: none;}
-select, input, button{ vertical-align: middle;}
+ins{ text-decoration: none;}
+input[class*=".zui-"]{ -webkit-appearance: none;}
+input[class*=".zui-"], button[class*=".zui-"]{ vertical-align: middle;}
 button, select{ cursor: pointer;}
 
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder{
@@ -86,6 +85,15 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-ani-normal, [zui*="anim-normal"]{ transition: all 0.4s;}
 .zui-ani-slow, [zui*="anim-slow"]{ transition: all 0.8s;}
 
+// 无边框
+.zui-nobor, [zui*="nobor"]{ border: none !important;}
+
+// 1px边框
+.zui-border, [zui*="border"]{ border: 1px solid @gray3 !important;}
+
+// 阴影
+.zui-shadow, [zui*="shadow"]{ box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);}
+
 // h1-h6
 .zui-h1, h1{ font-size: 40px; line-height: 50px;}
 .zui-h2, h2{ font-size: 36px; line-height: 44px;}
@@ -93,6 +101,38 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-h4, h4{ font-size: 28px; line-height: 32px;}
 .zui-h5, h5{ font-size: 24px; line-height: 26px;}
 .zui-h6, h6{ font-size: 20px; line-height: 20px;}
+
+// 分割线
+.zui-parting{
+    color: @gray2;
+    clear: both;
+    position: relative;
+    line-height: 38px;
+    padding: 0 15px;
+    span{
+        background: @white;
+        position: relative;
+        padding: 0 10px;
+        .index1;
+    }
+}
+.zui-parting:before{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 0;
+    left: 0;
+    top: 50%;
+    border-bottom: 1px solid @gray3;
+}
+.zui-parting[zui*="sm"]{
+    line-height: 28px;
+}
+.zui-parting[zui*="lg"]{
+    line-height: 44px;
+}
+
+
 
 // button样式、input样式、背景样式
 // 默认按钮
@@ -139,21 +179,6 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     color:@gray2;
     border: 1px solid @gray3; 
     background: @gray4;
-}
-
-// 无边框
-[zui*="nobor"]{
-    border: none !important;
-}
-
-// 1px边框
-[zui*="border"]{
-    border: 1px solid @gray3 !important;
-}
-
-// 阴影
-[zui*="shadow"]{
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 // 按钮字体白色
@@ -210,6 +235,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         cursor: pointer;
         width: 100%;
         vertical-align: top;
+        .zui-ani-fast;
     }
     .zui-option-list{
         width: 100%;
@@ -292,6 +318,9 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 
 // 展开select
 .zui-select-wrap.zui-select-open{
+    .zui-select{
+        border-color: @primary;
+    }
     .zui-option-list{
         .zui-ani-fast;
         height: auto;
@@ -763,3 +792,65 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-col[zui*="fx:5"]{
     flex: 1 1 20%;
 }
+
+.zui-pre{
+    background: @black;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 10px auto;
+    h3{
+        padding: 0 10px;
+        background: @gray1;
+        color: @white;
+        font-size: 16px;
+        line-height: 40px;
+        i{
+            color: @gray2;
+            font-size: 12px;
+        }
+    }
+    .zui-pre-ol{
+        padding: 20px 0;
+        line-height: 28px;
+        color: @gray4;
+        li{
+            list-style: decimal;
+            border-left: 2px solid @primary-active;
+            margin-left: 40px;
+            padding: 0 10px;
+        }
+    }
+}
+
+
+// 文档页面css
+.zjw .wrap{ padding: 100px 20px 20px 240px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

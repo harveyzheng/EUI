@@ -1,27 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title></title>
+        <title>ZUI-文档</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <link rel="stylesheet" href="/zui-resource/less/zui.css">
         <script src="/zui-resource/js/jquery-3.2.1.min.js"></script>
         <script src="/zui-resource/js/zui.js"></script>
-        <style>
-            .wrap{ margin: 20px;}
-            .wrap p.zui-h6{ margin: 30px 0 10px;}
-        </style>
     </head>
-    <body>
+    <body class="zjw">
+    <header>
+        
+    </header>
+    <nav>
+        <dl>
+            <dt>页面元素</dt>
+            <dd><a href="#"></a></dd>
+        </dl>
+    </nav>
     <div class="wrap">
-        <p class="zui-h6">h1-h6</p>
+        <div class="zui-parting" zui="lg"><span>h1~h6</span></div>
         <h1 class="zui-h1">我是h1标签</h1>
         <h2 class="zui-h2">我是h2标签</h2>
         <h3 class="zui-h3">我是h3标签</h3>
         <h4 class="zui-h4">我是h4标签</h4>
         <h5 class="zui-h5">我是h5标签</h5>
         <h6 class="zui-h6">我是h6标签</h6>
-
+        <div class="zui-parting" zui="sm"><span>input输入框</span></div>
+        <div class="zui-parting" zui="md"><span>input输入框</span></div>
+        <div class="zui-parting" zui="lg"><span>input输入框</span></div>
         <p class="zui-h6">普通input</p>
         <input class="zui-ipt" zui="sm" type="text" placeholder="请输入些什么...">
         <input class="zui-ipt" zui="md" type="text" placeholder="请输入些什么...">
@@ -386,6 +393,48 @@
             </div>
         </div>
 
+        <p class="zui-h6">pre标签</p>
+        <pre class="zui-pre">
+            html
+            <ul>
+                <li>你好啊</li>
+                <li>你好啊</li>
+                <li>你好啊</li>
+            </ul>
+        </pre>
+        <pre class="zui-pre">
+            css
+            .p{ color: #fff;}
+            .demo{ width: 100px; height: 100px; background: red; color: blue;}
+            .main{
+                width:200px;
+            }
+        </pre>
+        <pre class="zui-pre">
+            js
+            el.each((i,n)=>{
+                let $n=$(n);
+                // 初始化内容：替换<>，分割成数组
+                let str=$n.html().replace(/</g, "&lt;").replace(/>/g, "&gt;").split("\n");
+                let dom='<ol class="zui-pre-ol">';
+                let sp=0;
+                str.forEach((s,i)=>{
+                    // 空格数量
+                    let spa=s.split(' ').length-1;
+                    // 记录开头空格数量
+                    if(i<1){
+                        sp=spa;
+                        $n.html('<h3>'+s.trim()+'</h3>')
+                    }else{
+                        // 如果开头空格大于等于第一行，截取空格后的内容（删减空格）
+                        if(spa>=sp) s=s.substring(sp,s.length-1);
+                        if(i!=str.length-1) dom+='<li>'+s+'</li>';
+                    };
+                });
+                dom+='</ol>';
+                $n.append(dom);
+            });
+        </pre>
     </div>
     </body>
 </html>

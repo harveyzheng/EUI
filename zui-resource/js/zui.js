@@ -267,6 +267,32 @@ Zui.prototype.tabcut=data=>{
 
 }
 
+// pre编辑器
+Zui.prototype.precode=el=>{
+    el.each((i,n)=>{
+        let $n=$(n);
+        // 初始化内容：替换<>，分割成数组
+        let str=$n.html().replace(/</g, "&lt;").replace(/>/g, "&gt;").split("\n");
+        let dom='<ol class="zui-pre-ol">';
+        let sp=0;
+        str.forEach((s,i)=>{
+            // 空格数量
+            let spa=s.split(' ').length-1;
+            // 记录开头空格数量
+            if(i<1){
+                sp=spa;
+                $n.html('<h3>'+s.trim()+'<i zui="pull-right">www.zjw7.com</i></h3>')
+            }else{
+                // 如果开头空格大于等于第一行，截取空格后的内容（删减空格）
+                if(spa>=sp) s=s.substring(sp,s.length);
+                if(i!=str.length-1) dom+='<li>'+s+'</li>';
+            };
+        });
+        dom+='</ol>';
+        $n.append(dom);
+    });
+}
+
 // 实例化Zui
 var zui=new Zui();
 window.onload=function(){
@@ -289,7 +315,6 @@ $('.zui-switch').each(function(){
     let that=$(this);
     // 判断info填写内容
     function cge(){
-        console.log(1)
         if(that.is(':checked')){
             info.text(on);
         }else{
@@ -327,6 +352,9 @@ zui.tabcut({
     main:'.zui-tab-main', //内容类，必填
     target:'click' //切换方式，click或hover，默认click
 });
+
+// pre编辑器处理
+zui.precode($('.zui-pre'))
 
 };// zui-end
 
