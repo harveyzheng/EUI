@@ -1,27 +1,28 @@
-// 自定义颜色
+// 颜色
 @frist:#0656b1;
-@blue:#66CCFF;
-@blue-hover:#77DDFF;
-@blue-active:#55BBEE;
 
-@green:#66CC99;
-@green-hover:#77DDAA;
-@green-active:#55BB88;
+@primary:#66CCFF;
+@primary-hover:#77DDFF;
+@primary-active:#55BBEE;
 
-@yellow:#FF9900;
-@yellow-hover:#FFAA11;
-@yellow-active:#EE8800;
+@done:#66CC99;
+@done-hover:#77DDAA;
+@done-active:#55BB88;
 
-@red:#FF6666;
-@red-hover:#FF7777;
-@red-active:#EE5555;
+@warn:#F7B824;
+@warn-hover:#f8c935;
+@warn-active:#e6a713;
 
-@gray1:#333;
-@gray2:#666;
-@gray3:#999;
-@gray4:#ddd;
-@gray5:#f5f5f5;
-@gray6:#fafafa;
+@danger:#FF6666;
+@danger-hover:#FF7777;
+@danger-active:#EE5555;
+
+@black:#1F2D3D;
+@gray1:#475669;
+@gray2:#8492A6;
+@gray3:#d9e0e8;
+@gray4:#f4f6f8;
+@gray5:#F9FAFC;
 @white:#fff;
 
 html, body{
@@ -95,7 +96,7 @@ html, body{
         padding: 0 15px;
     }
     a:hover,a.on{
-        background: @blue;
+        background: @primary;
     }
     .z-nav-main{
         a{
@@ -165,14 +166,9 @@ html, body{
             border-radius: 8px;
             padding: 10px;
             margin: 10px auto;
-            background: @gray5;
+            background: @gray4;
             overflow: hidden;
-            border: 1px solid @gray4;
-            .zui-btn{
-                i{
-                     margin-right: 5px;
-                }
-            }
+            border: 1px solid @gray3;
             .z-input-search{
                 width: 240px;
             }
@@ -180,18 +176,18 @@ html, body{
     }
 }
 .z-page{
-    background: @gray5;
-    border: 1px solid @gray4;
+    background: @gray4;
+    border: 1px solid @gray3;
     padding: 10px;
     border-radius: 8px;
     margin: 10px auto;
-    height: 50px;
+    height: 52px;
     line-height: 30px;
     span{
         display: inline-block;
         margin-right: 10px;
     }
-    select{
+    .zui-select-wrap{
         width: 50px;
         line-height: 30px;
         height: 30px;
@@ -204,15 +200,17 @@ html, body{
             a{
                 display: block;
                 background: @white;
+                line-height: 26px;
                 padding: 0 15px;
                 border-radius: 4px;
-                border: 1px solid @gray4;
+                border: 1px solid @gray3;
             }
         }
         li.active,li:hover{
             a{
                 color: @white;
-                background: @blue;
+                background: @primary;
+                border-color: @primary-active;
             }
         }
     }
@@ -262,4 +260,56 @@ html, body{
 .z-layer-wrap.open{
     opacity: 1;
     .z-layer-main{ top: 5%;}
+}
+
+// 栅格布局
+.z-main-row{
+    border: 1px solid @gray3;
+    border-bottom: none;
+    border-right: none;
+    .zui-col{
+        h6{
+            padding: 10px;
+            background: @gray4;
+            line-height: 30px;
+        }
+        border: 1px solid @gray3;
+        border-left: none;
+        border-top: none;
+        .z-col-wrap{
+            min-width: 320px;
+            padding: 10px;
+            label{
+                text-align: right;
+                width: 100px;
+                float: left;
+                line-height: 38px;
+            }
+            .z-col-item{
+                margin-left: 110px;
+                position: relative;
+                input{
+                    width: 100%;
+                }
+            }
+            .error{
+                position: absolute;
+                left: 0;
+                bottom: -24px;
+                opacity: 0.9;
+                z-index: 11;
+                padding: 7px 10px;
+                border-radius: 4px;
+                font-size: 12px;
+            }
+            .error:after{
+                position: absolute;
+                left: 8px;
+                top: -10px;
+                content: '';
+                border: 5px solid transparent;
+                border-bottom-color: @danger;
+            }
+        }
+    }
 }

@@ -122,7 +122,7 @@ body {
   line-height: 47px;
   font-size: 16px;
   overflow: hidden;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #f4f6f8;
   background: #fff;
 }
 .z-wrapper .z-main-wrap {
@@ -136,30 +136,27 @@ body {
   border-radius: 8px;
   padding: 10px;
   margin: 10px auto;
-  background: #f5f5f5;
+  background: #f4f6f8;
   overflow: hidden;
-  border: 1px solid #ddd;
-}
-.z-wrapper .z-main-wrap .z-main-tool .zui-btn i {
-  margin-right: 5px;
+  border: 1px solid #d9e0e8;
 }
 .z-wrapper .z-main-wrap .z-main-tool .z-input-search {
   width: 240px;
 }
 .z-page {
-  background: #f5f5f5;
-  border: 1px solid #ddd;
+  background: #f4f6f8;
+  border: 1px solid #d9e0e8;
   padding: 10px;
   border-radius: 8px;
   margin: 10px auto;
-  height: 50px;
+  height: 52px;
   line-height: 30px;
 }
 .z-page span {
   display: inline-block;
   margin-right: 10px;
 }
-.z-page select {
+.z-page .zui-select-wrap {
   width: 50px;
   line-height: 30px;
   height: 30px;
@@ -172,14 +169,16 @@ body {
 .z-page .z-page-btn li a {
   display: block;
   background: #fff;
+  line-height: 26px;
   padding: 0 15px;
   border-radius: 4px;
-  border: 1px solid #ddd;
+  border: 1px solid #d9e0e8;
 }
 .z-page .z-page-btn li.active a,
 .z-page .z-page-btn li:hover a {
   color: #fff;
   background: #66CCFF;
+  border-color: #55BBEE;
 }
 .z-layer-wrap {
   position: fixed;
@@ -202,7 +201,7 @@ body {
   overflow: auto;
 }
 .z-layer-wrap .z-layer-main .z-layer-tit {
-  background: #ddd;
+  background: #f4f6f8;
   line-height: 40px;
   padding: 0 10px;
   font-size: 16px;
@@ -226,4 +225,54 @@ body {
 }
 .z-layer-wrap.open .z-layer-main {
   top: 5%;
+}
+.z-main-row {
+  border: 1px solid #d9e0e8;
+  border-bottom: none;
+  border-right: none;
+}
+.z-main-row .zui-col {
+  border: 1px solid #d9e0e8;
+  border-left: none;
+  border-top: none;
+}
+.z-main-row .zui-col h6 {
+  padding: 10px;
+  background: #f4f6f8;
+  line-height: 30px;
+}
+.z-main-row .zui-col .z-col-wrap {
+  min-width: 320px;
+  padding: 10px;
+}
+.z-main-row .zui-col .z-col-wrap label {
+  text-align: right;
+  width: 100px;
+  float: left;
+  line-height: 38px;
+}
+.z-main-row .zui-col .z-col-wrap .z-col-item {
+  margin-left: 110px;
+  position: relative;
+}
+.z-main-row .zui-col .z-col-wrap .z-col-item input {
+  width: 100%;
+}
+.z-main-row .zui-col .z-col-wrap .error {
+  position: absolute;
+  left: 0;
+  bottom: -24px;
+  opacity: 0.9;
+  z-index: 11;
+  padding: 7px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.z-main-row .zui-col .z-col-wrap .error:after {
+  position: absolute;
+  left: 8px;
+  top: -10px;
+  content: '';
+  border: 5px solid transparent;
+  border-bottom-color: #FF6666;
 }
