@@ -5,7 +5,7 @@
 
 var Zui=function(){
     return;
-}
+};
 // 确认窗、询问窗
 Zui.prototype.layer=data=>{
     // 先删除已存在窗口
@@ -199,7 +199,7 @@ Zui.prototype.marquee=el=>{
     return false;
 };
 
-// 处理
+// select处理
 Zui.prototype.select=el=>{
     el.each((i,n)=>{
         let $n=$(n);
@@ -265,7 +265,7 @@ Zui.prototype.tabcut=data=>{
     
 
 
-}
+};
 
 // pre编辑器
 Zui.prototype.precode=el=>{
@@ -285,85 +285,236 @@ Zui.prototype.precode=el=>{
             }else{
                 // 如果开头空格大于等于第一行，截取空格后的内容（删减空格）
                 if(spa>=sp) s=s.substring(sp,s.length);
-                if(i!=str.length-1) dom+='<li>'+s+'</li>';
+                // 判断是否为注释
+                if(s.trim().substring(0,2)=='//' && i!=str.length-1){
+                     dom+='<li class="annotations"><span>'+s+'</span></li>';
+                }else if(i!=str.length-1){
+                     dom+='<li><span>'+s+'</span></li>';
+                }
+                
             };
         });
         dom+='</ol>';
         $n.append(dom);
     });
+};
+
+// uploadimg图片上传
+Zui.prototype.uploadimg=el=>{
+    el.each((i,n)=>{
+        // max值
+        let $n=$(n);
+        let z=$n.attr('zui').split(','); //把属性值分开
+        let dt=z=>{
+            let d={};
+            for(let i in z){
+                // 找到max值
+                if(z[i].indexOf('max-')>=0){
+                    //mm记录max值
+                    d.m=z[i].substring(4,z[i].length);
+                }else if(z[i].indexOf('size-')>=0){
+                    d.s=z[i].substring(5,z[i].length);
+                }else if(z[i].indexOf('compress-')>=0){
+                    d.c=z[i].substring(9,z[i].length);
+                };
+            };
+            return d;
+        };
+        // 绑定change
+        let file=$n.find('.zui-upload-file').attr('alt','');
+        file.off().change(ev=>{
+            // file发生改变执行uploadfile方法,m是max 最大图片张数;
+            zui.uploadfile(ev.target,dt(z));
+        });
+    });
+};
+
+// 图片转base64、压缩
+Zui.prototype.uploadfile=(el,dt)=>{
+    // dt是object, dt.m是max值代表上传图片张数上限, dt.s是size代表, dt,c是compress代表压缩系数
+    let $n=$(el);
+    // 校验一下文件格式
+    let v=$n.val();
+	if(!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG|JPEG)$/.test(v)){
+		$n.val('');
+        zui.prompts('图片类型必须是jpg,png,gif,jpeg中的一种!');
+        return false;
+    };
+
+    // 校验一下文件大小
+    let s=dt.s||2; // 获取配置，默认为2M
+    let sz=s*1024*1024;
+    // 这里要用原生对象 el，不然files[0]报错！！！
+    let f=el.files[0];
+    if(f.size>sz){
+        zui.prompts('图片大小必须小于'+s+'M');
+        return false;
+    };
+
+    // 获取图片blob数据
+    let g=f=>{
+        let u;
+        if (window.createObjectURL!=undefined) { // basic
+            u = window.createObjectURL(f) ;
+        } else if (window.URL!=undefined) { // mozilla(firefox)
+            u = window.URL.createObjectURL(f) ;
+        } else if (window.webkitURL!=undefined) { // webkit or chrome
+            u = window.webkitURL.createObjectURL(f) ;
+        }
+        return u;
+    };
+
+    let blob=g(f);
+    let dom;
+
+    // canvas绘制、转base64、图片压缩
+    let base64Img=(b,ig)=>{
+        // 生成一个img
+        let img = new Image();
+        img.src = b;
+        img.onload = function () {
+            //宽高比例
+            let w = img.width;
+            let h = img.height;
+            let scale = w / h;
+            // 默认图片质量为100%
+            let quality = dt.c/10||1;
+            //生成canvas
+            let canvas = document.createElement('canvas');
+            let ctx = canvas.getContext('2d');
+            // 创建属性节点
+            let anw = document.createAttribute("width");
+            anw.nodeValue = w;
+            let anh = document.createAttribute("height");
+            anh.nodeValue = h;
+            canvas.setAttributeNode(anw);
+            canvas.setAttributeNode(anh);
+            ctx.drawImage(this, 0, 0, w, h);
+            // 到这里就完成了图片的生成，插入页面并且取消loading
+            // quality值越小，所绘制出的图像越模糊
+            let bs64=canvas.toDataURL('image/jpeg',quality);
+            if(tp($n.parents('.zui-upload-item'))=='a'){
+                $p.find('.zui-upload-item-img').last().find('img').attr('src',bs64).removeAttr('zui-load');
+            }else{
+                ig.attr('src',bs64).removeAttr('zui-load');
+            };
+            return;
+        };
+    };
+    // 在这里添加一个框到页面，并且loading状态
+    // 获取父标签
+    let $p=$n.parents('.zui-upload');
+    // 判断是添加图片还是修改
+    let tp=p=>{
+        if(p.hasClass('zui-upload-item-img')){
+            // 标记-修改
+            return 'm';
+        }else{
+            // 标记-添加
+            return 'a';
+        };
+    };
+    if(tp($n.parents('.zui-upload-item'))=='a'){
+        // 添加
+        dom='<div class="zui-upload-item zui-upload-item-img">'+
+                '<div class="zui-upload-item-main">'+
+                    '<i class="zui-icon-search"></i>'+
+                    '<label>修改图片</label>'+
+                    '<input class="zui-upload-file" type="file">'+
+                    '<img class="zui-upload-img" zui-load="loading" src="">'+
+                '</div>'+
+            '</div>';
+        let leng=dt.m-1||99;
+        // 判断数量max了没，到max了删除添加
+        if($p.find('.zui-upload-item-img').length==leng){
+            $n.parents('.zui-upload-item').remove();
+            $p.append(dom);
+        }else{
+            $n.val('');
+            $n.parents('.zui-upload-item').before(dom);
+        };
+        // base64处理
+        base64Img(blob);
+    }else{
+        // 修改
+        let ig=$n.siblings('img');
+        ig.attr({'zui-load':'loading','src':''});
+        // base64处理
+        base64Img(blob,ig);
+    };
+    // 重新绑定一下这组upload
+    zui.uploadimg($n.parents('.zui-upload'));
 }
 
+// init初始化
+Zui.prototype.init=w=>{
+    w.onload=()=>{
+        // radio处理
+        zui.marquee($('.zui-radio'));
+        // checkbox处理
+        zui.marquee($('.zui-checkbox'));
+        // switch处理
+        zui.marquee($('.zui-switch'));
+        // select处理
+        zui.select($('.zui-select'));
+        // 图片上传
+        zui.uploadimg($('.zui-upload'));
+
+        // 开关按钮
+        $('.zui-switch').each(function(){
+            let txt=$(this).attr('zui-info').split('|');
+            let on=txt[0];
+            let off=txt[1];
+            let info=$(this).siblings('div').find('.zui-switch-info');
+            let that=$(this);
+            // 判断info填写内容
+            function cge(){
+                if(that.is(':checked')){
+                    info.text(on);
+                }else{
+                    info.text(off);
+                }
+            };
+            // 初始化
+            cge();
+            // 绑定change
+            $(this).change(cge);
+        });
+
+        // select下拉事件绑定
+        $('.zui-select-wrap').on('click',function(){
+            $('.zui-select-wrap').not(this).removeClass('zui-select-open');
+            $(this).toggleClass('zui-select-open');
+            return false;
+        });
+
+        // select option选定
+        $('.zui-option-list dd').on('click',function(){
+            $(this).addClass('zui-option').siblings().removeClass('zui-option');
+            $(this).parent().siblings('.zui-select').val($(this).text());
+        });
+
+        // body 点击 关闭一些窗口
+        $('body').on('click',()=>{
+            $('.zui-select-wrap').removeClass('zui-select-open');
+        });
+
+        //绑定tab
+        zui.tabcut({
+            wrap:'.zui-tab', //父标签，必填
+            menu:'.zui-tab-menu', //导航类，必填
+            main:'.zui-tab-main', //内容类，必填
+            target:'click' //切换方式，click或hover，默认click
+        });
+
+        // pre编辑器处理
+        zui.precode($('.zui-pre'));
+
+    };// onload
+};
+
 // 实例化Zui
-var zui=new Zui();
-window.onload=function(){
+let zui=new Zui();
 
-// radio处理
-zui.marquee($('.zui-radio'));
-// checkbox处理
-zui.marquee($('.zui-checkbox'));
-// switch处理
-zui.marquee($('.zui-switch'));
-// select处理
-zui.select($('.zui-select'));
-
-// 开关按钮
-$('.zui-switch').each(function(){
-    let txt=$(this).attr('zui-info').split('|');
-    let on=txt[0];
-    let off=txt[1];
-    let info=$(this).siblings('div').find('.zui-switch-info');
-    let that=$(this);
-    // 判断info填写内容
-    function cge(){
-        if(that.is(':checked')){
-            info.text(on);
-        }else{
-            info.text(off);
-        }
-    };
-    // 初始化
-    cge();
-    // 绑定change
-    $(this).change(cge);
-});
-
-// select下拉事件绑定
-$('.zui-select-wrap').on('click',function(ev){
-    $('.zui-select-wrap').not(this).removeClass('zui-select-open');
-    $(this).toggleClass('zui-select-open');
-    return false;
-});
-
-// select option选定
-$('.zui-option-list dd').on('click',function(){
-    $(this).addClass('zui-option').siblings().removeClass('zui-option');
-    $(this).parent().siblings('.zui-select').val($(this).text());
-});
-
-// body 点击 关闭一些窗口
-$('body').on('click',()=>{
-    $('.zui-select-wrap').removeClass('zui-select-open');
-});
-
-//绑定tab
-zui.tabcut({
-    wrap:'.zui-tab', //父标签，必填
-    menu:'.zui-tab-menu', //导航类，必填
-    main:'.zui-tab-main', //内容类，必填
-    target:'click' //切换方式，click或hover，默认click
-});
-
-// pre编辑器处理
-zui.precode($('.zui-pre'))
-
-};// zui-end
-
-
-
-
-
-
-
-
-
-
+// 初始化
+zui.init(window);

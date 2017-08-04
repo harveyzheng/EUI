@@ -25,6 +25,9 @@
 @gray5:#F9FAFC;
 @white:#fff;
 
+.w50{ width: 50px;}
+.w200{ width: 200px;}
+
 html, body{
     width: 100%;
     height: 100%;
@@ -39,11 +42,15 @@ html, body{
     left: 0;
     top: 0;
     z-index: 9999;
+    overflow: hidden;
     background: @frist;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     .logo{
-        padding: 10px 0;
+        margin: 10px 0;
         display: inline-block;
+        width: 182px;
+        height: 30px;
+        background: url(../images/logo.png) no-repeat;
     }
     .head-bar{
         a{
@@ -57,12 +64,41 @@ html, body{
             min-width: 50px;
             height: 50px;
             padding: 0 15px;
+            line-height: 50px;
         }
     }
 }
+.z-header.z-header-hide{
+    top: -60px;
+}
+// .z-header.z-header-small{
+//     width: 560px;
+//     height: 40px;
+//     left: 50%;
+//     margin-left: -280px;
+//     border-bottom-left-radius: 40px;
+//     border-bottom-right-radius: 40px;
+//     .logo{
+//         margin: 5px 0;
+//         width: 185px;
+//         transform: scale(0.9);
+//     }
+//     a.zui-btn{
+//         height: 40px;
+//         line-height: 40px;
+//         background: none;
+//         margin: 0;
+//         padding: 0 5px;
+//     }
+//     a.zui-btn:hover{
+//         background: @primary-active;
+//     }
+// }
+
 .head-bar-user,.head-bar-message{
     background: @frist;
 }
+
 .head-bar-message{
     font-size: 24px;
     position: relative;
@@ -75,6 +111,7 @@ html, body{
         height: 17px;
         border-radius: 30px;
         line-height: 17px;
+        font-style: normal;
     }
 }
 
@@ -142,19 +179,19 @@ html, body{
     }
 }
 .z-wrapper{
-    padding: 50px 5px 5px;
     width: 100%;
     height: 100%;
-    
     position: relative;
-    .main-title{
+    .z-main-title{
         width: 100%;
         height: 50px;
-        line-height: 47px;
+        padding: 0 20px;
+        line-height: 50px;
         font-size: 16px;
         overflow: hidden;
-        border-bottom: 1px solid @gray4;
+        border-bottom: 1px solid @gray3;
         background: @white;
+        margin:50px auto 10px;
     }
     .z-main-wrap{
         width: 100%;
@@ -165,22 +202,38 @@ html, body{
         .z-main-tool{
             border-radius: 8px;
             padding: 10px;
-            margin: 10px auto;
+            margin: 10px;
             background: @gray4;
-            overflow: hidden;
             border: 1px solid @gray3;
+            >[zui*="pull-left"]+[zui*="pull-left"], >[zui*="pull-right"]+[zui*="pull-right"]{
+                margin-top: 10px;
+            }
+            &-item{
+                display: inline-block;
+                vertical-align: middle;
+                em{
+                    margin: 0 5px;
+                    font-style: normal;
+                }
+            }
             .z-input-search{
                 width: 240px;
             }
         }
+        .z-main-context{
+            margin: 0 10px;
+        }
     }
+}
+.z-main-tool-item+.z-main-tool-item{
+    margin-left: 15px;
 }
 .z-page{
     background: @gray4;
     border: 1px solid @gray3;
     padding: 10px;
     border-radius: 8px;
-    margin: 10px auto;
+    margin: 10px;
     height: 52px;
     line-height: 30px;
     span{
@@ -196,7 +249,7 @@ html, body{
     .z-page-btn{
         li{
             display: inline-block;
-            margin-right: 10px;
+            margin-left: 10px;
             a{
                 display: block;
                 background: @white;
@@ -270,6 +323,7 @@ html, body{
     .zui-col{
         h6{
             padding: 10px;
+            font-size: 16px;
             background: @gray4;
             line-height: 30px;
         }
@@ -279,26 +333,40 @@ html, body{
         .z-col-wrap{
             min-width: 320px;
             padding: 10px;
-            label{
+            >label{
                 text-align: right;
-                width: 100px;
+                min-width: 100px;
                 float: left;
-                line-height: 38px;
+                font-size: 14px;
+                line-height: 28px;
+                color: @gray1;
             }
             .z-col-item{
-                margin-left: 110px;
+                margin-left: 100px;
                 position: relative;
-                input{
+                min-height: 28px;
+                font-size: 12px;
+                line-height: 28px;
+                input,.zui-select-wrap{
                     width: 100%;
+                    vertical-align: top;
+                }
+                .zui-checkbox-label{
+                    width: auto;
+                }
+                em{
+                    font-style: normal;
+                    margin-left: 10px;
+                    color: @gray2;
                 }
             }
             .error{
                 position: absolute;
                 left: 0;
-                bottom: -24px;
+                bottom: -28px;
                 opacity: 0.9;
                 z-index: 11;
-                padding: 7px 10px;
+                padding: 0px 10px;
                 border-radius: 4px;
                 font-size: 12px;
             }

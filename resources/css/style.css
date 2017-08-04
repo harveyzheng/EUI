@@ -1,3 +1,9 @@
+.w50 {
+  width: 50px;
+}
+.w200 {
+  width: 200px;
+}
 html,
 body {
   width: 100%;
@@ -13,12 +19,16 @@ body {
   left: 0;
   top: 0;
   z-index: 9999;
+  overflow: hidden;
   background: #0656b1;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 .z-header .logo {
-  padding: 10px 0;
+  margin: 10px 0;
   display: inline-block;
+  width: 182px;
+  height: 30px;
+  background: url(../images/logo.png) no-repeat;
 }
 .z-header .head-bar a {
   color: #fff;
@@ -31,6 +41,10 @@ body {
   min-width: 50px;
   height: 50px;
   padding: 0 15px;
+  line-height: 50px;
+}
+.z-header.z-header-hide {
+  top: -60px;
 }
 .head-bar-user,
 .head-bar-message {
@@ -49,6 +63,7 @@ body {
   height: 17px;
   border-radius: 30px;
   line-height: 17px;
+  font-style: normal;
 }
 .z-nav {
   width: 180px;
@@ -111,19 +126,20 @@ body {
   left: -15px;
 }
 .z-wrapper {
-  padding: 50px 5px 5px;
   width: 100%;
   height: 100%;
   position: relative;
 }
-.z-wrapper .main-title {
+.z-wrapper .z-main-title {
   width: 100%;
   height: 50px;
-  line-height: 47px;
+  padding: 0 20px;
+  line-height: 50px;
   font-size: 16px;
   overflow: hidden;
-  border-bottom: 1px solid #f4f6f8;
+  border-bottom: 1px solid #d9e0e8;
   background: #fff;
+  margin: 50px auto 10px;
 }
 .z-wrapper .z-main-wrap {
   width: 100%;
@@ -135,20 +151,37 @@ body {
 .z-wrapper .z-main-wrap .z-main-tool {
   border-radius: 8px;
   padding: 10px;
-  margin: 10px auto;
+  margin: 10px;
   background: #f4f6f8;
-  overflow: hidden;
   border: 1px solid #d9e0e8;
+}
+.z-wrapper .z-main-wrap .z-main-tool > [zui*="pull-left"] + [zui*="pull-left"],
+.z-wrapper .z-main-wrap .z-main-tool > [zui*="pull-right"] + [zui*="pull-right"] {
+  margin-top: 10px;
+}
+.z-wrapper .z-main-wrap .z-main-tool-item {
+  display: inline-block;
+  vertical-align: middle;
+}
+.z-wrapper .z-main-wrap .z-main-tool-item em {
+  margin: 0 5px;
+  font-style: normal;
 }
 .z-wrapper .z-main-wrap .z-main-tool .z-input-search {
   width: 240px;
+}
+.z-wrapper .z-main-wrap .z-main-context {
+  margin: 0 10px;
+}
+.z-main-tool-item + .z-main-tool-item {
+  margin-left: 15px;
 }
 .z-page {
   background: #f4f6f8;
   border: 1px solid #d9e0e8;
   padding: 10px;
   border-radius: 8px;
-  margin: 10px auto;
+  margin: 10px;
   height: 52px;
   line-height: 30px;
 }
@@ -164,7 +197,7 @@ body {
 }
 .z-page .z-page-btn li {
   display: inline-block;
-  margin-right: 10px;
+  margin-left: 10px;
 }
 .z-page .z-page-btn li a {
   display: block;
@@ -238,6 +271,7 @@ body {
 }
 .z-main-row .zui-col h6 {
   padding: 10px;
+  font-size: 16px;
   background: #f4f6f8;
   line-height: 30px;
 }
@@ -245,26 +279,41 @@ body {
   min-width: 320px;
   padding: 10px;
 }
-.z-main-row .zui-col .z-col-wrap label {
+.z-main-row .zui-col .z-col-wrap > label {
   text-align: right;
-  width: 100px;
+  min-width: 100px;
   float: left;
-  line-height: 38px;
+  font-size: 14px;
+  line-height: 28px;
+  color: #475669;
 }
 .z-main-row .zui-col .z-col-wrap .z-col-item {
-  margin-left: 110px;
+  margin-left: 100px;
   position: relative;
+  min-height: 28px;
+  font-size: 12px;
+  line-height: 28px;
 }
-.z-main-row .zui-col .z-col-wrap .z-col-item input {
+.z-main-row .zui-col .z-col-wrap .z-col-item input,
+.z-main-row .zui-col .z-col-wrap .z-col-item .zui-select-wrap {
   width: 100%;
+  vertical-align: top;
+}
+.z-main-row .zui-col .z-col-wrap .z-col-item .zui-checkbox-label {
+  width: auto;
+}
+.z-main-row .zui-col .z-col-wrap .z-col-item em {
+  font-style: normal;
+  margin-left: 10px;
+  color: #8492A6;
 }
 .z-main-row .zui-col .z-col-wrap .error {
   position: absolute;
   left: 0;
-  bottom: -24px;
+  bottom: -28px;
   opacity: 0.9;
   z-index: 11;
-  padding: 7px 10px;
+  padding: 0px 10px;
   border-radius: 4px;
   font-size: 12px;
 }

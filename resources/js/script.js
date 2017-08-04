@@ -21,15 +21,19 @@ $(function(){
         }else{
             $('.z-nav-sub').removeClass('open');
             $('.z-nav-sub li[data-nav]').hide();
-        }
+        };
     });
 
-    // 自适应z-main-context高度
-    function mainWrap(){
-        $('.z-main-wrap').height($(window).height()-105);
+    // head显示与隐藏
+    function headerHide(){
+        if($('.z-main-wrap').scrollTop()>10){
+            $('.z-header').addClass('z-header-hide');
+        }else{
+            $('.z-header').removeClass('z-header-hide');
+        };
     };
-    mainWrap();
-    $(window).resize(mainWrap);
+    headerHide();
+    $('.z-main-wrap').scroll(headerHide);
 
     // 弹窗层
     $('[data-layer]').click(function(){
@@ -88,15 +92,21 @@ $(function(){
                         '</tr>'+
                     '</tbody>'+
                 '</table>';
-
         // 插入页面
-        $context.append(pp)
+        $context.append(pp);
+    });
 
+    // 加载页面
+    $('.z-nav a').click(function(e){
+        e.preventDefault();
+        var page=$(this).attr('href');
+        if(page!='#'){
+            $('.z-main-wrap').load(page);
+        }else{
+            $('.z-main-wrap').load('backlog.html');
+        };
+    });
+    $('.z-main-wrap').load('backlog.html');
 
-
-
-
-    })
-
-})
+});
 

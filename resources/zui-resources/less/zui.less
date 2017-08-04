@@ -11,11 +11,8 @@ article, aside, details, figcaption, figure, footer, header, nav, section, summa
 ins{ text-decoration: none;}
 input[class*=".zui-"]{ -webkit-appearance: none;}
 input[class*=".zui-"], button[class*=".zui-"]{ vertical-align: middle;}
-button, select{ cursor: pointer;}
-
-input::-webkit-input-placeholder, textarea::-webkit-input-placeholder{
-    color: @gray2;
-}
+button, select, .zui-switch-label, .zui-radio-label, .zui-checkbox-label{ cursor: pointer; user-select: none;}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder{ color: @gray2;}
 
 // 滚动条美化
 ::-webkit-scrollbar{ width: 7px; height: 7px;}
@@ -89,7 +86,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-nobor, [zui*="nobor"]{ border: none !important;}
 
 // 1px边框
-.zui-border, [zui*="border"]{ border: 1px solid @gray3 !important;}
+.zui-border, [zui*="border"]{ border: 1px solid @gray3; border-radius: 4px;}
 
 // 阴影
 .zui-shadow, [zui*="shadow"]{ box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);}
@@ -132,20 +129,31 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     line-height: 44px;
 }
 
-
+// clear
+.zui-clearfix:after{
+    display:block;
+    height:0;
+    font-size:0;
+    clear:both;
+    content:".";
+    visibility:hidden;
+}
 
 // button样式、input样式、背景样式
 // 默认按钮
 .zui-btn{
     display: inline-block; 
-    border-radius: 4px; 
     .zui-txt-center; 
     white-space: nowrap; 
     background: @white; 
     color: @black; 
-    border: 1px solid @gray3;
+    .zui-border;
+    line-height: 20px;
+    vertical-align: middle;
     i,span{
-        vertical-align: middle;
+        line-height: 20px;
+        display: inline-block;
+        vertical-align: top;
     }
     i+span, span+i{
         margin-left: 5px;
@@ -155,7 +163,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-btn:active{ color: @primary-active; border-color: @primary-active;}
 
 .zui-btn[zui*="primary"], .zui-btn[zui*="done"], .zui-btn[zui*="warn"], .zui-btn[zui*="danger"]{
-    border: none;
+    .zui-nobor;
 }
 
 .zui-bg-primary, [zui*="primary"]{ background: @primary;}
@@ -177,7 +185,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-ipt[disabled],.zui-btn[disabled], .zui-btn[disabled]:hover, .zui-btn[disabled]:active{ 
     cursor: not-allowed; 
     color:@gray2;
-    border: 1px solid @gray3; 
+    .zui-border;
     background: @gray4;
 }
 
@@ -211,8 +219,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-ipt{ 
     padding: 0; 
     text-indent: 10px; 
-    border: 1px solid @gray3; 
-    border-radius: 5px; 
+    .zui-border;
     color: @black;
 }
 
@@ -245,8 +252,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         left: 0;
         background: @white;
         box-shadow: 0 0 7px @gray3;
-        border: 1px solid @gray3;
-        border-radius: 4px;
+        .zui-border;
         .index-1;
         overflow-y: auto;
         opacity: 0;
@@ -373,7 +379,6 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 
 .zui-radio-label, .zui-checkbox-label{
     display: inline-block;
-    cursor: pointer;
     span{
         margin-left: 7px;
     }
@@ -406,8 +411,6 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-switch-label{
     display: inline-block;
     vertical-align: middle;
-    cursor: pointer;
-    user-select: none;
     .zui-switch{ 
         display: none;
     }
@@ -418,8 +421,8 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         width: 60px;
         height: 24px;
         line-height: 22px;
-        border-radius: 300px;
-        border: 1px solid @gray3;
+        border-radius: 300px !important;
+        .zui-border;
         background: @white;
         .zui-icon-switch{
             .zui-ani-fast;
@@ -455,12 +458,11 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-textarea{
     width: 100%;
     min-height: 100px;
-    border-radius: 4px;
     padding: 5px 10px;
     font-size: 14px;
     line-height: 20px;
     resize: vertical;
-    border: 1px solid @gray3;
+    .zui-border;
 }
 
 // layer弹窗
@@ -640,8 +642,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 // ul list 列表
 .zui-list{
     width: 100%;
-    border: 1px solid @gray3;
-    border-radius: 4px;
+    .zui-border;
     li{
         padding: 0 10px;
         line-height: 40px;
@@ -736,7 +737,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     }
 }
 
-// flex 网格布局
+// flex 流式布局
 .zui-row{
     display: flex;
     flex-flow: row wrap;
@@ -748,32 +749,32 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     }
 }
 
-[zui*="jc:flex-start"]{
+[zui*="jc-flex-start"]{
     justify-content: flex-start;
 }
-[zui*="jc:flex-end"]{
+[zui*="jc-flex-end"]{
     justify-content: flex-end;
 }
-[zui*="jc:center"]{
+[zui*="jc-center"]{
     justify-content: center;
 }
-[zui*="jc:space-around"]{
+[zui*="jc-space-around"]{
     justify-content: center;
 }
-[zui*="jc:space-between"]{
+[zui*="jc-space-between"]{
     justify-content: center;
 }
 
-[zui*="ai:flex-start"]{
+[zui*="ai-flex-start"]{
     align-items: flex-start;
 }
-[zui*="ai:flex-end"]{
+[zui*="ai-flex-end"]{
     align-items: flex-end;
 }
-[zui*="ai:center"]{
+[zui*="ai-center"]{
     align-items: center;
 }
-[zui*="ai:stretch"]{
+[zui*="ai-stretch"]{
     align-items: stretch;
 }
 
@@ -793,39 +794,149 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     flex: 1 1 20%;
 }
 
+// 源码编辑器
 .zui-pre{
     background: @black;
     border-radius: 4px;
     overflow: hidden;
     margin: 10px auto;
     h3{
-        padding: 0 10px;
+        padding: 0 15px;
         background: @gray1;
         color: @white;
         font-size: 16px;
-        line-height: 40px;
+        line-height: 44px;
         i{
             color: @gray2;
             font-size: 12px;
+            font-style: normal;
         }
     }
     .zui-pre-ol{
         padding: 20px 0;
         line-height: 28px;
-        color: @gray4;
         li{
             list-style: decimal;
             border-left: 2px solid @primary-active;
-            margin-left: 40px;
+            margin-left: 50px;
             padding: 0 10px;
+            color: @gray2;
+            span{
+                color: @gray4;
+            }
+        }
+        li.annotations span{
+            color: @gray2;
         }
     }
 }
 
+// 图片上传
+.zui-upload{
+    &-item{
+        .zui-border;
+        .zui-txt-center;
+        display: inline-block;
+        width: 180px;
+        height: 120px;
+        padding: 5px;
+        margin: 5px;
+        &-main{
+            position: relative;
+            height: 100%;
+            color: @gray2;
+            overflow: hidden;
+            i, label, img, input{ 
+                display: block; 
+                .zui-ani-fast; 
+                position: absolute; 
+                width: 100%;
+                .index1;
+                left: 0;
+                cursor: pointer;
+            }
+            i{ 
+                font-size: 50px; 
+                top: 12px;
+            }
+            label{
+                top: 75px;
+            }
+            img, input{ 
+                .index10;
+                width: 168px;
+                height: 108px;
+                top: 0;
+                left: 0;
+            }
+            input{
+                opacity: 0;
+            }
+        }
+        
+    }
+}
+.zui-upload-item:hover{
+    i{ color: @primary;}
+    label{ color: @gray1;}
+}
+// 已载图片
+.zui-upload-item-img{
+    img{
+        .index1;
+    }
+    i, label{
+        color: @white;
+        .index10;
+    }
+    i{
+        font-size: 30px;
+        top: -40px;
+    }
+    input{
+        height: 28px;
+    }
+    label,input{
+        .zui-bg-primary;
+        line-height: 28px;
+        bottom: -28px;
+        top: auto;
+    }
+}
+.zui-upload-item-img:hover{
+    .zui-upload-item-main{
+        background: @black;
+    }
+    i, label{
+        color: @white;
+    }
+    i{
+        top: 25px;
+    }
+    i:hover{
+        font-size: 40px;
+        top: 20px;
+    }
+    label,input{
+        bottom: 0;
+    }
+    label:hover{
+        background: @primary-active;
+    }
+    img{
+        opacity: 0.5;
+    }
+}
+
+
+
+
+
+
 
 // 文档页面css
 .zjw .wrap{ padding: 100px 20px 20px 240px;}
-
+.zjw .wrap p.zui-h6{ margin: 50px auto 20px;}
 
 
 

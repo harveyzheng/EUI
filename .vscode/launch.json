@@ -14,6 +14,13 @@
             "name": "Attach to Chrome",
             "port": 9222,
             "webRoot": "${workspaceRoot}"
-        }
+        },
+        {
+            "name": "debugger for chrome",
+            "type": "chrome",
+            "request": "launch",
+            "sourceMaps": false,
+            "file": "${workspaceRoot}/index.html"
+        }, 
     ]
 }
