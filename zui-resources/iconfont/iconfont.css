@@ -32,8 +32,6 @@
 
 .zui-icon-unlock:before { content: "\e608"; }
 
-.zui-icon-tel:before { content: "\e609"; }
-
 .zui-icon-phone:before { content: "\e60a"; }
 
 .zui-icon-img:before { content: "\e60e"; }
@@ -98,11 +96,29 @@
 
 .zui-icon-loading:before { content: "\e63a"; }
 
+.zui-icon-link:before { content: "\e648"; }
+
+.zui-icon-menu:before { content: "\e601"; }
+
 .zui-icon-radio2:before { content: "\e62a"; }
 
 .zui-icon-shang:before { content: "\e610"; }
 
+.zui-icon-bag:before { content: "\e60f"; }
+
+.zui-icon-bill:before { content: "\e609"; }
+
+.zui-icon-file:before { content: "\e667"; }
+
+.zui-icon-toupiao:before { content: "\e67d"; }
+
+.zui-icon-menu2:before { content: "\e60d"; }
+
 .zui-icon-radio1:before { content: "\e60b"; }
+
+.zui-icon-sex:before { content: "\e650"; }
+
+.zui-icon-file2:before { content: "\e64c"; }
 
 .zui-icon-zuo:before { content: "\e620"; }
 

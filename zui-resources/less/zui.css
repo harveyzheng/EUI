@@ -7,7 +7,7 @@
 html,
 body {
   width: 100%;
-  color: #1F2D3D;
+  color: #232527;
   background: #fff;
   line-height: 1;
   font-size: 14px;
@@ -41,7 +41,7 @@ a:active,
 a:hover {
   outline: none;
   text-decoration: none;
-  color: #1F2D3D;
+  color: #232527;
   cursor: pointer;
 }
 article,
@@ -76,7 +76,7 @@ select,
 }
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
-  color: #8492A6;
+  color: #898b8d;
 }
 ::-webkit-scrollbar {
   width: 7px;
@@ -88,14 +88,14 @@ textarea::-webkit-input-placeholder {
 }
 ::-webkit-scrollbar-thumb {
   height: 7px;
-  background: #8492A6;
+  background: #898b8d;
   border-radius: 8px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #475669;
+  background: #46484a;
 }
 body::-webkit-scrollbar-track-piece {
-  background: #f4f6f8;
+  background: #e0e2e4;
 }
 ::selection {
   color: #fff;
@@ -190,7 +190,7 @@ body::-webkit-scrollbar-track-piece {
 }
 .zui-border,
 [zui*="border"] {
-  border: 1px solid #d9e0e8;
+  border: 1px solid #e0e2e4;
   border-radius: 4px;
 }
 .zui-shadow,
@@ -228,7 +228,7 @@ h6 {
   line-height: 20px;
 }
 .zui-parting {
-  color: #8492A6;
+  color: #898b8d;
   clear: both;
   position: relative;
   line-height: 38px;
@@ -247,7 +247,7 @@ h6 {
   height: 0;
   left: 0;
   top: 50%;
-  border-bottom: 1px solid #d9e0e8;
+  border-bottom: 1px solid #cdcecf;
 }
 .zui-parting[zui*="sm"] {
   line-height: 28px;
@@ -268,8 +268,8 @@ h6 {
   text-align: center !important;
   white-space: nowrap;
   background: #fff;
-  color: #1F2D3D;
-  border: 1px solid #d9e0e8;
+  color: #232527;
+  border: 1px solid #e0e2e4;
   border-radius: 4px;
   line-height: 20px;
   vertical-align: middle;
@@ -343,10 +343,10 @@ h6 {
 .zui-btn[disabled]:hover,
 .zui-btn[disabled]:active {
   cursor: not-allowed;
-  color: #8492A6;
-  border: 1px solid #d9e0e8;
+  color: #898b8d;
+  border: 1px solid #e0e2e4;
   border-radius: 4px;
-  background: #f4f6f8;
+  background: #e0e2e4;
 }
 .zui-bg-primary,
 .zui-bg-done,
@@ -391,9 +391,9 @@ h6 {
 .zui-ipt {
   padding: 0;
   text-indent: 10px;
-  border: 1px solid #d9e0e8;
+  border: 1px solid #e0e2e4;
   border-radius: 4px;
-  color: #1F2D3D;
+  color: #232527;
 }
 .zui-radius,
 [zui*="radius"] {
@@ -426,8 +426,8 @@ h6 {
   position: absolute;
   left: 0;
   background: #fff;
-  box-shadow: 0 0 7px #d9e0e8;
-  border: 1px solid #d9e0e8;
+  box-shadow: 0 0 7px #e0e2e4;
+  border: 1px solid #e0e2e4;
   border-radius: 4px;
   z-index: -1;
   overflow-y: auto;
@@ -439,7 +439,7 @@ h6 {
   cursor: pointer;
 }
 .zui-select-wrap .zui-option-list dd:hover {
-  background: #f4f6f8;
+  background: #f8f8f8;
 }
 .zui-select-wrap .zui-option-list .zui-option,
 .zui-select-wrap .zui-option-list .zui-option:hover {
@@ -466,7 +466,7 @@ h6 {
   transition: all 0.2s;
   position: absolute;
   right: 10px;
-  border-top: 6px solid #8492A6;
+  border-top: 6px solid #cdcecf;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
 }
@@ -539,7 +539,7 @@ h6 {
   width: 100%;
 }
 .zui-form-main .zui-form-item .zui-ipt-info {
-  color: #8492A6;
+  color: #898b8d;
   margin-left: 10px;
 }
 .zui-radio,
@@ -558,7 +558,7 @@ h6 {
 .zui-checkbox-label .zui-icon-radio,
 .zui-radio-label .zui-icon-checkbox,
 .zui-checkbox-label .zui-icon-checkbox {
-  color: #d9e0e8;
+  color: #cdcecf;
   vertical-align: top;
 }
 .zui-radio-label .zui-radio + .zui-icon-radio:before,
@@ -598,7 +598,7 @@ h6 {
   height: 24px;
   line-height: 22px;
   border-radius: 300px !important;
-  border: 1px solid #d9e0e8;
+  border: 1px solid #e0e2e4;
   border-radius: 4px;
   background: #fff;
 }
@@ -609,7 +609,7 @@ h6 {
   left: 3px;
   width: 18px;
   height: 18px;
-  background: #d9e0e8;
+  background: #e0e2e4;
   border-radius: 300px;
 }
 .zui-switch-label .zui-switch-view .zui-switch-info {
@@ -636,7 +636,7 @@ h6 {
   font-size: 14px;
   line-height: 20px;
   resize: vertical;
-  border: 1px solid #d9e0e8;
+  border: 1px solid #e0e2e4;
   border-radius: 4px;
 }
 .zui-layer-prompt {
@@ -658,7 +658,7 @@ h6 {
   left: 0;
   top: 0;
   user-select: none;
-  background: #1F2D3D;
+  background: #232527;
   transition: all 0.2s;
   opacity: 0;
 }
@@ -749,7 +749,7 @@ h6 {
 .zui-layer-message-info {
   font-size: 14px;
   line-height: 20px;
-  color: #8492A6;
+  color: #898b8d;
 }
 .zui-layer-message-close {
   position: absolute;
@@ -769,10 +769,10 @@ h6 {
   width: 100%;
   text-align: left;
   background: #fff;
-  border: 1px solid #d9e0e8;
+  border: 1px solid #e0e2e4;
 }
 .zui-table thead {
-  background: #ebedef;
+  background: #e0e2e4;
 }
 .zui-table td,
 .zui-table th {
@@ -780,7 +780,7 @@ h6 {
   white-space: nowrap;
   line-height: 20px;
   vertical-align: middle;
-  border: 1px solid #d9e0e8;
+  border: 1px solid #e0e2e4;
 }
 .zui-table[zui*="line"] td,
 .zui-table[zui*="line"] th {
@@ -788,31 +788,31 @@ h6 {
   border-right: none;
 }
 .zui-table[zui*="nobor"] {
-  border: 1px solid #d9e0e8 !important;
+  border: 1px solid #e0e2e4 !important;
 }
 .zui-table[zui*="nobor"] td,
 .zui-table[zui*="nobor"] th {
   border: none;
 }
 .zui-table[zui*="hover"] tbody tr:hover {
-  background: #F9FAFC;
+  background: #f8f8f8;
 }
 .zui-list {
   width: 100%;
-  border: 1px solid #d9e0e8;
+  border: 1px solid #e0e2e4;
   border-radius: 4px;
 }
 .zui-list li {
   padding: 0 10px;
   line-height: 40px;
-  border-bottom: 1px solid #d9e0e8;
+  border-bottom: 1px solid #e0e2e4;
   position: relative;
 }
 .zui-list li:last-child {
   border: none;
 }
 .zui-list[zui*="nobor"] li:last-child {
-  border-bottom: 1px solid #d9e0e8;
+  border-bottom: 1px solid #e0e2e4;
 }
 .zui-list[zui*="arrow-left"] li::before,
 .zui-list[zui*="arrow-right"] li::before {
@@ -820,7 +820,7 @@ h6 {
   font-family: "iconfont" !important;
   font-size: 14px;
   position: absolute;
-  color: #8492A6;
+  color: #898b8d;
 }
 .zui-list[zui*="arrow-right"] li:before {
   right: 5px;
@@ -835,7 +835,7 @@ h6 {
   background: #fff;
 }
 .zui-tab-menu {
-  background: #f4f6f8;
+  background: #e0e2e4;
 }
 .zui-tab-menu .zui-tab-item {
   display: inline-block;
@@ -847,7 +847,7 @@ h6 {
 }
 .zui-tab-menu[zui*="style2"] {
   background: #fff;
-  border-bottom: 1px solid #d9e0e8;
+  border-bottom: 1px solid #cdcecf;
 }
 .zui-tab-menu[zui*="style2"] .zui-tab-item {
   margin-bottom: -2px;
@@ -859,7 +859,7 @@ h6 {
 }
 .zui-tab-menu[zui*="style3"] {
   background: #fff;
-  border-bottom: 1px solid #d9e0e8;
+  border-bottom: 1px solid #cdcecf;
 }
 .zui-tab-menu[zui*="style3"] .zui-tab-item {
   margin-bottom: -1px;
@@ -867,7 +867,7 @@ h6 {
   border-bottom: none;
 }
 .zui-tab-menu[zui*="style3"] .zui-tab-item.active {
-  border-color: #d9e0e8;
+  border-color: #cdcecf;
 }
 .zui-tab-main {
   background: #fff;
@@ -932,20 +932,20 @@ h6 {
   flex: 1 1 20%;
 }
 .zui-pre {
-  background: #1F2D3D;
+  background: #232527;
   border-radius: 4px;
   overflow: hidden;
   margin: 10px auto;
 }
 .zui-pre h3 {
   padding: 0 15px;
-  background: #475669;
+  background: #46484a;
   color: #fff;
   font-size: 16px;
   line-height: 44px;
 }
 .zui-pre h3 i {
-  color: #8492A6;
+  color: #898b8d;
   font-size: 12px;
   font-style: normal;
 }
@@ -958,16 +958,16 @@ h6 {
   border-left: 2px solid #55BBEE;
   margin-left: 50px;
   padding: 0 10px;
-  color: #8492A6;
+  color: #898b8d;
 }
 .zui-pre .zui-pre-ol li span {
-  color: #f4f6f8;
+  color: #e0e2e4;
 }
 .zui-pre .zui-pre-ol li.annotations span {
-  color: #8492A6;
+  color: #898b8d;
 }
 .zui-upload-item {
-  border: 1px solid #d9e0e8;
+  border: 1px solid #e0e2e4;
   border-radius: 4px;
   text-align: center !important;
   display: inline-block;
@@ -979,7 +979,7 @@ h6 {
 .zui-upload-item-main {
   position: relative;
   height: 100%;
-  color: #8492A6;
+  color: #898b8d;
   overflow: hidden;
 }
 .zui-upload-item-main i,
@@ -1016,7 +1016,7 @@ h6 {
   color: #66CCFF;
 }
 .zui-upload-item:hover label {
-  color: #475669;
+  color: #46484a;
 }
 .zui-upload-item-img img {
   z-index: 1;
@@ -1042,7 +1042,7 @@ h6 {
   top: auto;
 }
 .zui-upload-item-img:hover .zui-upload-item-main {
-  background: #1F2D3D;
+  background: #232527;
 }
 .zui-upload-item-img:hover i,
 .zui-upload-item-img:hover label {
@@ -1065,9 +1065,65 @@ h6 {
 .zui-upload-item-img:hover img {
   opacity: 0.5;
 }
-.zjw .wrap {
-  padding: 100px 20px 20px 240px;
+body {
+  background: #f8f8f8;
 }
-.zjw .wrap p.zui-h6 {
-  margin: 50px auto 20px;
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  margin-bottom: 20px;
+  background: #46484a;
+  box-shadow: 0 0 10px #232527;
+}
+.header .wrapper {
+  background: none;
+}
+.header input {
+  width: 240px;
+}
+.wrapper {
+  width: 1140px;
+  margin: 0 auto;
+  background: #fff;
+}
+.wrapper .nav {
+  position: fixed;
+  width: 220px;
+  height: 100%;
+  top: 0;
+  padding: 70px 0 20px 0;
+  overflow-y: auto;
+  border-right: 1px solid #f0f0f0;
+  z-index: 1;
+}
+.wrapper .nav dl {
+  padding-bottom: 15px;
+}
+.wrapper .nav dt,
+.wrapper .nav dd a {
+  display: block;
+}
+.wrapper .nav dt {
+  padding-left: 20px;
+  background: #f8f8f8;
+  border-left: 3px solid #55BBEE;
+  margin-bottom: 15px;
+  line-height: 40px;
+  font-size: 16px;
+}
+.wrapper .nav dd a {
+  padding-left: 30px;
+  line-height: 30px;
+}
+.wrapper .nav dd a:hover {
+  color: #55BBEE;
+}
+.wrapper .main {
+  margin: 50px 0 20px 220px;
+  padding: 20px;
 }

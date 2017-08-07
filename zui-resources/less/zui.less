@@ -59,13 +59,14 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 @danger-hover:#FF7777;
 @danger-active:#EE5555;
 
-@black:#1F2D3D;
-@gray1:#475669;
-@gray2:#8492A6;
-@gray3:#d9e0e8;
-@gray4:#f4f6f8;
-@gray5:#F9FAFC;
-@white:#fff;
+@black:#232527; //背景、字体
+@gray1:#46484a; //背景、字体
+@gray2:#898b8d; //字体
+@gray3:#cdcecf; //border
+@gray4:#e0e2e4; //border
+@gray5:#f0f0f0; //bg
+@gray6:#f8f8f8; //用于hover背景
+@white:#fff; //白色字体
 
 // 基本属性类
 .zui-float-left,[zui*="pull-left"]{ float: left !important;}
@@ -86,7 +87,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-nobor, [zui*="nobor"]{ border: none !important;}
 
 // 1px边框
-.zui-border, [zui*="border"]{ border: 1px solid @gray3; border-radius: 4px;}
+.zui-border, [zui*="border"]{ border: 1px solid @gray4; border-radius: 4px;}
 
 // 阴影
 .zui-shadow, [zui*="shadow"]{ box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);}
@@ -165,7 +166,6 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-btn[zui*="primary"], .zui-btn[zui*="done"], .zui-btn[zui*="warn"], .zui-btn[zui*="danger"]{
     .zui-nobor;
 }
-
 .zui-bg-primary, [zui*="primary"]{ background: @primary;}
 .zui-btn[zui*="primary"]:hover{ background: @primary-hover;}
 .zui-btn[zui*="primary"]:active{ background: @primary-active;}
@@ -251,7 +251,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         position: absolute;
         left: 0;
         background: @white;
-        box-shadow: 0 0 7px @gray3;
+        box-shadow: 0 0 7px @gray4;
         .zui-border;
         .index-1;
         overflow-y: auto;
@@ -262,7 +262,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
             cursor: pointer;
         }
         dd:hover{
-            background: @gray4;
+            background: @gray6;
         }
         .zui-option,.zui-option:hover{
             .zui-bg-primary;
@@ -288,7 +288,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         .zui-ani-fast;
         position: absolute;
         right: 10px;
-        border-top: 6px solid @gray2;
+        border-top: 6px solid @gray3;
         border-left: 6px solid transparent;
         border-right: 6px solid transparent;
     }
@@ -431,7 +431,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
             left: 3px;
             width: 18px;
             height: 18px;
-            background: @gray3;
+            background: @gray4;
             border-radius: 300px;
         }
         .zui-switch-info{
@@ -606,16 +606,16 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     width: 100%;
     text-align: left;
     background: @white;
-    border: 1px solid @gray3;
+    border: 1px solid @gray4;
     thead{
-        background: #ebedef;
+        background: @gray4;
     }
     td,th{
         padding: 10px 10px;
         white-space:nowrap;
         line-height: 20px;
         vertical-align: middle;
-        border: 1px solid @gray3;
+        border: 1px solid @gray4;
     }
 }
 
@@ -627,7 +627,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 }
 
 .zui-table[zui*="nobor"]{
-    border: 1px solid @gray3 !important;
+    border: 1px solid @gray4 !important;
     td,th{
         border:none;
     }
@@ -635,7 +635,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 
 .zui-table[zui*="hover"]{
     tbody tr:hover{
-        background: @gray5;
+        background: @gray6;
     }
 }
 
@@ -646,7 +646,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     li{
         padding: 0 10px;
         line-height: 40px;
-        border-bottom: 1px solid @gray3;
+        border-bottom: 1px solid @gray4;
         position: relative;
     }
     li:last-child{
@@ -656,7 +656,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 
 .zui-list[zui*="nobor"]{
     li:last-child{
-        border-bottom: 1px solid @gray3;
+        border-bottom: 1px solid @gray4;
     }
 }
 
@@ -929,14 +929,68 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 }
 
 
-
-
-
-
-
+body{
+    background: @gray6;
+}
 // 文档页面css
-.zjw .wrap{ padding: 100px 20px 20px 240px;}
-.zjw .wrap p.zui-h6{ margin: 50px auto 20px;}
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    margin-bottom: 20px;
+    background: @gray1;
+    box-shadow: 0 0 10px @black;
+    .wrapper{
+        background: none;
+    }
+    input{
+        width: 240px;
+    }
+}
+.wrapper{
+    width: 1140px;
+    margin: 0 auto;
+    background: @white;
+    .nav{
+        position: fixed;
+        width: 220px;
+        height: 100%;
+        top: 0;
+        padding: 70px 0 20px 0;
+        overflow-y: auto;
+        border-right: 1px solid @gray5;
+        z-index: 1;
+        dl{
+            padding-bottom: 15px;
+        }
+        dt,dd a{
+            display: block;
+        }
+        dt{
+            padding-left: 20px;
+            background: @gray6;
+            border-left: 3px solid @primary-active;
+            margin-bottom: 15px;
+            line-height: 40px;
+            font-size: 16px;
+        }
+        dd a{
+            padding-left: 30px;
+            line-height: 30px;
+        }
+        dd a:hover{
+            color: @primary-active;
+        }
+    }
+    .main{
+        margin: 50px 0 20px 220px;
+        padding: 20px;
+    }
+}
 
 
 
