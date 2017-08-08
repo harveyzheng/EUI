@@ -142,7 +142,6 @@ Zui.prototype.message=data=>{
                     zui.message_sequence();
                 },200);
             },100);
-            
         })
     }
     return false;
@@ -160,6 +159,7 @@ Zui.prototype.message_sequence=()=>{
 Zui.prototype.marquee=el=>{
     el.each((i,n)=>{
         let $n=$(n);
+        if($n.parents('.zui-radio-label').length||$n.parents('.zui-checkbox-label').length||$n.parents('.zui-switch-label').length) return; //防止重复装载
         let dom;
         let nm=$n.attr('name')||'';
         let ckd=$n.attr('checked')||'';
@@ -203,6 +203,7 @@ Zui.prototype.marquee=el=>{
 Zui.prototype.select=el=>{
     el.each((i,n)=>{
         let $n=$(n);
+        if($n.parents('.zui-select-wrap').length) return; //防止重复装载
         let dom;
         let dd='';
         let item=$n.children();
@@ -241,57 +242,54 @@ Zui.prototype.select=el=>{
 // tab切换
 Zui.prototype.tabcut=data=>{
     // 初始化
-    let wrap=$(data.wrap);
-    wrap.each(function(){
-        let menu=$(this).find(data.menu);
-        let me_item=menu.children();
-        let main=$(this).find(data.main);
-        let ma_item=main.children();
-        me_item.eq(0).addClass('active');
-        ma_item.eq(0).addClass('active');
+    let w=$(data.wrap);
+    w.each(function(){
+        // 初始
+        let ime=$(this).find(data.menu).children();
+        let ima=$(this).find(data.main).children();
+        ime.eq(0).addClass('active');
+        ima.eq(0).addClass('active');
         
+        // 事件类型，默认click，可设置值 hover
         let tar='click';
         if(data.target=='hover')tar='mouseover';
 
-        me_item.on(tar,function(){
+        // 绑定事件
+        ime.off().on(tar,function(){
             let index=$(this).index();
-            me_item.removeClass('active');
+            ime.removeClass('active');
             $(this).addClass('active');
-            ma_item.removeClass('active');
-            ma_item.eq(index).addClass('active');
+            ima.removeClass('active');
+            ima.eq(index).addClass('active');
         });
-    })
-
-    
-
-
+    });
 };
 
 // pre编辑器
 Zui.prototype.precode=el=>{
     el.each((i,n)=>{
         let $n=$(n);
+        if($n.find('.zui-load').length) return; //防止重复装载
         // 初始化内容：替换<>，分割成数组
         let str=$n.html().replace(/</g, "&lt;").replace(/>/g, "&gt;").split("\n");
         let dom='<ol class="zui-pre-ol">';
-        let sp=0;
+        let sp=0; //记录空格数量
         str.forEach((s,i)=>{
             // 空格数量
             let spa=s.split(' ').length-1;
             // 记录开头空格数量
             if(i<1){
                 sp=spa;
-                $n.html('<h3>'+s.trim()+'<i zui="pull-right">www.zjw7.com</i></h3>')
+                $n.html('<h3 class="zui-load">'+s.trim()+'<i zui="pull-right">www.zjw7.com</i></h3>');
             }else{
                 // 如果开头空格大于等于第一行，截取空格后的内容（删减空格）
                 if(spa>=sp) s=s.substring(sp,s.length);
                 // 判断是否为注释
                 if(s.trim().substring(0,2)=='//' && i!=str.length-1){
-                     dom+='<li class="annotations"><span>'+s+'</span></li>';
+                     dom+='<li class="zui-pre-annotations"><span>'+s+'</span></li>';
                 }else if(i!=str.length-1){
                      dom+='<li><span>'+s+'</span></li>';
-                }
-                
+                };
             };
         });
         dom+='</ol>';
@@ -354,12 +352,12 @@ Zui.prototype.uploadfile=(el,dt)=>{
     // 获取图片blob数据
     let g=f=>{
         let u;
-        if (window.createObjectURL!=undefined) { // basic
-            u = window.createObjectURL(f) ;
-        } else if (window.URL!=undefined) { // mozilla(firefox)
-            u = window.URL.createObjectURL(f) ;
-        } else if (window.webkitURL!=undefined) { // webkit or chrome
-            u = window.webkitURL.createObjectURL(f) ;
+        if(window.createObjectURL!=undefined){ // basic
+            u=window.createObjectURL(f);
+        }else if(window.URL!=undefined){ // mozilla(firefox)
+            u=window.URL.createObjectURL(f);
+        }else if(window.webkitURL!=undefined){ // webkit or chrome
+            u=window.webkitURL.createObjectURL(f);
         }
         return u;
     };
@@ -447,8 +445,7 @@ Zui.prototype.uploadfile=(el,dt)=>{
 }
 
 // init初始化
-Zui.prototype.init=w=>{
-    w.onload=()=>{
+Zui.prototype.init=()=>{
         // radio处理
         zui.marquee($('.zui-radio'));
         // checkbox处理
@@ -459,7 +456,6 @@ Zui.prototype.init=w=>{
         zui.select($('.zui-select'));
         // 图片上传
         zui.uploadimg($('.zui-upload'));
-
         // 开关按钮
         $('.zui-switch').each(function(){
             let txt=$(this).attr('zui-info').split('|');
@@ -478,24 +474,24 @@ Zui.prototype.init=w=>{
             // 初始化
             cge();
             // 绑定change
-            $(this).change(cge);
+            $(this).off().change(cge);
         });
 
         // select下拉事件绑定
-        $('.zui-select-wrap').on('click',function(){
+        $('.zui-select-wrap').off().on('click',function(){
             $('.zui-select-wrap').not(this).removeClass('zui-select-open');
             $(this).toggleClass('zui-select-open');
             return false;
         });
 
         // select option选定
-        $('.zui-option-list dd').on('click',function(){
+        $('.zui-option-list dd').off().on('click',function(){
             $(this).addClass('zui-option').siblings().removeClass('zui-option');
             $(this).parent().siblings('.zui-select').val($(this).text());
         });
 
         // body 点击 关闭一些窗口
-        $('body').on('click',()=>{
+        $('body').off().on('click',()=>{
             $('.zui-select-wrap').removeClass('zui-select-open');
         });
 
@@ -510,11 +506,7 @@ Zui.prototype.init=w=>{
         // pre编辑器处理
         zui.precode($('.zui-pre'));
 
-    };// onload
 };
 
 // 实例化Zui
 let zui=new Zui();
-
-// 初始化
-zui.init(window);

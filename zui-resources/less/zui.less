@@ -27,21 +27,6 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 // 导入iconfont
 @import url('../iconfont/iconfont.css');
 
-// z-index值设置
-// 1、2、3、4、5用于普通脱离文档流排版，10、20、30用于定位组件，100、200、300用于弹窗
-.index-1{z-index: -1;}
-.index1{z-index: 1;}
-.index2{z-index: 2;}
-.index3{z-index: 3;}
-.index4{z-index: 4;}
-.index5{z-index: 5;}
-.index10{z-index: 10;}
-.index20{z-index: 20;}
-.index30{z-index: 30;}
-.index100{z-index: 100;}
-.index200{z-index: 200;}
-.index300{z-index: 300;}
-
 // 颜色
 @primary:#66CCFF;
 @primary-hover:#77DDFF;
@@ -111,7 +96,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         background: @white;
         position: relative;
         padding: 0 10px;
-        .index1;
+        z-index: 1;
     }
 }
 .zui-parting:before{
@@ -253,7 +238,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         background: @white;
         box-shadow: 0 0 7px @gray4;
         .zui-border;
-        .index-1;
+        z-index: -1;
         overflow-y: auto;
         opacity: 0;
         transform:translateY(25px);
@@ -330,7 +315,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     .zui-option-list{
         .zui-ani-fast;
         height: auto;
-        .index10;
+        z-index: 10;
         opacity: 1;
         transform:translateY(0);
     }
@@ -478,6 +463,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     color: @white;
     .zui-ani-fast;
     opacity: 0;
+    z-index: 301;
 }
 
 // 阴影背景
@@ -491,6 +477,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     background: @black;
     .zui-ani-fast;
     opacity: 0;
+    z-index: 300;
 }
 
 .zui-layer-shade.on{
@@ -508,7 +495,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     overflow: hidden;
     opacity: 0;
     .zui-ani-fast;
-    .index300;
+    z-index: 301;
     &-title{
         padding: 0 10px;
         position: relative;
@@ -552,6 +539,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     background: @white;
     box-shadow: 0 2px 10px rgba(50, 50, 50, 0.2);
     overflow: hidden;
+    z-index: 301;
     .zui-ani-fast;
     &-type{
         position: absolute;
@@ -590,7 +578,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         top: 5px;
         padding: 5px;
         font-size: 18px;
-        .index10;
+        z-index: 301;
     }
     &-close:hover{
         color: @danger;
@@ -825,8 +813,8 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
                 color: @gray4;
             }
         }
-        li.annotations span{
-            color: @gray2;
+        li.zui-pre-annotations span{
+            color: @done-active;
         }
     }
 }
@@ -851,7 +839,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
                 .zui-ani-fast; 
                 position: absolute; 
                 width: 100%;
-                .index1;
+                z-index: 1;
                 left: 0;
                 cursor: pointer;
             }
@@ -863,7 +851,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
                 top: 75px;
             }
             img, input{ 
-                .index10;
+                z-index: 10;
                 width: 168px;
                 height: 108px;
                 top: 0;
@@ -883,11 +871,11 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 // 已载图片
 .zui-upload-item-img{
     img{
-        .index1;
+        z-index: 1;
     }
     i, label{
         color: @white;
-        .index10;
+        z-index: 10;
     }
     i{
         font-size: 30px;
@@ -929,10 +917,12 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 }
 
 
+
+// 文档页面css
 body{
     background: @gray6;
 }
-// 文档页面css
+
 .header{
     position: fixed;
     top: 0;
@@ -950,7 +940,16 @@ body{
     input{
         width: 240px;
     }
+    span{
+        position: relative;
+    }
+    span i{
+        position: absolute;
+        right: 5px;
+        top: 1·px;
+    }
 }
+
 .wrapper{
     width: 1140px;
     margin: 0 auto;
