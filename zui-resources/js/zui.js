@@ -1,6 +1,12 @@
-// 2017-07-24
-;
-// zui-start
+/*
+2017-08-11
+name：z-ui
+author：harvey
+qq：269144551
+官网：http://www.zjw7.com/
+*/
+
+;// zui-start
 "use strict";
 
 var Zui=function(){
@@ -29,7 +35,6 @@ Zui.prototype.layer=data=>{
     // 插入dom
     let that=$(dom);
     $('body').append(that);
-
     // 按钮绑定-确定、取消事件
     let okay=that.find('.zui-layer-okay');
     let cancel=that.find('.zui-layer-cancel');
@@ -63,12 +68,13 @@ Zui.prototype.prompts=info=>{
     if($('.zui-layer-prompt').length) $('.zui-layer-prompt').remove();
     // 生成dom
     let dom='<div class="zui-layer-prompt">'+info+'</div>';
-    $('body').append(dom);
+    let that=$(dom);
+    $('body').append(that);
     // 动画效果及延时关闭
-    setTimeout(()=>$('.zui-layer-prompt').addClass('on'),100);
+    setTimeout(()=>that.addClass('on'),100);
     setTimeout(()=>{
-        $('.zui-layer-prompt').removeClass('on');
-        setTimeout(()=>$('.zui-layer-prompt').remove(),200);
+        that.removeClass('on');
+        setTimeout(()=>that.remove(),200);
     },2500);
     return false;
 };
@@ -318,18 +324,45 @@ Zui.prototype.uploadimg=el=>{
             };
             return d;
         };
+        let s=dt(z);
+        // 查看图片
+        $n.find('.zui-img-see').off().click(function(){
+            let list=el.find('img');
+            let index=list.index($(this).parents('.zui-upload-item').find('img'));
+            // 开启图片查看
+            zui.imglayer({list,index});
+            return false; // 阻止冒泡
+        })
+        // 删除图片
+        $n.find('.zui-upload-delete').off().click(function(){
+            $(this).parent().remove();
+            if($n.find('.zui-upload-add').length<1){
+                let add=
+                    '<div class="zui-upload-item">'+
+                        '<div class="zui-upload-item-main zui-upload-add">'+
+                            '<label>'+
+                                '<i class="zui-icon-upload"></i>'+
+                                '<span>上传图片</span><input class="zui-upload-file" type="file">'+
+                            '</label>'+
+                        '</div>'+
+                    '</div>';
+                $n.append(add);
+                zui.uploadimg($n);
+                return false;
+            };
+        });
         // 绑定change
-        let file=$n.find('.zui-upload-file').attr('alt','');
+        let file=$n.find('.zui-upload-file');
         file.off().change(ev=>{
-            // file发生改变执行uploadfile方法,m是max 最大图片张数;
-            zui.uploadfile(ev.target,dt(z));
+            // file发生改变执行uploadfile方法,传递当前file和父标签配置参数;
+            zui.uploadfile(ev.target,s);
         });
     });
 };
 
 // 图片转base64、压缩
 Zui.prototype.uploadfile=(el,dt)=>{
-    // dt是object, dt.m是max值代表上传图片张数上限, dt.s是size代表, dt,c是compress代表压缩系数
+    // dt.m是max上传图片张数上限, dt.s是size, dt,c是compress压缩系数
     let $n=$(el);
     // 校验一下文件格式
     let v=$n.val();
@@ -368,31 +401,31 @@ Zui.prototype.uploadfile=(el,dt)=>{
     // canvas绘制、转base64、图片压缩
     let base64Img=(b,ig)=>{
         // 生成一个img
-        let img = new Image();
-        img.src = b;
-        img.onload = function () {
+        let img=new Image();
+        img.src=b;
+        img.onload=function () {
             //宽高比例
-            let w = img.width;
-            let h = img.height;
-            let scale = w / h;
+            let w=img.width;
+            let h=img.height;
+            let scale=w/h;
             // 默认图片质量为100%
-            let quality = dt.c/10||1;
+            let quality=dt.c/10||1;
             //生成canvas
-            let canvas = document.createElement('canvas');
-            let ctx = canvas.getContext('2d');
+            let canvas=document.createElement('canvas');
+            let ctx=canvas.getContext('2d');
             // 创建属性节点
-            let anw = document.createAttribute("width");
-            anw.nodeValue = w;
-            let anh = document.createAttribute("height");
-            anh.nodeValue = h;
+            let anw=document.createAttribute("width");
+            anw.nodeValue=w;
+            let anh=document.createAttribute("height");
+            anh.nodeValue=h;
             canvas.setAttributeNode(anw);
             canvas.setAttributeNode(anh);
             ctx.drawImage(this, 0, 0, w, h);
             // 到这里就完成了图片的生成，插入页面并且取消loading
             // quality值越小，所绘制出的图像越模糊
             let bs64=canvas.toDataURL('image/jpeg',quality);
-            if(tp($n.parents('.zui-upload-item'))=='a'){
-                $p.find('.zui-upload-item-img').last().find('img').attr('src',bs64).removeAttr('zui-load');
+            if(tp($n.parents('.zui-upload-item-main'))=='a'){
+                $p.find('.zui-upload-img').last().find('img').attr('src',bs64).removeAttr('zui-load');
             }else{
                 ig.attr('src',bs64).removeAttr('zui-load');
             };
@@ -404,7 +437,7 @@ Zui.prototype.uploadfile=(el,dt)=>{
     let $p=$n.parents('.zui-upload');
     // 判断是添加图片还是修改
     let tp=p=>{
-        if(p.hasClass('zui-upload-item-img')){
+        if(p.hasClass('zui-upload-img')){
             // 标记-修改
             return 'm';
         }else{
@@ -412,20 +445,23 @@ Zui.prototype.uploadfile=(el,dt)=>{
             return 'a';
         };
     };
-    if(tp($n.parents('.zui-upload-item'))=='a'){
+    if(tp($n.parents('.zui-upload-item-main'))=='a'){
         // 添加
-        dom='<div class="zui-upload-item zui-upload-item-img">'+
-                '<div class="zui-upload-item-main">'+
-                    '<i class="zui-icon-search"></i>'+
-                    '<label>修改图片</label>'+
-                    '<input class="zui-upload-file" type="file">'+
-                    '<img class="zui-upload-img" zui-load="loading" src="">'+
+        dom='<div class="zui-upload-item">'+
+                '<i class="zui-icon-guanbi zui-btn zui-upload-delete" zui="danger"></i>'+
+                '<div class="zui-upload-item-main zui-upload-img">'+
+                    '<label>'+
+                        '<i class="zui-icon-search zui-img-see"></i>'+
+                        '<span>修改图片</span>'+
+                        '<input class="zui-upload-file" type="file">'+
+                    '</label>'+
+                    '<img zui-load="loading" src="">'+
                 '</div>'+
             '</div>';
         let leng=dt.m-1||99;
         // 判断数量max了没，到max了删除添加
-        if($p.find('.zui-upload-item-img').length==leng){
-            $n.parents('.zui-upload-item').remove();
+        if($p.find('.zui-upload-img').length==leng){
+            $n.parents('.zui-upload-add').parent().remove();
             $p.append(dom);
         }else{
             $n.val('');
@@ -435,13 +471,155 @@ Zui.prototype.uploadfile=(el,dt)=>{
         base64Img(blob);
     }else{
         // 修改
-        let ig=$n.siblings('img');
+        let ig=$n.parent().siblings('img');
         ig.attr({'zui-load':'loading','src':''});
         // base64处理
         base64Img(blob,ig);
     };
     // 重新绑定一下这组upload
-    zui.uploadimg($n.parents('.zui-upload'));
+    zui.uploadimg($p);
+};
+
+// 图片列表弹出层、调用轮播
+Zui.prototype.imglayer=dt=>{
+    let li='';
+    // 循环出图片
+    dt.list.each((i,n)=>{
+        let c='';
+        if(dt.index==i) c='active';
+        li+='<li class="'+c+'"><img src="'+$(n).attr('src')+'"></li>';
+    });
+    let dom='<div class="zui-layer zui-layer-shade"></div>'+
+            '<div class="zui-imglayer">'+
+                '<a class="zui-imglayer-close zui-icon-guanbi zui-btn" zui="danger"></a>'+
+                '<a class="zui-imglayer-prev prev zui-icon-left"></a>'+
+                '<a class="zui-imglayer-next next zui-icon-left"></a>'+
+                '<ul class="zui-imglayer-main">'+
+                    li+
+                '</ul>'+
+            '</div>';
+    let that=$(dom);
+    // 插入页面
+    $('body').append(that);
+    // 绑定轮播
+    zui.imgfocus({
+        main:'.zui-imglayer', //父标签
+        item:'.zui-imglayer-main li', //轮播体
+        index:dt.index,  //默认焦点，可选，不填为0
+        autoplay:true //是否自动播放，可选，不填为false
+    });
+    // 关闭
+    that.find('.zui-imglayer-close').click(()=>{
+        that.eq(0).removeClass('on');
+        that.eq(1).removeClass('on');
+        setTimeout(()=>{
+            that.remove();
+        },200);
+    });
+    // 入场动画
+    setTimeout(()=>{
+        that.eq(0).addClass('on');
+        that.eq(1).addClass('on');
+    },100);
+};
+
+// 图片查看、轮播
+Zui.prototype.imgfocus=da=>{
+    // 切换上限、下限和li集合;
+    let $wp=$('body').find(da.main);
+    if($wp.length>1) return console.error('imgfocus方法中绑定的main类不是唯一！');
+    let $ag=$wp.find(da.item);
+    let min=0;
+    let max=$ag.length-1;
+    let index=da.index;
+    // 只有一张图就隐藏切换按钮
+    if(!max) $wp.find('.prev,.next').hide();
+
+    // 自动播放
+    let p=da.autoplay;
+    let play;
+    let auto=()=>{
+        if(p){
+            play=setInterval(()=>{
+                next();
+            },da.palytime||3000);
+        }
+    };
+    auto();
+
+    // 切换
+    let next=()=>{
+        
+        clearInterval(play);
+        auto();
+        if(index==max){
+            // 是否循环
+            if(da.loop!==false){
+                index=min-1;
+            }else{
+                return;
+            }
+        };
+        index++;
+        console.log(index)
+        $ag.removeClass('active');
+        return $ag.eq(index).addClass('active');;
+    }
+    let prev=()=>{
+        clearInterval(play);
+        auto();
+        if(index==min){
+            // 是否循环
+            if(da.loop!==false){
+                index=max+1;
+            }else{
+                return;
+            }
+        };
+        index--;
+        $ag.removeClass('active');
+        return $ag.eq(index).addClass('active');;
+    }
+    // 切换事件
+    $wp.find('.prev,.next').click(function(){
+        if($(this).hasClass('prev')){
+            // 上一张
+            prev();
+        }else if($(this).hasClass('next')){
+            // 下一张
+            next();
+        };
+    });
+};
+
+// 日期选择
+Zui.prototype.optiondate=el=>{
+    el.each((i,n)=>{
+        let $n=$(n);
+        let nm=$n.attr('name')||'';
+        let c=$n.attr('class');
+        let id=$n.attr('id')||'';
+        let z=$n.attr('zui')||'md';
+        let ed=$n.val()||'';
+        let dom=
+            '<div class="zui-date-wrap">'+
+                '<input class="'+c+' zui-ipt" id="'+id+'" zui="'+z+'" name="'+nm+'" type="text" value="'+ed+'" readonly>'+
+                '<i class="zui-icon-date"></i>'+
+            '</div>';
+        let that=$(dom);
+        $n.replaceWith(that);
+        // 绑定插件
+    });
+    $('.zui-date').calendar({
+        speed: 200,                                           // 三种预定速度之一的字符串("slow", "normal", or "fast")或表示动画时长的毫秒数值(如：1000),默认：200
+        complement: true,                                     // 是否显示日期或年空白处的前后月的补充,默认：true
+        readonly: true,                                       // 目标对象是否设为只读，默认：true
+        upperLimit: new Date(),                               // 日期上限，默认：NaN(不限制)
+        lowerLimit: new Date("2011/01/01"),                   // 日期下限，默认：NaN(不限制)
+        callback: function () {                               // 点击选择日期后的回调函数
+            // alert("您选择的日期是：" + $("#txtBeginDate").val());
+        }
+    });
 }
 
 // init初始化
@@ -456,6 +634,8 @@ Zui.prototype.init=()=>{
         zui.select($('.zui-select'));
         // 图片上传
         zui.uploadimg($('.zui-upload'));
+        // 选择日期
+        zui.optiondate($('.zui-date'));
         // 开关按钮
         $('.zui-switch').each(function(){
             let txt=$(this).attr('zui-info').split('|');
@@ -505,8 +685,33 @@ Zui.prototype.init=()=>{
 
         // pre编辑器处理
         zui.precode($('.zui-pre'));
-
 };
 
 // 实例化Zui
 let zui=new Zui();
+
+// 轮播方法
+//     zui.imgfocus({
+//         main:'.zui-imglayer', //父标签
+//         item:'.zui-imglayer-main li', //轮播体
+//         index:dt.index,  //默认焦点，可选，不填为0
+//         autoplay:true, //是否自动播放，可选，不填为false
+//         palytime:3000,  //播放间隔时间，默认为3000
+//         loop:true  //是否循环，可选，不填为true
+//     });
+
+// 弹出查看图片方法
+
+// 要把init方法整理一下，以 zui.init({  调用的模块：$('对应元素')  })；的方式实现初始化，并且单独初始化某个模块，不要每次都全局初始化
+// radio 默认选中没有高亮bug
+
+// $('.zui-date').calendar({
+//     speed: 200,                                           // 三种预定速度之一的字符串("slow", "normal", or "fast")或表示动画时长的毫秒数值(如：1000),默认：200
+//     complement: true,                                     // 是否显示日期或年空白处的前后月的补充,默认：true
+//     readonly: true,                                       // 目标对象是否设为只读，默认：true
+//     upperLimit: new Date(),                               // 日期上限，默认：NaN(不限制)
+//     lowerLimit: new Date("2011/01/01"),                   // 日期下限，默认：NaN(不限制)
+//     callback: function () {                               // 点击选择日期后的回调函数
+//         // alert("您选择的日期是：" + $("#txtBeginDate").val());
+//     }
+// });

@@ -78,6 +78,9 @@ input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
   color: #898b8d;
 }
+.zui-upload-file[type="file"] {
+  color: transparent;
+}
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
@@ -132,19 +135,19 @@ body::-webkit-scrollbar-track-piece {
   clear: both;
   visibility: hidden;
 }
-.zui-ani-no,
+.zui-anim-no,
 [zui*="anim-no"] {
   transition: all 0s;
 }
-.zui-ani-fast,
+.zui-anim-fast,
 [zui*="anim-fast"] {
   transition: all 0.2s;
 }
-.zui-ani-normal,
+.zui-anim-normal,
 [zui*="anim-normal"] {
   transition: all 0.4s;
 }
-.zui-ani-slow,
+.zui-anim-slow,
 [zui*="anim-slow"] {
   transition: all 0.8s;
 }
@@ -352,12 +355,34 @@ h6 {
 [zui*="lg"] i {
   font-size: 22px;
 }
-.zui-ipt {
+.zui-ipt,
+.zui-date {
   padding: 0;
   text-indent: 10px;
   border: 1px solid #e0e2e4;
   border-radius: 4px;
   color: #232527;
+}
+.zui-date-wrap {
+  display: inline-block;
+  position: relative;
+}
+.zui-date-wrap .zui-date {
+  width: 100%;
+  cursor: pointer;
+  vertical-align: top;
+}
+.zui-date-wrap .zui-icon-date {
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.zui-date-wrap .zui-icon-date:hover,
+.zui-date-wrap .zui-date:hover + .zui-icon-date {
+  color: #55BBEE;
 }
 .zui-radius,
 [zui*="radius"] {
@@ -614,7 +639,7 @@ h6 {
   color: #fff;
   transition: all 0.2s;
   opacity: 0;
-  z-index: 301;
+  z-index: 1102;
 }
 .zui-layer-shade {
   position: fixed;
@@ -626,10 +651,10 @@ h6 {
   background: #232527;
   transition: all 0.2s;
   opacity: 0;
-  z-index: 300;
+  z-index: 1000;
 }
 .zui-layer-shade.on {
-  opacity: 0.3;
+  opacity: 0.5;
 }
 .zui-layer-main {
   position: fixed;
@@ -641,7 +666,7 @@ h6 {
   overflow: hidden;
   opacity: 0;
   transition: all 0.2s;
-  z-index: 301;
+  z-index: 1101;
 }
 .zui-layer-main-title {
   padding: 0 10px;
@@ -683,7 +708,7 @@ h6 {
   background: #fff;
   box-shadow: 0 2px 10px rgba(50, 50, 50, 0.2);
   overflow: hidden;
-  z-index: 301;
+  z-index: 1200;
   transition: all 0.2s;
 }
 .zui-layer-message-type {
@@ -724,7 +749,7 @@ h6 {
   top: 5px;
   padding: 5px;
   font-size: 18px;
-  z-index: 301;
+  z-index: 2;
 }
 .zui-layer-message-close:hover {
   color: #FF6666;
@@ -938,10 +963,12 @@ h6 {
   border-radius: 4px;
   text-align: center !important;
   display: inline-block;
+  position: relative;
   width: 180px;
   height: 120px;
   padding: 5px;
   margin: 5px;
+  vertical-align: top;
 }
 .zui-upload-item-main {
   position: relative;
@@ -949,88 +976,167 @@ h6 {
   color: #898b8d;
   overflow: hidden;
 }
-.zui-upload-item-main i,
-.zui-upload-item-main label,
-.zui-upload-item-main img,
-.zui-upload-item-main input {
+.zui-upload-item-main input[type="file"] {
+  display: none;
+}
+.zui-upload-item .zui-upload-add i,
+.zui-upload-item .zui-upload-add label {
   display: block;
   transition: all 0.2s;
-  position: absolute;
-  width: 100%;
-  z-index: 1;
-  left: 0;
   cursor: pointer;
 }
-.zui-upload-item-main i {
-  font-size: 50px;
-  top: 12px;
+.zui-upload-item .zui-upload-add i {
+  font-size: 40px;
+  height: 75px;
+  padding-top: 15px;
 }
-.zui-upload-item-main label {
-  top: 75px;
-}
-.zui-upload-item-main img,
-.zui-upload-item-main input {
-  z-index: 10;
+.zui-upload-item .zui-upload-add label {
   width: 168px;
   height: 108px;
-  top: 0;
-  left: 0;
 }
-.zui-upload-item-main input {
-  opacity: 0;
-}
-.zui-upload-item:hover i {
+.zui-upload-item .zui-upload-add:hover i {
   color: #66CCFF;
+  font-size: 50px;
 }
-.zui-upload-item:hover label {
-  color: #46484a;
+.zui-upload-item .zui-upload-img label,
+.zui-upload-item .zui-upload-img img,
+.zui-upload-item .zui-upload-img span,
+.zui-upload-item .zui-upload-img i {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  transition: all 0.2s;
 }
-.zui-upload-item-img img {
+.zui-upload-item .zui-upload-img img {
   z-index: 1;
+  top: 50%;
+  transform: translateY(-50%);
 }
-.zui-upload-item-img i,
-.zui-upload-item-img label {
+.zui-upload-item .zui-upload-img label {
+  z-index: 2;
+  height: 100%;
+  cursor: pointer;
+}
+.zui-upload-item .zui-upload-img label i {
   color: #fff;
-  z-index: 10;
+  font-size: 0;
+  height: 100%;
+  line-height: 75px;
 }
-.zui-upload-item-img i {
-  font-size: 30px;
-  top: -40px;
-}
-.zui-upload-item-img input {
-  height: 28px;
-}
-.zui-upload-item-img label,
-.zui-upload-item-img input {
+.zui-upload-item .zui-upload-img label span {
+  bottom: 0;
+  height: 0;
+  line-height: 30px;
   background: #66CCFF;
   color: #fff !important;
-  line-height: 28px;
-  bottom: -28px;
-  top: auto;
 }
-.zui-upload-item-img:hover .zui-upload-item-main {
-  background: #232527;
+.zui-upload-item .zui-upload-img label span:hover {
+  background: #77DDFF;
 }
-.zui-upload-item-img:hover i,
-.zui-upload-item-img:hover label {
-  color: #fff;
+.zui-upload-item .zui-upload-img:hover label {
+  background: rgba(0, 0, 0, 0.6);
 }
-.zui-upload-item-img:hover i {
-  top: 25px;
-}
-.zui-upload-item-img:hover i:hover {
+.zui-upload-item .zui-upload-img:hover label i {
   font-size: 40px;
-  top: 20px;
 }
-.zui-upload-item-img:hover label,
-.zui-upload-item-img:hover input {
-  bottom: 0;
+.zui-upload-item .zui-upload-img:hover label i:hover {
+  font-size: 50px;
 }
-.zui-upload-item-img:hover label:hover {
-  background: #55BBEE;
+.zui-upload-item .zui-upload-img:hover label span {
+  height: 30px;
 }
-.zui-upload-item-img:hover img {
-  opacity: 0.5;
+.zui-upload-item .zui-upload-delete {
+  display: none;
+  position: absolute;
+  cursor: pointer;
+  right: -5px;
+  top: -5px;
+  font-size: 10px;
+  z-index: 3;
+  width: 20px;
+  border-radius: 300px;
+}
+.zui-upload-item:hover .zui-upload-delete {
+  display: block;
+}
+.zui-imglayer {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  height: 100%;
+  z-index: 1001;
+  transition: all 0.2s;
+}
+.zui-imglayer-close {
+  transition: all 0.2s;
+  position: fixed;
+  top: -100%;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 0;
+  opacity: 0;
+  line-height: 50px;
+  z-index: 11;
+}
+.zui-imglayer-prev,
+.zui-imglayer-next {
+  position: absolute;
+  top: 50%;
+  font-size: 60px;
+  transform: translateY(-50%);
+  left: 50%;
+  margin-left: -670px;
+  color: #fff;
+  transition: all 0.2s;
+  font-weight: bold;
+  z-index: 11;
+}
+.zui-imglayer-next {
+  margin-left: 610px;
+  transform: translateY(-50%) rotateY(180deg);
+}
+.zui-imglayer-prev:hover,
+.zui-imglayer-next:hover {
+  color: #66CCFF;
+}
+.zui-imglayer-main {
+  width: 1140px;
+  height: 100%;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+}
+.zui-imglayer-main li {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  opacity: 0;
+  transition: all 0.4s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.zui-imglayer-main li img {
+  max-width: 100%;
+  max-height: 80%;
+  border: 5px solid #fff;
+  border-radius: 4px;
+}
+.zui-imglayer-main li.active {
+  opacity: 1;
+  z-index: 10;
+}
+.zui-imglayer.on {
+  top: 0;
+}
+.zui-imglayer.on .zui-imglayer-close {
+  opacity: 1;
+  top: 0;
 }
 body {
   background: #f8f8f8;
@@ -1059,7 +1165,7 @@ body {
 .header span i {
   position: absolute;
   right: 5px;
-  top: 1·px;
+  top: 1px;
 }
 .wrapper {
   width: 1140px;
@@ -1101,4 +1207,127 @@ body {
 .wrapper .main {
   margin: 50px 0 20px 220px;
   padding: 20px;
+}
+.calendar {
+  position: absolute;
+  width: 210px;
+  height: 242px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  background: #fff;
+  overflow: hidden;
+  text-align: center;
+  z-index: 1110;
+  top: 120px;
+  left: 200px;
+}
+.calendar .calMain .calTitle {
+  width: 100%;
+  height: 35px;
+  line-height: 34px;
+  overflow: hidden;
+  position: relative;
+  background: #fff;
+  border-bottom: 1px solid #66CCFF;
+}
+.calendar .calMain .calTitle .t_date {
+  display: block;
+  color: #46484a;
+  font-size: 16px;
+}
+.calendar .calMain .calTitle .t_date span:hover a {
+  color: #66CCFF;
+}
+.calendar .calMain .calTitle .prevMonth,
+.calendar .calMain .calTitle .nextMonth {
+  position: absolute;
+  width: 30px;
+  height: 100%;
+  font-size: 18px;
+  color: #898b8d;
+  left: 0;
+  top: 0;
+}
+.calendar .calMain .calTitle .nextMonth {
+  left: auto;
+  right: 0;
+}
+.calendar .calMain .calTitle .prevMonth:hover,
+.calendar .calMain .calTitle .nextMonth:hover {
+  color: #66CCFF;
+}
+.calendar .calMain .calTitle .currentYearText,
+.calendar .calMain .calTitle .currentMonthText {
+  cursor: pointer;
+  margin: 0 8px;
+}
+.calendar .calMain .calContent .enabled,
+.calendar .calMain .calContent .reserve {
+  position: absolute;
+  width: 100%;
+}
+.calendar .calMain .calContent table {
+  width: 100%;
+}
+.calendar .calMain .calContent .tabM td,
+.calendar .calMain .calContent .tabY td {
+  width: 25%;
+  height: 50px;
+  line-height: 50px;
+}
+.calendar .calMain .calContent .tabM td a,
+.calendar .calMain .calContent .tabY td a {
+  display: block;
+  color: #46484a;
+}
+.calendar .calMain .calContent .tabM td .hover,
+.calendar .calMain .calContent .tabY td .hover {
+  color: #77DDFF;
+}
+.calendar .calMain .calContent .tabM td .current,
+.calendar .calMain .calContent .tabY td .current {
+  color: #55BBEE;
+}
+.calendar .calMain .calContent .tabD {
+  line-height: 30px;
+}
+.calendar .calMain .calContent .tabD th {
+  background: #66CCFF;
+  font-size: 13px;
+  font-weight: normal;
+  color: #fff;
+}
+.calendar .calMain .calContent .tabD td {
+  width: 30px;
+}
+.calendar .calMain .calContent .tabD td a,
+.calendar .calMain .calContent .tabD td span {
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 300px;
+}
+.calendar .calMain .calContent .tabD td span {
+  color: #cdcecf;
+}
+.calendar .calMain .calContent .tabD td a {
+  color: #46484a;
+}
+.calendar .calMain .calContent .tabD td .nextD,
+.calendar .calMain .calContent .tabD td .prevD {
+  color: #e0e2e4;
+}
+.calendar .calMain .calContent .tabD td .hover,
+.calendar .calMain .calContent .tabD td .select {
+  color: #fff;
+  background: #77DDFF;
+}
+.calendar .calMain .calContent .tabD td .select {
+  background: #55BBEE;
+}
+.calendar .calMain .calContent .tabM a {
+  border-radius: 300px;
+}
+.calendar .calMain .calContent .tabY a {
+  border-radius: 4px;
 }
