@@ -1138,7 +1138,7 @@ h6 {
   opacity: 1;
   top: 0;
 }
-.calendar {
+.zui-calendar {
   position: absolute;
   width: 210px;
   height: 242px;
@@ -1149,9 +1149,9 @@ h6 {
   text-align: center;
   z-index: 1110;
   top: 120px;
-  left: 200px;
+  left: 400px;
 }
-.calendar .calMain .calTitle {
+.zui-calendar-main-title {
   width: 100%;
   height: 35px;
   line-height: 34px;
@@ -1160,16 +1160,16 @@ h6 {
   background: #fff;
   border-bottom: 1px solid #66CCFF;
 }
-.calendar .calMain .calTitle .t_date {
+.zui-calendar-main-title-tit {
   display: block;
   color: #46484a;
   font-size: 16px;
 }
-.calendar .calMain .calTitle .t_date span:hover a {
+.zui-calendar-main-title-tit span:hover a {
   color: #66CCFF;
 }
-.calendar .calMain .calTitle .prevMonth,
-.calendar .calMain .calTitle .nextMonth {
+.zui-calendar-main-title .zui-prev-month,
+.zui-calendar-main-title .zui-next-month {
   position: absolute;
   width: 30px;
   height: 100%;
@@ -1178,86 +1178,86 @@ h6 {
   left: 0;
   top: 0;
 }
-.calendar .calMain .calTitle .nextMonth {
+.zui-calendar-main-title .zui-next-month {
   left: auto;
   right: 0;
 }
-.calendar .calMain .calTitle .prevMonth:hover,
-.calendar .calMain .calTitle .nextMonth:hover {
+.zui-calendar-main-title .zui-prev-month:hover,
+.zui-calendar-main-title .zui-next-month:hover {
   color: #66CCFF;
 }
-.calendar .calMain .calTitle .currentYearText,
-.calendar .calMain .calTitle .currentMonthText {
+.zui-calendar-main-title .zui-year-txt,
+.zui-calendar-main-title .zui-month-txt {
   cursor: pointer;
   margin: 0 8px;
 }
-.calendar .calMain .calContent .enabled,
-.calendar .calMain .calContent .reserve {
+.zui-calendar-main-con .zui-calendar-enabled,
+.zui-calendar-main-con .zui-calendar-reserve {
   position: absolute;
   width: 100%;
 }
-.calendar .calMain .calContent table {
+.zui-calendar-main-con table {
   width: 100%;
 }
-.calendar .calMain .calContent .tabM td,
-.calendar .calMain .calContent .tabY td {
-  width: 25%;
-  height: 50px;
-  line-height: 50px;
-}
-.calendar .calMain .calContent .tabM td a,
-.calendar .calMain .calContent .tabY td a {
-  display: block;
-  color: #46484a;
-}
-.calendar .calMain .calContent .tabM td .hover,
-.calendar .calMain .calContent .tabY td .hover {
-  color: #77DDFF;
-}
-.calendar .calMain .calContent .tabM td .current,
-.calendar .calMain .calContent .tabY td .current {
-  color: #55BBEE;
-}
-.calendar .calMain .calContent .tabD {
+.zui-calendar-main-con .zui-caltab-day {
   line-height: 30px;
 }
-.calendar .calMain .calContent .tabD th {
+.zui-calendar-main-con .zui-caltab-day th {
   background: #66CCFF;
   font-size: 13px;
   font-weight: normal;
   color: #fff;
 }
-.calendar .calMain .calContent .tabD td {
+.zui-calendar-main-con .zui-caltab-day td {
   width: 30px;
 }
-.calendar .calMain .calContent .tabD td a,
-.calendar .calMain .calContent .tabD td span {
+.zui-calendar-main-con .zui-caltab-day td a,
+.zui-calendar-main-con .zui-caltab-day td span {
   display: block;
   width: 30px;
   height: 30px;
   border-radius: 300px;
 }
-.calendar .calMain .calContent .tabD td span {
+.zui-calendar-main-con .zui-caltab-day td span {
   color: #cdcecf;
 }
-.calendar .calMain .calContent .tabD td a {
+.zui-calendar-main-con .zui-caltab-day td a {
   color: #46484a;
 }
-.calendar .calMain .calContent .tabD td .nextD,
-.calendar .calMain .calContent .tabD td .prevD {
+.zui-calendar-main-con .zui-caltab-day td .nextD,
+.zui-calendar-main-con .zui-caltab-day td .prevD {
   color: #e0e2e4;
 }
-.calendar .calMain .calContent .tabD td .hover,
-.calendar .calMain .calContent .tabD td .select {
+.zui-calendar-main-con .zui-caltab-day td .hover,
+.zui-calendar-main-con .zui-caltab-day td .select {
   color: #fff;
   background: #77DDFF;
 }
-.calendar .calMain .calContent .tabD td .select {
+.zui-calendar-main-con .zui-caltab-day td .select {
   background: #55BBEE;
 }
-.calendar .calMain .calContent .tabM a {
+.zui-calendar-main-con .zui-caltab-month td,
+.zui-calendar-main-con .zui-caltab-year td {
+  width: 25%;
+  height: 50px;
+  line-height: 50px;
+}
+.zui-calendar-main-con .zui-caltab-month td a,
+.zui-calendar-main-con .zui-caltab-year td a {
+  display: block;
+  color: #46484a;
+}
+.zui-calendar-main-con .zui-caltab-month td .hover,
+.zui-calendar-main-con .zui-caltab-year td .hover {
+  color: #77DDFF;
+}
+.zui-calendar-main-con .zui-caltab-month td .current,
+.zui-calendar-main-con .zui-caltab-year td .current {
+  color: #55BBEE;
+}
+.zui-calendar-main-con .zui-caltab-month a {
   border-radius: 300px;
 }
-.calendar .calMain .calContent .tabY a {
+.zui-calendar-main-con .zui-caltab-year a {
   border-radius: 4px;
 }

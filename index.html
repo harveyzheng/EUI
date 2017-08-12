@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>ZUI-文档</title>
+        <meta content="webkit" name="renderer">
+        <meta http-equiv=”X-UA-Compatible” content=”IE=Edge,chrome=1″>
+        <!-- 默认Edge或webkit内核打开 -->
+        <title>ZUI-开发文档</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <link rel="stylesheet" href="zui-resources/less/zui.css?v1.0">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black"> 
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+        
+        <link rel="stylesheet" href="zui/less/zui.css?v1.0">
         <link rel="stylesheet" href="css/style.css">
-        <script src="zui-resources/js/jquery-2.1.4.min.js"></script>
-        <script src="zui-resources/js/zui.js?v1.0"></script>
+        <script src="zui/js/jquery-2.1.4.min.js"></script>
+        <script src="zui/js/calendar.js"></script>
+        <script src="zui/js/zui.js?v1.0"></script>
+        <script src="js/script.js"></script>
     </head>
     <body>
     <header class="header">
         <div class="wrapper zui-clearfix">
-            <span zui="pull-left"><img src="" alt=""></span>
+            <span zui="pull-left"><a class="logo" href="/"><img src="images/zui-logo.png"></a></span>
             <span zui="pull-right"><input class="zui-ipt" zui="sm" type="text" placeholder="请输入要搜索的模块或元素"><i class="zui-icon-search"></i></span>
         </div>
     </header>
@@ -20,43 +29,43 @@
         <nav class="nav">
             <dl>
                 <dt>开发指南</dt>
-                <dd><a href="#">快速上手</a></dd>
-                <dd><a href="#">书写规范</a></dd>
-                <dd><a href="#">公共属性</a></dd>
+                <dd><a href="javascript:;">快速上手</a></dd>
+                <dd><a href="javascript:;">书写规范</a></dd>
+                <dd><a href="javascript:;">公共属性</a></dd>
             </dl>
             <dl>
                 <dt>页面元素</dt>
-                <dd><a href="#">颜色<i>color</i></a></dd>
-                <dd><a href="#">图标<i>zui-icon</i></a></dd>
-                <dd><a href="#">导航<i>zui-nav</i></a></dd>
-                <dd><a href="#">按钮<i>zui-btn</i></a></dd>
-                <dd><a href="#">输入框<i>zui-ipt</i></a></dd>
-                <dd><a href="#">单选组<i>zui-radio</i></a></dd>
-                <dd><a href="#">多选组<i>zui-checkbox</i></a></dd>
-                <dd><a href="#">下拉框<i>zui-select</i></a></dd>
-                <dd><a href="#">表单<i>zui-form</i></a></dd>
-                <dd><a href="#">表格<i>zui-table</i></a></dd>
-                <dd><a href="#">列表<i>zui-list</i></a></dd>
-                <dd><a href="#">选项卡<i>zui-tab</i></a></dd>
-                <dd><a href="#">手风琴<i>zui-fold</i></a></dd>
-                <dd><a href="#">树状菜单<i>zui-tree</i></a></dd>
-                <dd><a href="#">分页<i>page</i></a></dd>
-                <dd><a href="#">流布局<i>zui-tab</i></a></dd>
-                <dd><a href="#">其他<i>element</i></a></dd>
+                <dd><a href="javascript:;">颜色<i>color</i></a></dd>
+                <dd><a href="javascript:;">图标<i>zui-icon</i></a></dd>
+                <dd><a href="javascript:;">导航<i>zui-nav</i></a></dd>
+                <dd><a href="javascript:;">按钮<i>zui-btn</i></a></dd>
+                <dd><a href="javascript:;">输入框<i>zui-ipt</i></a></dd>
+                <dd><a href="javascript:;">单选组<i>zui-radio</i></a></dd>
+                <dd><a href="javascript:;">多选组<i>zui-checkbox</i></a></dd>
+                <dd><a href="javascript:;">下拉框<i>zui-select</i></a></dd>
+                <dd><a href="javascript:;">表单<i>zui-form</i></a></dd>
+                <dd><a href="javascript:;">表格<i>zui-table</i></a></dd>
+                <dd><a href="javascript:;">列表<i>zui-list</i></a></dd>
+                <dd><a href="javascript:;">选项卡<i>zui-tab</i></a></dd>
+                <dd><a href="javascript:;">手风琴<i>zui-fold</i></a></dd>
+                <dd><a href="javascript:;">树状菜单<i>zui-tree</i></a></dd>
+                <dd><a href="javascript:;">分页<i>zui-page</i></a></dd>
+                <dd><a href="javascript:;">流布局<i>zui-row</i></a></dd>
+                <dd><a href="javascript:;">其他<i>element</i></a></dd>
             </dl>
             <dl>
                 <dt>功能模块</dt>
-                <dd><a href="#">加载<i>loading</i></a></dd>
-                <dd><a href="#">进度条<i>progress</i></a></dd>
-                <dd><a href="#">警告窗<i>prompts</i></a></dd>
-                <dd><a href="#">信息窗<i>message</i></a></dd>
-                <dd><a href="#">弹出层<i>layer</i></a></dd>
-                <dd><a href="#">日期选择<i>date</i></a></dd>
-                <dd><a href="#">图片查看<i>imgview</i></a></dd>
-                <dd><a href="#">多图查看<i>imglayer</i></a></dd>
-                <dd><a href="#">图片轮播<i>imgfocus</i></a></dd>
-                <dd><a href="#">图片上传<i>uploadimg</i></a></dd>
-                <dd><a href="#">代码修饰<i>precode</i></a></dd>
+                <dd><a href="javascript:;">加载<i>loading</i></a></dd>
+                <dd><a href="javascript:;">进度条<i>progress</i></a></dd>
+                <dd><a href="javascript:;">警告窗<i>prompts</i></a></dd>
+                <dd><a href="javascript:;">信息窗<i>message</i></a></dd>
+                <dd><a href="javascript:;">弹出层<i>layer</i></a></dd>
+                <dd><a href="javascript:;">日期选择<i>date</i></a></dd>
+                <dd><a href="javascript:;">图片查看<i>imgview</i></a></dd>
+                <dd><a href="javascript:;">多图查看<i>imglayer</i></a></dd>
+                <dd><a href="javascript:;">图片轮播<i>imgfocus</i></a></dd>
+                <dd><a href="javascript:;">图片上传<i>uploadimg</i></a></dd>
+                <dd><a href="javascript:;">代码展示<i>precode</i></a></dd>
             </dl>
         </nav>
         <div class="main">
@@ -90,7 +99,7 @@
             <button class="zui-btn" zui="sm">按钮</button>
             <button class="zui-btn" zui="md">按钮</button>
             <button class="zui-btn" zui="lg">按钮</button>
-
+            <input class="zui-date" zui="sm" type="text">
             <p class="zui-h6">primary按钮</p>
             <button class="zui-btn" zui="sm,primary">按钮</button>
             <button class="zui-btn" zui="md,primary">按钮</button>
@@ -294,7 +303,7 @@
             <p class="zui-h6">左箭头列表</p>
             <ul class="zui-list" zui="arrow-left">
                 <li>123</li>
-                <li><a href="#">123</a></li>
+                <li><a href="javascript:;">123</a></li>
                 <li>123</li>
                 <li>123</li>
             </ul>
@@ -302,7 +311,7 @@
             <p class="zui-h6">左箭头列表-无边框</p>
             <ul class="zui-list" zui="arrow-left,nobor">
                 <li>123</li>
-                <li><a href="#">123</a></li>
+                <li><a href="javascript:;">123</a></li>
                 <li>123</li>
                 <li>123</li>
             </ul>

@@ -29,16 +29,24 @@
 // 内容宽度
 @wrap:1140px;
 
+// 滚动条颜色
+::-webkit-scrollbar-thumb{ background: @gray3;}
+
 // 文档页面css
+html,body,.wrapper{
+    height: 100%;
+}
 body{
-    background: @gray6;
+    background: @gray5;
+    min-width: @wrap;
+    padding-top: 50px;
 }
 
 .header{
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 2;
+    z-index: 12;
     width: 100%;
     height: 50px;
     line-height: 50px;
@@ -47,6 +55,12 @@ body{
     box-shadow: 0 0 10px @black;
     .wrapper{
         background: none;
+        overflow: hidden;
+    }
+    .logo{
+        img{
+            margin-top: 10px;
+        }
     }
     input{
         width: 240px;
@@ -63,6 +77,8 @@ body{
 
 .wrapper{
     width: @wrap;
+    height: 100%;
+    overflow-y: auto;
     margin: 0 auto;
     background: @white;
     .nav{
@@ -73,7 +89,8 @@ body{
         padding: 70px 0 20px 0;
         overflow-y: auto;
         border-right: 1px solid @gray5;
-        z-index: 1;
+        background: @white;
+        z-index: 10;
         dl{
             padding-bottom: 15px;
         }
@@ -81,7 +98,7 @@ body{
             display: block;
         }
         dt{
-            padding-left: 20px;
+            padding-left: 25px;
             background: @gray6;
             border-left: 3px solid @primary-active;
             margin-bottom: 15px;
@@ -90,7 +107,7 @@ body{
         }
         dd a{
             padding-left: 30px;
-            line-height: 30px;
+            line-height: 34px;
             i{
                 font-style: normal;
                 margin-left: 10px;
@@ -102,7 +119,8 @@ body{
         }
     }
     .main{
-        margin: 50px 0 20px 220px;
+        margin-left: 220px;
         padding: 20px;
+        background: @white;
     }
 }

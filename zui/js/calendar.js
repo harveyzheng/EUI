@@ -2,31 +2,30 @@
 jQuery.fn.extend({
     calendar: function(c) {
         function r() {
-            $("#" + c.controlId).find(".tabD a").mouseup(function() {
-                var a = new Date($("#" + c.controlId).find(".currentYear").text() + "/" + $("#" + c.controlId).find(".currentMonth").text() + "/1");
+            $('.zui-calendar').find(".zui-caltab-day a").mouseup(function() {
+                var a = new Date($('.zui-calendar').find(".currentYear").text() + "/" + $('.zui-calendar').find(".currentMonth").text() + "/1");
                 if ($(this).hasClass("prevD")) {
                     a.setMonth(a.getMonth() - 1);
                     a.setDate($(this).text());
                     var b = c.speed;
                     c.speed = 0;
-                    $("#" + c.controlId).find(".prevMonth").triggerHandler("mouseup");
+                    $('.zui-calendar').find(".zui-prev-month").triggerHandler("mouseup");
                     c.speed = b
                 } else if ($(this).hasClass("nextD")) {
                     a.setMonth(a.getMonth() + 1);
                     a.setDate($(this).text());
                     b = c.speed;
                     c.speed = 0;
-                    $("#" + c.controlId).find(".nextMonth").triggerHandler("mouseup");
+                    $('.zui-calendar').find(".zui-next-month").triggerHandler("mouseup");
                     c.speed = b
                 }
                 var d = $(this).text();
                 a = a.getFullYear() + "-" + (Number(a.getMonth() + 1) < 10 ? "0" + Number(a.getMonth() + 1) : Number(a.getMonth() + 1)) + "-" + (Number(d) < 10 ? "0" + d: d);
                 n.val(a);
-                $("#" + c.controlId + " div table a").removeClass("select");
-                $("#" + c.controlId + " .tabD a:contains('" + d + "')").each(function() {
+                $('.zui-calendar' + " div table a").removeClass("select");
+                $('.zui-calendar' + " .zui-caltab-day a:contains('" + d + "')").each(function() {
                     d == $(this).text() && !$(this).hasClass("prevD") && !$(this).hasClass("nextD") && $(this).addClass("select")
                 });
-                $("#" + c.controlId).hide();
                 c.callback()
             }).hover(function() {
                 $(this).addClass("hover")
@@ -36,11 +35,11 @@ jQuery.fn.extend({
             })
         }
         function u() {
-            $("#" + c.controlId).find(".tabM a").mouseup(function() {
-                var a = s(Number($("#" + c.controlId).find(".currentYear").text()), Number($(this).attr("val")));
+            $('.zui-calendar').find(".zui-caltab-month a").mouseup(function() {
+                var a = s(Number($('.zui-calendar').find(".currentYear").text()), Number($(this).attr("val")));
                 D(a);
                 r();
-                $("#" + c.controlId).find(".currentMonth").text(Number($(this).attr("val")) + 1)
+                $('.zui-calendar').find(".currentMonth").text(Number($(this).attr("val")) + 1)
             }).hover(function() {
                 $(this).addClass("hover")
             },
@@ -49,11 +48,11 @@ jQuery.fn.extend({
             })
         }
         function v() {
-            $("#" + c.controlId).find(".tabY a").mouseup(function() {
-                var a = s(Number($(this).text()), Number($("#" + c.controlId).find(".currentMonth").text()) - 1);
+            $('.zui-calendar').find(".zui-caltab-year a").mouseup(function() {
+                var a = s(Number($(this).text()), Number($('.zui-calendar').find(".currentMonth").text()) - 1);
                 D(a);
                 r();
-                $("#" + c.controlId).find(".currentYear").text(Number($(this).text()))
+                $('.zui-calendar').find(".currentYear").text(Number($(this).text()))
             }).hover(function() {
                 $(this).addClass("hover")
             },
@@ -74,13 +73,12 @@ jQuery.fn.extend({
             newDate.setMonth(newDate.getMonth() + 1);
             newDate.setDate(0);
             var o = newDate.getDate(),
-            g = "<table class='tabD'>";
+            g = "<table class='zui-caltab-day'>";
             g += "<tr><th>\u65e5</th><th>\u4e00</th><th>\u4e8c</th><th>\u4e09</th><th>\u56db</th><th>\u4e94</th><th>\u516d</th></tr>";
             var i = w(),
             l = "",
             p = "",
             t = "";
-            c.complement || (t = "style='display:none'");
             for (var x = 0; x < 6; x++) {
                 g += "<tr>";
                 for (var y = 0; y < 7; y++) {
@@ -123,7 +121,7 @@ jQuery.fn.extend({
         }
         function z(a) {
             var b = w(),
-            d = "<table class='tabM'>";
+            d = "<table class='zui-caltab-month'>";
             d += "<tr>";
             d += "<td><a val='0' " + (a == b.getFullYear() && 0 == b.getMonth() ? "class='select'": "") + " " + (a == e && 0 == f ? "class='current'": "") + ">\u4e00\u6708</a></td>";
             d += "<td><a val='1' " + (a == b.getFullYear() && 1 == b.getMonth() ? "class='select'": "") + " " + (a == e && 1 == f ? "class='current'": "") + ">\u4e8c\u6708</a></td>";
@@ -147,12 +145,11 @@ jQuery.fn.extend({
         }
         function A(a) {
             a = Math.floor(a / 10) * 10;
-            var b = "<table class='tabY'>",
+            var b = "<table class='zui-caltab-year'>",
             d = w(),
             h = "",
             m = "",
             o = "";
-            c.complement || (o = "style='display:none'");
             for (var g = 0; g < 3; g++) {
                 b += "<tr>";
                 for (var i = 0; i < 4; i++) {
@@ -178,12 +175,12 @@ jQuery.fn.extend({
             return b
         }
         function B(a) {
-            var b = $("#" + c.controlId).find(".reserve"),
-            d = $("#" + c.controlId).find(".enabled");
+            var b = $('.zui-calendar').find(".zui-calendar-reserve"),
+            d = $('.zui-calendar').find(".zui-calendar-enabled");
             b.stop();
             d.stop();
-            b.removeClass("reserve").addClass("enabled");
-            d.removeClass("enabled").addClass("reserve");
+            b.removeClass("zui-calendar-reserve").addClass("zui-calendar-enabled");
+            d.removeClass("zui-calendar-enabled").addClass("zui-calendar-reserve");
             b.css({
                 "margin-left": d.width() + "px",
                 "margin-top": "0px"
@@ -202,12 +199,12 @@ jQuery.fn.extend({
             })
         }
         function C(a) {
-            var b = $("#" + c.controlId).find(".reserve"),
-            d = $("#" + c.controlId).find(".enabled");
+            var b = $('.zui-calendar').find(".zui-calendar-reserve"),
+            d = $('.zui-calendar').find(".zui-calendar-enabled");
             b.stop();
             d.stop();
-            b.removeClass("reserve").addClass("enabled");
-            d.removeClass("enabled").addClass("reserve");
+            b.removeClass("zui-calendar-reserve").addClass("zui-calendar-enabled");
+            d.removeClass("zui-calendar-enabled").addClass("zui-calendar-reserve");
             b.css({
                 "margin-left": "-" + d.width() + "px",
                 "margin-top": "0px"
@@ -226,15 +223,12 @@ jQuery.fn.extend({
             })
         }
         function D(a) {
-            var b = $("#" + c.controlId).find(".reserve"),
-            d = $("#" + c.controlId).find(".enabled");
+            var b = $('.zui-calendar').find(".zui-calendar-reserve"),
+            d = $('.zui-calendar').find(".zui-calendar-enabled");
             b.stop();
             d.stop();
-            b.removeClass("reserve").addClass("enabled");
-            d.removeClass("enabled").addClass("reserve");
-            $("#" + c.controlId).css({
-                "z-index": 1
-            });
+            b.removeClass("zui-calendar-reserve").addClass("zui-calendar-enabled");
+            d.removeClass("zui-calendar-enabled").addClass("zui-calendar-reserve");
 
             b.css({
                 "z-index": -1
@@ -257,9 +251,6 @@ jQuery.fn.extend({
             c.speed,
             function() {
                 d.empty();
-                $("#" + c.controlId).css({
-                    "z-index": 0
-                });
                 b.css({
                     "z-index": 0
                 });
@@ -269,15 +260,12 @@ jQuery.fn.extend({
             })
         }
         function E(a) {
-            var b = $("#" + c.controlId).find(".reserve"),
-            d = $("#" + c.controlId).find(".enabled");
+            var b = $('.zui-calendar').find(".zui-calendar-reserve"),
+            d = $('.zui-calendar').find(".zui-calendar-enabled");
             b.stop();
             d.stop();
-            b.removeClass("reserve").addClass("enabled");
-            d.removeClass("enabled").addClass("reserve");
-            $("#" + c.controlId).css({
-                "z-index": 1
-            });
+            b.removeClass("zui-calendar-reserve").addClass("zui-calendar-enabled");
+            d.removeClass("zui-calendar-enabled").addClass("zui-calendar-reserve");
             b.css({
                 "z-index": -1
             });
@@ -299,9 +287,6 @@ jQuery.fn.extend({
             c.speed,
             function() {
                 d.empty();
-                $("#" + c.controlId).css({
-                    "z-index": 0
-                });
                 b.css({
                     "z-index": 0
                 });
@@ -326,9 +311,7 @@ jQuery.fn.extend({
             return b
         }
         c = jQuery.extend({
-            controlId: $(this).attr("id") + "Calendar",
             speed: 200,
-            complement: true,
             readonly: true,
             upperLimit: NaN,
             lowerLimit: NaN,
@@ -348,15 +331,15 @@ jQuery.fn.extend({
         f = today.getMonth(),
         q = today.getDate(),
         k = "";
-        k += "<div id='" + c.controlId + "'class='calendar'>";
-        k += "  <div class='calMain'>";
-        k += "    <div class='calTitle'>";
-        k += "      <a class='prevMonth zui-icon-zuo'></a><span class='t_date'><span class='currentYearText'><a class='currentYear'>" + e + "</a>\u5e74</span><span class='currentMonthText'><a class='currentMonth'>" + (f + 1) + "</a>\u6708</span></span><a class='nextMonth zui-icon-you'></a>";
+        k += "<div class='zui-calendar'>";
+        k += "  <div class='zui-calendar-main'>";
+        k += "    <div class='zui-calendar-main-title'>";
+        k += "      <a class='zui-prev-month zui-icon-zuo'></a><span class='zui-calendar-main-title-tit'><span class='zui-year-txt'><a class='currentYear'>" + e + "</a>\u5e74</span><span class='zui-month-txt'><a class='currentMonth'>" + (f + 1) + "</a>\u6708</span></span><a class='zui-next-month zui-icon-you'></a>";
         k += "    </div>";
-        k += "    <div class='calContent'>";
-        k += "      <div class='reserve'>";
+        k += "    <div class='zui-calendar-main-con'>";
+        k += "      <div class='zui-calendar-reserve'>";
         k += "      </div>";
-        k += "      <div class='enabled'>";
+        k += "      <div class='zui-calendar-enabled'>";
         k += s(e, f);
         k += "      </div>";
         k += "    </div>";
@@ -364,10 +347,10 @@ jQuery.fn.extend({
         k += "</div>";
         $("body").append(k);
         r();
-        $("#" + c.controlId).find(".prevMonth").mouseup(function() {
-            if ($("#" + c.controlId).find(".enabled > .tabD").length > 0) {
-                var a = $("#" + c.controlId).find(".currentYear"),
-                b = $("#" + c.controlId).find(".currentMonth"),
+        $('.zui-calendar').find(".zui-prev-month").mouseup(function() {
+            if ($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-day").length > 0) {
+                var a = $('.zui-calendar').find(".currentYear"),
+                b = $('.zui-calendar').find(".currentMonth"),
                 d = s(Number(a.text()), Number(b.text()) - 2);
                 C(d);
                 if (Number(b.text()) != 1) b.text(Number(b.text()) - 1);
@@ -376,22 +359,22 @@ jQuery.fn.extend({
                     b.text("12")
                 }
                 r()
-            } else if ($("#" + c.controlId).find(".enabled > .tabM").length > 0) {
-                d = z(Number($("#" + c.controlId).find(".currentYear").text()) - 1);
+            } else if ($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-month").length > 0) {
+                d = z(Number($('.zui-calendar').find(".currentYear").text()) - 1);
                 C(d);
                 u();
-                $("#" + c.controlId).find(".currentYear").text(Number($("#" + c.controlId).find(".currentYear").text()) - 1)
-            } else if ($("#" + c.controlId).find(".enabled > .tabY").length > 0) {
-                d = A(Number($("#" + c.controlId).find(".currentYear").text()) - 10);
+                $('.zui-calendar').find(".currentYear").text(Number($('.zui-calendar').find(".currentYear").text()) - 1)
+            } else if ($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-year").length > 0) {
+                d = A(Number($('.zui-calendar').find(".currentYear").text()) - 10);
                 C(d);
                 v();
-                $("#" + c.controlId).find(".currentYear").text(Number($("#" + c.controlId).find(".currentYear").text()) - 10)
+                $('.zui-calendar').find(".currentYear").text(Number($('.zui-calendar').find(".currentYear").text()) - 10)
             }
         });
-        $("#" + c.controlId).find(".nextMonth").mouseup(function() {
-            if ($("#" + c.controlId).find(".enabled > .tabD").length > 0) {
-                var a = $("#" + c.controlId).find(".currentYear"),
-                b = $("#" + c.controlId).find(".currentMonth"),
+        $('.zui-calendar').find(".zui-next-month").mouseup(function() {
+            if ($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-day").length > 0) {
+                var a = $('.zui-calendar').find(".currentYear"),
+                b = $('.zui-calendar').find(".currentMonth"),
                 d = s(Number(a.text()), Number(b.text()));
                 B(d);
                 if (Number(b.text()) != 12) b.text(Number(b.text()) + 1);
@@ -400,37 +383,36 @@ jQuery.fn.extend({
                     b.text("1")
                 }
                 r()
-            } else if ($("#" + c.controlId).find(".enabled > .tabM").length > 0) {
-                d = z(Number($("#" + c.controlId).find(".currentYear").text()) + 1);
+            } else if ($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-month").length > 0) {
+                d = z(Number($('.zui-calendar').find(".currentYear").text()) + 1);
                 B(d);
                 u();
-                $("#" + c.controlId).find(".currentYear").text(Number($("#" + c.controlId).find(".currentYear").text()) + 1)
-            } else if ($("#" + c.controlId).find(".enabled > .tabY").length > 0) {
-                d = A(Number($("#" + c.controlId).find(".currentYear").text()) + 10);
+                $('.zui-calendar').find(".currentYear").text(Number($('.zui-calendar').find(".currentYear").text()) + 1)
+            } else if ($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-year").length > 0) {
+                d = A(Number($('.zui-calendar').find(".currentYear").text()) + 10);
                 B(d);
                 v();
-                $("#" + c.controlId).find(".currentYear").text(Number($("#" + c.controlId).find(".currentYear").text()) + 10)
+                $('.zui-calendar').find(".currentYear").text(Number($('.zui-calendar').find(".currentYear").text()) + 10)
             }
         });
-        $("#" + c.controlId).find(".currentMonthText").mouseup(function() {
-            if (! ($("#" + c.controlId).find(".enabled > .tabM").length > 0)) {
-                var a = z(Number($("#" + c.controlId).find(".currentYear").text()));
+        $('.zui-calendar').find(".zui-month-txt").mouseup(function() {
+            if (! ($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-month").length > 0)) {
+                var a = z(Number($('.zui-calendar').find(".currentYear").text()));
                 E(a);
                 u()
             }
         });
-        $("#" + c.controlId).find(".currentYearText").mouseup(function() {
-            if (! ($("#" + c.controlId).find(".enabled > .tabY").length > 0)) {
-                var a = A(Number($("#" + c.controlId).find(".currentYear").text()));
+        $('.zui-calendar').find(".zui-year-txt").mouseup(function() {
+            if (! ($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-year").length > 0)) {
+                var a = A(Number($('.zui-calendar').find(".currentYear").text()));
                 E(a);
                 v()
             }
         });
         n.bind("click focus",
         function() {
-            if ($("#" + c.controlId + ":hidden").length != 0) {
-                $(".calendar").hide();
-                var a = $("#" + c.controlId),
+            if ($('.zui-calendar' + ":hidden").length != 0) {
+                var a = $('.zui-calendar'),
                 b = F(n[0]),
                 d = b.x + Number(n.attr("clientLeft"))-1;
                 b = b.y + Number(n.attr("clientTop")) + Number(n.attr("clientHeight"))-1;
@@ -438,8 +420,8 @@ jQuery.fn.extend({
                     top: b + "px",
                     left: d + "px"
                 });
-                d = $("#" + c.controlId).width();
-                b = $("#" + c.controlId).height();
+                d = $('.zui-calendar').width();
+                b = $('.zui-calendar').height();
                 a.width(0);
                 a.height(0);
                 a.show().animate({
@@ -456,8 +438,8 @@ jQuery.fn.extend({
                 })
             }
         });
-        $(document).mouseup(function(a) {
-            if ($(a.target).attr("id") != n.attr("id") && ($(a.target).parentsUntil("#" + c.controlId).parent().length == 0 || $(a.target).parentsUntil("#" + c.controlId).parent()[0].id != c.controlId)) $("#" + c.controlId).hide()
+        $(document).mouseup(function(e) {
+            if ($(e.target).attr("class") != n.attr("class") && ($(e.target).parentsUntil('.zui-calendar').parent().length == 0 || $(e.target).parentsUntil('.zui-calendar').parent()[0].class != '.zui-calendar')) $('.zui-calendar').hide();
         })
     }
 });
