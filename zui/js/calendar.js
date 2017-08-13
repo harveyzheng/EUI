@@ -1,90 +1,132 @@
 
 jQuery.fn.extend({
     calendar: function(c) {
-        function r() {
-            $('.zui-calendar').find(".zui-caltab-day a").mouseup(function() {
-                var a = new Date($('.zui-calendar').find(".currentYear").text() + "/" + $('.zui-calendar').find(".currentMonth").text() + "/1");
+        // 初始化
+        c.upper=c.upper||NaN;
+        c.lower=c.lower||NaN;
+        c.wrap=c.wrap||'body';
+
+        let $n = $(this);
+        
+        // 开启选择器
+        let today = new Date;
+        let e = today.getFullYear();
+        let f = today.getMonth();
+        let q = today.getDate();
+        let that;
+        function cd(n){
+            let k = "";
+            k += "<div class='zui-calendar'>";
+            k += "  <div class='zui-calendar-main'>";
+            k += "    <div class='zui-calendar-main-title'>";
+            k += "      <a class='zui-prev-month zui-icon-zuo'></a><span class='zui-calendar-main-title-tit'><span class='zui-year-txt'><a class='currentYear'>" + e + "</a>\u5e74</span><span class='zui-month-txt'><a class='currentMonth'>" + (f + 1) + "</a>\u6708</span></span><a class='zui-next-month zui-icon-you'></a>";
+            k += "    </div>";
+            k += "    <div class='zui-calendar-main-con'>";
+            k += "      <div class='zui-calendar-reserve'>";
+            k += "      </div>";
+            k += "      <div class='zui-calendar-enabled'>";
+            k += setD(e, f);
+            k += "      </div>";
+            k += "    </div>";
+            k += "  </div>";
+            k += "</div>";
+            that=$(k);
+            $(c.wrap).append(that);
+
+            // 计算出现位置，是否超出可视范围
+            let t=()=>{
+                return n.offset().top + n.innerHeight()-$(c.wrap).offset().top+5;
+            }
+            let l=()=>{
+                return n.offset().left-$(c.wrap).offset().left;
+            };
+
+            // 出现位置
+            that.css({
+                'top': t(),
+                'left': l()
+            });
+
+            bindDay();
+            mp();
+        };
+        
+        // 绑定日期选择
+        function bindDay(){
+            that.find(".zui-caltab-day a").mouseup(function(){
+                let a = new Date(that.find(".currentYear").text() + "/" + that.find(".currentMonth").text() + "/1");
+                let d = $(this).text();
                 if ($(this).hasClass("prevD")) {
+                    // 如果选择上个月的天数
                     a.setMonth(a.getMonth() - 1);
-                    a.setDate($(this).text());
-                    var b = c.speed;
-                    c.speed = 0;
-                    $('.zui-calendar').find(".zui-prev-month").triggerHandler("mouseup");
-                    c.speed = b
+                    a.setDate(d);
+                    that.find(".zui-prev-month").triggerHandler("mouseup");
                 } else if ($(this).hasClass("nextD")) {
+                    // 如果选择下个月的天数
                     a.setMonth(a.getMonth() + 1);
-                    a.setDate($(this).text());
-                    b = c.speed;
-                    c.speed = 0;
-                    $('.zui-calendar').find(".zui-next-month").triggerHandler("mouseup");
-                    c.speed = b
-                }
-                var d = $(this).text();
+                    a.setDate(d);
+                    that.find(".zui-next-month").triggerHandler("mouseup");
+                };
+                // 输出日期
                 a = a.getFullYear() + "-" + (Number(a.getMonth() + 1) < 10 ? "0" + Number(a.getMonth() + 1) : Number(a.getMonth() + 1)) + "-" + (Number(d) < 10 ? "0" + d: d);
-                n.val(a);
-                $('.zui-calendar' + " div table a").removeClass("select");
-                $('.zui-calendar' + " .zui-caltab-day a:contains('" + d + "')").each(function() {
-                    d == $(this).text() && !$(this).hasClass("prevD") && !$(this).hasClass("nextD") && $(this).addClass("select")
+                $n.val(a);
+                $(".zui-calendar table a").removeClass("select");
+                // 给已选日期加标记
+                $(".zui-caltab-day a:contains('" + d + "')").each(function() {
+                    d == $(this).text() && !$(this).hasClass("prevD") && !$(this).hasClass("nextD") && $(this).addClass("select");
                 });
-                c.callback()
-            }).hover(function() {
-                $(this).addClass("hover")
-            },
-            function() {
-                $(this).removeClass("hover")
-            })
-        }
-        function u() {
-            $('.zui-calendar').find(".zui-caltab-month a").mouseup(function() {
-                var a = s(Number($('.zui-calendar').find(".currentYear").text()), Number($(this).attr("val")));
-                D(a);
-                r();
-                $('.zui-calendar').find(".currentMonth").text(Number($(this).attr("val")) + 1)
-            }).hover(function() {
-                $(this).addClass("hover")
-            },
-            function() {
-                $(this).removeClass("hover")
-            })
-        }
-        function v() {
-            $('.zui-calendar').find(".zui-caltab-year a").mouseup(function() {
-                var a = s(Number($(this).text()), Number($('.zui-calendar').find(".currentMonth").text()) - 1);
-                D(a);
-                r();
-                $('.zui-calendar').find(".currentYear").text(Number($(this).text()))
-            }).hover(function() {
-                $(this).addClass("hover")
-            },
-            function() {
-                $(this).removeClass("hover")
-            })
-        }
-        function s(a, b) {
-            newDate = new Date(a, b, 1);
+                that.remove();
+                // 执行回调函数
+                if(c.callback) c.callback();
+                return false;
+            });
+        };
+        
+        // 绑定月份选择
+        function bindMonth() {
+            that.find(".zui-caltab-month a").mouseup(function() {
+                let a = setD(Number(that.find(".currentYear").text()), Number($(this).attr("val")));
+                that.find(".currentMonth").text(Number($(this).attr("val")) + 1);
+                anim('close',a);
+                bindDay();
+            });
+        };
+        // 选择年份选择
+        function bindYear() {
+            that.find(".zui-caltab-year a").mouseup(function() {
+                let a = setD(Number($(this).text()), Number(that.find(".currentMonth").text()) - 1);
+                that.find(".currentYear").text(Number($(this).text()));
+                anim('close',a);
+                bindDay();
+            });
+        };
+        // 生成日期天数
+        function setD(a, b) {
+            let newDate = new Date(a, b, 1);
             newDate.setDate(0);
-            var d = 1,
-            h = newDate.getDate();
+            let d = 1;
+            let h = newDate.getDate();
             newDate.setDate(1);
             newDate.setMonth(newDate.getMonth() + 1);
-            var m = newDate.getDay();
-            if (m == 0) m = 7;
+            let m = newDate.getDay();
             h = h - m + 1;
             newDate.setMonth(newDate.getMonth() + 1);
             newDate.setDate(0);
-            var o = newDate.getDate(),
+            let o = newDate.getDate(),
             g = "<table class='zui-caltab-day'>";
             g += "<tr><th>\u65e5</th><th>\u4e00</th><th>\u4e8c</th><th>\u4e09</th><th>\u56db</th><th>\u4e94</th><th>\u516d</th></tr>";
-            var i = w(),
+            let i = w(),
             l = "",
             p = "",
             t = "";
-            for (var x = 0; x < 6; x++) {
+            let xx=5;
+            if(m>4&&o>30) xx=6;
+            for (let x = 0; x < xx; x++) {
                 g += "<tr>";
-                for (var y = 0; y < 7; y++) {
-                    var j = x * 7 + y + 1 - m;
+                for (let y = 0; y < 7; y++) {
+                    let j = x * 7 + y + 1 - m;
                     p = l = "";
-                    if (c.lowerLimit != NaN && c.lowerLimit > new Date(newDate.getFullYear(), newDate.getMonth(), j) || c.upperLimit != NaN && new Date(newDate.getFullYear(), newDate.getMonth(), j) > c.upperLimit) if (0 < j && j <= o) {
+                    if (c.lower != NaN && c.lower > new Date(newDate.getFullYear(), newDate.getMonth(), j) || c.upper != NaN && new Date(newDate.getFullYear(), newDate.getMonth(), j) > c.upper) if (0 < j && j <= o) {
                         if (newDate.getFullYear() == e && newDate.getMonth() == f && j == q) l = "current";
                         g += "<td><span class='" + l + "'>" + j + "</span></td>"
                     } else if (j <= 0) {
@@ -110,17 +152,18 @@ jQuery.fn.extend({
                         if (newDate.getFullYear() == e && newDate.getMonth() + 1 == f && d == q) l = "current";
                         if (newDate.getFullYear() == i.getFullYear() && newDate.getMonth() + 1 == i.getMonth() && d == i.getDate()) p = "select";
                         g += "<td><a class='nextD " + p + " " + l + "' " + t + ">" + d + "</a></td>";
-                        d++
+                        d++;
                     }
-                    g = g.replace("class=' '", "")
+                    g = g.replace("class=' '", "");
                 }
                 g += "</tr>"
             }
             g += "</table>";
-            return g
-        }
-        function z(a) {
-            var b = w(),
+            return g;
+        };
+        // 生成月份
+        function setM(a){
+            let b = w(),
             d = "<table class='zui-caltab-month'>";
             d += "<tr>";
             d += "<td><a val='0' " + (a == b.getFullYear() && 0 == b.getMonth() ? "class='select'": "") + " " + (a == e && 0 == f ? "class='current'": "") + ">\u4e00\u6708</a></td>";
@@ -142,17 +185,18 @@ jQuery.fn.extend({
             d += "</tr>";
             d += "</table>";
             return d
-        }
-        function A(a) {
+        };
+        // 生成年份
+        function setY(a) {
             a = Math.floor(a / 10) * 10;
-            var b = "<table class='zui-caltab-year'>",
+            let b = "<table class='zui-caltab-year'>",
             d = w(),
             h = "",
             m = "",
             o = "";
-            for (var g = 0; g < 3; g++) {
+            for (let g = 0; g < 3; g++) {
                 b += "<tr>";
-                for (var i = 0; i < 4; i++) {
+                for (let i = 0; i < 4; i++) {
                     m = h = "";
                     if (g + 1 * i + 1 != 1 && (g + 1) * (i + 1) != 12) {
                         if (a == d.getFullYear()) h = "select";
@@ -172,274 +216,120 @@ jQuery.fn.extend({
                 b += "</tr>"
             }
             b += "</table>";
-            return b
-        }
-        function B(a) {
-            var b = $('.zui-calendar').find(".zui-calendar-reserve"),
-            d = $('.zui-calendar').find(".zui-calendar-enabled");
-            b.stop();
-            d.stop();
-            b.removeClass("zui-calendar-reserve").addClass("zui-calendar-enabled");
-            d.removeClass("zui-calendar-enabled").addClass("zui-calendar-reserve");
-            b.css({
-                "margin-left": d.width() + "px",
-                "margin-top": "0px"
-            });
-            b.empty().append(a);
-            b.animate({
-                "margin-left": "0px"
-            },
-            c.speed);
-            d.animate({
-                "margin-left": "-" + d.width() + "px"
-            },
-            c.speed,
-            function() {
-                d.empty()
-            })
-        }
-        function C(a) {
-            var b = $('.zui-calendar').find(".zui-calendar-reserve"),
-            d = $('.zui-calendar').find(".zui-calendar-enabled");
-            b.stop();
-            d.stop();
-            b.removeClass("zui-calendar-reserve").addClass("zui-calendar-enabled");
-            d.removeClass("zui-calendar-enabled").addClass("zui-calendar-reserve");
-            b.css({
-                "margin-left": "-" + d.width() + "px",
-                "margin-top": "0px"
-            });
-            b.empty().append(a);
-            b.animate({
-                "margin-left": "0px"
-            },
-            c.speed);
-            d.animate({
-                "margin-left": d.width() + "px"
-            },
-            c.speed,
-            function() {
-                d.empty()
-            })
-        }
-        function D(a) {
-            var b = $('.zui-calendar').find(".zui-calendar-reserve"),
-            d = $('.zui-calendar').find(".zui-calendar-enabled");
-            b.stop();
-            d.stop();
-            b.removeClass("zui-calendar-reserve").addClass("zui-calendar-enabled");
-            d.removeClass("zui-calendar-enabled").addClass("zui-calendar-reserve");
-
-            b.css({
-                "z-index": -1
-            });
-            d.css({
-                "z-index": -1
-            });
-            b.css({
-                "margin-left": "0px",
-                "margin-top": d.height() + "px"
-            });
-            b.empty().append(a);
-            b.animate({
-                "margin-top": "0px"
-            },
-            c.speed);
-            d.animate({
-                "margin-top": "-" + d.width() + "px"
-            },
-            c.speed,
-            function() {
-                d.empty();
-                b.css({
-                    "z-index": 0
-                });
-                d.css({
-                    "z-index": 0
-                })
-            })
-        }
-        function E(a) {
-            var b = $('.zui-calendar').find(".zui-calendar-reserve"),
-            d = $('.zui-calendar').find(".zui-calendar-enabled");
-            b.stop();
-            d.stop();
-            b.removeClass("zui-calendar-reserve").addClass("zui-calendar-enabled");
-            d.removeClass("zui-calendar-enabled").addClass("zui-calendar-reserve");
-            b.css({
-                "z-index": -1
-            });
-            d.css({
-                "z-index": -1
-            });
-            b.css({
-                "margin-left": "0px",
-                "margin-top": "-" + d.height() + "px"
-            });
-            b.empty().append(a);
-            b.animate({
-                "margin-top": "0px"
-            },
-            c.speed);
-            d.animate({
-                "margin-top": d.width() + "px"
-            },
-            c.speed,
-            function() {
-                d.empty();
-                b.css({
-                    "z-index": 0
-                });
-                d.css({
-                    "z-index": 0
-                })
-            })
-        }
+            return b;
+        };
+        
+        // 切换
+        function anim(s,d,m){
+            let reserve=that.find(".zui-calendar-reserve");
+            let enabled=that.find(".zui-calendar-enabled");
+            if(s=='open'){
+                reserve.html(d);
+                reserve.css('top',36);
+            }else if(s=='close'){
+                reserve.empty();
+                reserve.css('top','-100%');
+            }else{
+                if(m){
+                    reserve.html(d);
+                }else{
+                    enabled.html(d);
+                }
+                
+            };
+        };
+     
         function w() {
-            re = /(\d\d\d\d)(\W)?(\d\d)(\W)?(\d\d)/g;
-            var a = n.val();
+            let re = /(\d\d\d\d)(\W)?(\d\d)(\W)?(\d\d)/g;
+            let a = $n.val();
             a = a.replace(re, "$1/$3/$5@").split("@")[0];
-            return new Date(a)
-        }
+            return new Date(a);
+        };
         function F(a) {
-            var b = [];
+            let b = [];
             b.x = a.offsetLeft;
             for (b.y = a.offsetTop; a = a.offsetParent;) {
                 b.x += a.offsetLeft;
                 b.y += a.offsetTop
-            }
-            return b
-        }
-        c = jQuery.extend({
-            speed: 200,
-            readonly: true,
-            upperLimit: NaN,
-            lowerLimit: NaN,
-            callback: function() {}
-        },
-        c || {});
-        var n = $(this);
-        if (c.readonly) {
-            n.attr("readonly", true);
-            n.bind("keydown",
-            function() {
-                if (event.keyCode == 8) event.keyCode = 0
-            })
-        }
-        today = new Date;
-        var e = today.getFullYear(),
-        f = today.getMonth(),
-        q = today.getDate(),
-        k = "";
-        k += "<div class='zui-calendar'>";
-        k += "  <div class='zui-calendar-main'>";
-        k += "    <div class='zui-calendar-main-title'>";
-        k += "      <a class='zui-prev-month zui-icon-zuo'></a><span class='zui-calendar-main-title-tit'><span class='zui-year-txt'><a class='currentYear'>" + e + "</a>\u5e74</span><span class='zui-month-txt'><a class='currentMonth'>" + (f + 1) + "</a>\u6708</span></span><a class='zui-next-month zui-icon-you'></a>";
-        k += "    </div>";
-        k += "    <div class='zui-calendar-main-con'>";
-        k += "      <div class='zui-calendar-reserve'>";
-        k += "      </div>";
-        k += "      <div class='zui-calendar-enabled'>";
-        k += s(e, f);
-        k += "      </div>";
-        k += "    </div>";
-        k += "  </div>";
-        k += "</div>";
-        $("body").append(k);
-        r();
-        $('.zui-calendar').find(".zui-prev-month").mouseup(function() {
-            if ($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-day").length > 0) {
-                var a = $('.zui-calendar').find(".currentYear"),
-                b = $('.zui-calendar').find(".currentMonth"),
-                d = s(Number(a.text()), Number(b.text()) - 2);
-                C(d);
-                if (Number(b.text()) != 1) b.text(Number(b.text()) - 1);
-                else {
-                    a.text(Number(a.text()) - 1);
-                    b.text("12")
-                }
-                r()
-            } else if ($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-month").length > 0) {
-                d = z(Number($('.zui-calendar').find(".currentYear").text()) - 1);
-                C(d);
-                u();
-                $('.zui-calendar').find(".currentYear").text(Number($('.zui-calendar').find(".currentYear").text()) - 1)
-            } else if ($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-year").length > 0) {
-                d = A(Number($('.zui-calendar').find(".currentYear").text()) - 10);
-                C(d);
-                v();
-                $('.zui-calendar').find(".currentYear").text(Number($('.zui-calendar').find(".currentYear").text()) - 10)
-            }
+            };
+            return b;
+        };
+        
+        function mp(){
+            that.find(".zui-prev-month").mouseup(function() {
+                if ($('.zui-calendar').find(".zui-calendar-reserve > .zui-caltab-month").length > 0) {
+                    d = setM(Number($('.zui-calendar').find(".currentYear").text()) - 1);
+                    anim('prev',d,true);
+                    bindMonth();
+                    $('.zui-calendar').find(".currentYear").text(Number($('.zui-calendar').find(".currentYear").text()) - 1)
+                } else if ($('.zui-calendar').find(".zui-calendar-reserve > .zui-caltab-year").length > 0) {
+                    d = setY(Number($('.zui-calendar').find(".currentYear").text()) - 10);
+                    anim('prev',d,true);
+                    bindYear();
+                    $('.zui-calendar').find(".currentYear").text(Number($('.zui-calendar').find(".currentYear").text()) - 10)
+                }else if ($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-day").length > 0) {
+                    let a = $('.zui-calendar').find(".currentYear"),
+                    b = $('.zui-calendar').find(".currentMonth"),
+                    d = setD(Number(a.text()), Number(b.text()) - 2);
+                    anim('prev',d);
+                    if (Number(b.text()) != 1) b.text(Number(b.text()) - 1);
+                    else {
+                        a.text(Number(a.text()) - 1);
+                        b.text("12");
+                    }
+                    bindDay();
+                };
+                return false;
+            });
+            that.find(".zui-next-month").mouseup(function() {
+                if (that.find(".zui-calendar-reserve > .zui-caltab-month").length > 0) {
+                    d = setM(Number(that.find(".currentYear").text()) + 1);
+                    anim('next',d,true);
+                    bindMonth();
+                    that.find(".currentYear").text(Number(that.find(".currentYear").text()) + 1)
+                } else if (that.find(".zui-calendar-reserve > .zui-caltab-year").length > 0) {
+                    d = setY(Number(that.find(".currentYear").text()) + 10);
+                    anim('next',d,true);
+                    bindYear();
+                    that.find(".currentYear").text(Number(that.find(".currentYear").text()) + 10)
+                }else if (that.find(".zui-calendar-enabled > .zui-caltab-day").length > 0) {
+                    let a = that.find(".currentYear"),
+                    b = that.find(".currentMonth"),
+                    d = setD(Number(a.text()), Number(b.text()));
+                    anim('next',d);
+                    if (Number(b.text()) != 12) b.text(Number(b.text()) + 1);
+                    else {
+                        a.text(Number(a.text()) + 1);
+                        b.text("1");
+                    }
+                    bindDay();
+                };
+                return false;
+            });
+            that.find(".zui-month-txt").mouseup(function() {
+                let a = setM(Number(that.find(".currentYear").text()));
+                anim('open',a);
+                bindMonth();
+                return false;
+            });
+            that.find(".zui-year-txt").mouseup(function() {
+                let a = setY(Number(that.find(".currentYear").text()));
+                anim('open',a);
+                bindYear();
+                return false;
+            });
+        };
+
+        // zui-date绑定
+        $n.on("click",function() {
+            cd($(this));
         });
-        $('.zui-calendar').find(".zui-next-month").mouseup(function() {
-            if ($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-day").length > 0) {
-                var a = $('.zui-calendar').find(".currentYear"),
-                b = $('.zui-calendar').find(".currentMonth"),
-                d = s(Number(a.text()), Number(b.text()));
-                B(d);
-                if (Number(b.text()) != 12) b.text(Number(b.text()) + 1);
-                else {
-                    a.text(Number(a.text()) + 1);
-                    b.text("1")
-                }
-                r()
-            } else if ($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-month").length > 0) {
-                d = z(Number($('.zui-calendar').find(".currentYear").text()) + 1);
-                B(d);
-                u();
-                $('.zui-calendar').find(".currentYear").text(Number($('.zui-calendar').find(".currentYear").text()) + 1)
-            } else if ($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-year").length > 0) {
-                d = A(Number($('.zui-calendar').find(".currentYear").text()) + 10);
-                B(d);
-                v();
-                $('.zui-calendar').find(".currentYear").text(Number($('.zui-calendar').find(".currentYear").text()) + 10)
-            }
+
+        // 点击外部隐藏
+        $(document).mouseup(function(e){
+            if($(e.target).attr("class") != $n.attr("class") && $(e.target).parents('.zui-calendar').length==0){
+                that.remove();
+            };
         });
-        $('.zui-calendar').find(".zui-month-txt").mouseup(function() {
-            if (! ($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-month").length > 0)) {
-                var a = z(Number($('.zui-calendar').find(".currentYear").text()));
-                E(a);
-                u()
-            }
-        });
-        $('.zui-calendar').find(".zui-year-txt").mouseup(function() {
-            if (! ($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-year").length > 0)) {
-                var a = A(Number($('.zui-calendar').find(".currentYear").text()));
-                E(a);
-                v()
-            }
-        });
-        n.bind("click focus",
-        function() {
-            if ($('.zui-calendar' + ":hidden").length != 0) {
-                var a = $('.zui-calendar'),
-                b = F(n[0]),
-                d = b.x + Number(n.attr("clientLeft"))-1;
-                b = b.y + Number(n.attr("clientTop")) + Number(n.attr("clientHeight"))-1;
-                a.css({
-                    top: b + "px",
-                    left: d + "px"
-                });
-                d = $('.zui-calendar').width();
-                b = $('.zui-calendar').height();
-                a.width(0);
-                a.height(0);
-                a.show().animate({
-                    width: d + "px",
-                    height: b + "px"
-                },
-                c.speed);
-                a.bind("selectstart",
-                function() {
-                    return false
-                }).bind("mousedown",
-                function() {
-                    return false
-                })
-            }
-        });
-        $(document).mouseup(function(e) {
-            if ($(e.target).attr("class") != n.attr("class") && ($(e.target).parentsUntil('.zui-calendar').parent().length == 0 || $(e.target).parentsUntil('.zui-calendar').parent()[0].class != '.zui-calendar')) $('.zui-calendar').hide();
-        })
     }
 });

@@ -1049,8 +1049,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 // 日期插件
 .zui-calendar{ 
     position: absolute; 
-    width:210px; 
-    height: 242px;
+    width: 220px;
     .zui-shadow;
     border-radius: 4px;
     background:@white; 
@@ -1064,12 +1063,10 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     &-main{
         &-title{
             width: 100%; 
-            height: 35px; 
             line-height: 34px; 
             overflow: hidden;
             position: relative;
             background: @white;
-            border-bottom: 1px solid @primary;
             &-tit{
                 display: block;
                 color: @gray1;
@@ -1100,12 +1097,37 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
             }
         }
         &-con{
-            .zui-calendar-enabled,.zui-calendar-reserve{
+            .zui-calendar-reserve{
                 position: absolute; 
-                width:100%; 
+                width:100%;
+                height: 100%;
+                background: @white;
+                z-index: 1;
+                top: -100%;
+                left: 0;
+                .zui-anim-fast;
+            }
+            .zui-calendar-enabled{
+                padding-bottom: 5px;
             }
             table{
                 width: 100%; 
+            }
+            .zui-caltab-month td, .zui-caltab-year td,.zui-caltab-day{
+                a{
+                    display: block;
+                    color: @gray1;
+                }
+                .current{
+                    color: @primary;
+                }
+                a:hover,.select{
+                    color: @white;
+                    background: @primary-hover;
+                }
+                .select{
+                    background: @primary-active;
+                }
             }
             .zui-caltab-day{
                 line-height: 30px; 
@@ -1126,18 +1148,8 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
                     span{
                         color: @gray3;
                     }
-                    a{
-                        color: @gray1;
-                    }
                     .nextD,.prevD{
                         color: @gray4;
-                    }
-                    .hover,.select{
-                        color: @white;
-                        background: @primary-hover;
-                    }
-                    .select{
-                        background: @primary-active;
                     }
                 }
             }
@@ -1145,26 +1157,6 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
                 width: 25%;
                 height: 50px; 
                 line-height: 50px;
-                a{
-                    display: block;
-                    color: @gray1;
-                }
-                .hover{
-                    color: @primary-hover;
-                }
-                .current{
-                    color: @primary-active;
-                }
-            }
-            .zui-caltab-month{ 
-                a{
-                    .zui-radius;
-                }
-            }
-            .zui-caltab-year{
-                a{
-                    border-radius: 4px;
-                }
             }
         }
     }
