@@ -11,6 +11,20 @@ $(function(){
         ['loading','progress','prompts','message','layer','date','imgview','imglayer','imgfocus','uploadimg','precode']
     ];
 
+    // 
+    let ld=d=>{
+        // 加载页面
+        $('.main').load('page/'+d[0]+'.html',()=>{
+            // 加载完回调
+            localStorage.url=d;
+            $('.wrapper').animate({scrollTop:0},0);
+            zui.init();
+            $('.nav a').removeClass('on');
+            $('dl').eq(d[1]).find('a').eq(d[2]).addClass('on');
+        });
+    };
+    if(localStorage.url) ld(localStorage.url.split(','));
+
     // 切换内容
     $('.nav a').click(function(){
         // 列表索引
@@ -19,15 +33,10 @@ $(function(){
         let i=$(this).parent().index()-1;
         // 页面名称
         let pg=page[x][i];
-        // 开启loading
-
         // 加载页面
-        $('.main').load('page/'+pg+'.html',()=>{
-            // 加载完回调
-            $('.wrapper').animate({scrollTop:0},0);
-            // 关闭loading
-        });
+        ld([pg,x,i]);
     });
+    
 
 
 

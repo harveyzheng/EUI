@@ -114,7 +114,7 @@ body{
                 color: @gray3;
             }
         }
-        dd a:hover{
+        dd a:hover,dd a.on{
             color: @primary-active;
         }
     }
@@ -123,5 +123,68 @@ body{
         margin-left: 220px;
         padding: 20px;
         background: @white;
+        .main-title{
+            color: @gray1;
+            font-size: 22px;
+        }
+        .main-info{
+            background: @gray6;
+            padding: 10px;
+            border-left: 3px solid @primary-active;
+            line-height: 22px;
+            margin: 20px auto;
+            color: @gray2;
+            span{
+                margin: 0 10px;
+                color: @gray1;
+            }
+            a{
+                color: @gray2;
+                border-bottom: 1px solid @gray2;
+            }
+            a:hover{
+                color: @primary;
+                border-bottom: 1px solid @primary;
+            }
+        }
+    }
+}
+
+// icon页面
+.iconpage{
+    td{
+        width: 20%;
+        line-height: 24px;
+    }
+    i{
+        font-size: 24px;
+    }
+    span{
+        display: block;
+        color: @gray2;
+    }
+    td:hover span{
+        color: @primary;
+    }
+}
+// 颜色页面
+.colorpage{
+    line-height: 24px;
+    div{
+        padding: 10px;
+        border-radius: 4px;
+    }
+}
+// 按钮页面
+.btnpage{
+    p{ margin: 40px auto 15px;}
+    .zui-table{
+        margin-top: 15px;
+        .con{
+            width: 80%;
+            span{
+                margin-right: 15px;
+            }
+        }
     }
 }

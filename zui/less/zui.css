@@ -38,7 +38,8 @@ button {
 }
 a,
 a:active,
-a:hover {
+a:hover,
+input[type=range]:focus {
   outline: none;
   text-decoration: none;
   color: #232527;
@@ -59,7 +60,8 @@ summary {
 ins {
   text-decoration: none;
 }
-input[class*=".zui-"] {
+input[class*=".zui-"],
+input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
 }
 input[class*=".zui-"],
@@ -80,6 +82,22 @@ textarea::-webkit-input-placeholder {
 }
 .zui-upload-file[type="file"] {
   color: transparent;
+}
+input[type="range"]::-webkit-slider-thumb {
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  background-color: #66CCFF;
+  border-radius: 300px !important;
+  box-shadow: none;
+}
+input[type="range"] {
+  width: 100%;
+  vertical-align: middle;
+  background-color: #e0e2e4;
+  border-radius: 300px !important;
+  height: 5px;
+  box-shadow: none;
 }
 ::-webkit-scrollbar {
   width: 7px;
@@ -308,7 +326,11 @@ h6 {
 .zui-ipt[disabled],
 .zui-btn[disabled],
 .zui-btn[disabled]:hover,
-.zui-btn[disabled]:active {
+.zui-btn[disabled]:active,
+.zui-ipt[zui*="disabled"],
+.zui-btn[zui*="disabled"],
+.zui-btn[zui*="disabled"]:hover,
+.zui-btn[zui*="disabled"]:active {
   cursor: not-allowed;
   color: #898b8d;
   border: 1px solid #e0e2e4;
@@ -325,6 +347,20 @@ h6 {
 [zui*="danger"] {
   color: #fff !important;
 }
+.zui-size-md,
+[zui*="md"],
+.zui-btn,
+.zui-ipt {
+  padding: 0 15px;
+  height: 38px;
+  font-size: 14px;
+}
+.zui-size-md i,
+[zui*="md"] i,
+.zui-btn i,
+.zui-ipt i {
+  font-size: 16px;
+}
 .zui-size-sm,
 [zui*="sm"] {
   padding: 0 10px;
@@ -333,16 +369,6 @@ h6 {
 }
 .zui-size-sm i,
 [zui*="sm"] i {
-  font-size: 16px;
-}
-.zui-size-md,
-[zui*="md"] {
-  padding: 0 15px;
-  height: 38px;
-  font-size: 14px;
-}
-.zui-size-md i,
-[zui*="md"] i {
   font-size: 16px;
 }
 .zui-size-lg,
@@ -362,10 +388,12 @@ h6 {
   border: 1px solid #e0e2e4;
   border-radius: 4px;
   color: #232527;
+  vertical-align: middle;
 }
 .zui-date-wrap {
   display: inline-block;
   position: relative;
+  vertical-align: middle;
 }
 .zui-date-wrap .zui-date {
   width: 100%;
@@ -386,7 +414,7 @@ h6 {
 }
 .zui-radius,
 [zui*="radius"] {
-  border-radius: 300px;
+  border-radius: 300px !important;
 }
 .zui-btn + .zui-btn,
 .zui-ipt + .zui-btn,
@@ -415,12 +443,12 @@ h6 {
   position: absolute;
   left: 0;
   background: #fff;
-  box-shadow: 0 0 7px #e0e2e4;
-  border: 1px solid #e0e2e4;
+  box-shadow: 0 0 7px #cdcecf;
   border-radius: 4px;
   z-index: -1;
   overflow-y: auto;
   opacity: 0;
+  overflow: hidden;
   transform: translateY(25px);
 }
 .zui-select-wrap .zui-option-list dd {
@@ -537,6 +565,7 @@ h6 {
 }
 .zui-radio-label,
 .zui-checkbox-label {
+  vertical-align: middle;
   display: inline-block;
 }
 .zui-radio-label span,
@@ -787,6 +816,9 @@ h6 {
   border: none;
 }
 .zui-table[zui*="hover"] tbody tr:hover {
+  background: #f8f8f8;
+}
+.zui-table[zui*="even"] tbody tr:nth-of-type(even) {
   background: #f8f8f8;
 }
 .zui-list {
@@ -1054,7 +1086,7 @@ h6 {
   font-size: 10px;
   z-index: 3;
   width: 20px;
-  border-radius: 300px;
+  border-radius: 300px !important;
 }
 .zui-upload-item:hover .zui-upload-delete {
   display: block;
@@ -1140,15 +1172,15 @@ h6 {
 }
 .zui-calendar {
   position: absolute;
-  width: 220px;
+  width: 210px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   border-radius: 4px;
   background: #fff;
   overflow: hidden;
   text-align: center;
   z-index: 1110;
-  top: 120px;
-  left: 400px;
+  top: 0;
+  left: 0;
 }
 .zui-calendar-main-title {
   width: 100%;
@@ -1156,6 +1188,7 @@ h6 {
   overflow: hidden;
   position: relative;
   background: #fff;
+  z-index: 10;
 }
 .zui-calendar-main-title-tit {
   display: block;
@@ -1227,26 +1260,29 @@ h6 {
 .zui-calendar-main-con .zui-caltab-month td .select,
 .zui-calendar-main-con .zui-caltab-year td .select,
 .zui-calendar-main-con .zui-caltab-day .select {
+  color: #fff !important;
   background: #55BBEE;
 }
 .zui-calendar-main-con .zui-caltab-day {
-  line-height: 30px;
+  line-height: 24px;
 }
 .zui-calendar-main-con .zui-caltab-day th {
   background: #66CCFF;
   font-size: 13px;
   font-weight: normal;
   color: #fff;
+  line-height: 30px;
 }
 .zui-calendar-main-con .zui-caltab-day td {
   width: 30px;
+  padding: 3px;
 }
 .zui-calendar-main-con .zui-caltab-day td a,
 .zui-calendar-main-con .zui-caltab-day td span {
   display: block;
-  width: 30px;
-  height: 30px;
-  border-radius: 300px;
+  width: 24px;
+  border-radius: 300px !important;
+  transition: all 0.2s;
 }
 .zui-calendar-main-con .zui-caltab-day td span {
   color: #cdcecf;
@@ -1255,9 +1291,36 @@ h6 {
 .zui-calendar-main-con .zui-caltab-day td .prevD {
   color: #e0e2e4;
 }
+.zui-calendar-main-con .zui-caltab-day td .nextD:hover,
+.zui-calendar-main-con .zui-caltab-day td .prevD:hover {
+  color: #fff;
+}
 .zui-calendar-main-con .zui-caltab-month td,
 .zui-calendar-main-con .zui-caltab-year td {
   width: 25%;
   height: 50px;
   line-height: 50px;
+}
+.zui-calendar-main-con .zui-calendar-times {
+  padding: 5px;
+}
+.zui-calendar-main-con .zui-calendar-times-item {
+  line-height: 30px;
+}
+.zui-calendar-main-con .zui-calendar-times-title,
+.zui-calendar-main-con .zui-calendar-times-con {
+  display: inline-block;
+}
+.zui-calendar-main-con .zui-calendar-times-title {
+  width: 20%;
+}
+.zui-calendar-main-con .zui-calendar-times-con {
+  width: 80%;
+}
+.zui-calendar-main-con .zui-calendar-times-con i {
+  font-style: normal;
+  margin: 0 3px;
+}
+.zui-calendar-main-con .zui-calendar-times-con i.on {
+  color: #66CCFF;
 }

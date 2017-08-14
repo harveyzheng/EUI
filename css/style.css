@@ -83,7 +83,8 @@ body {
   margin-left: 10px;
   color: #cdcecf;
 }
-.wrapper .nav dd a:hover {
+.wrapper .nav dd a:hover,
+.wrapper .nav dd a.on {
   color: #55BBEE;
 }
 .wrapper .main {
@@ -91,4 +92,61 @@ body {
   margin-left: 220px;
   padding: 20px;
   background: #fff;
+}
+.wrapper .main .main-title {
+  color: #46484a;
+  font-size: 22px;
+}
+.wrapper .main .main-info {
+  background: #f8f8f8;
+  padding: 10px;
+  border-left: 3px solid #55BBEE;
+  line-height: 22px;
+  margin: 20px auto;
+  color: #898b8d;
+}
+.wrapper .main .main-info span {
+  margin: 0 10px;
+  color: #46484a;
+}
+.wrapper .main .main-info a {
+  color: #898b8d;
+  border-bottom: 1px solid #898b8d;
+}
+.wrapper .main .main-info a:hover {
+  color: #66CCFF;
+  border-bottom: 1px solid #66CCFF;
+}
+.iconpage td {
+  width: 20%;
+  line-height: 24px;
+}
+.iconpage i {
+  font-size: 24px;
+}
+.iconpage span {
+  display: block;
+  color: #898b8d;
+}
+.iconpage td:hover span {
+  color: #66CCFF;
+}
+.colorpage {
+  line-height: 24px;
+}
+.colorpage div {
+  padding: 10px;
+  border-radius: 4px;
+}
+.btnpage p {
+  margin: 40px auto 15px;
+}
+.btnpage .zui-table {
+  margin-top: 15px;
+}
+.btnpage .zui-table .con {
+  width: 80%;
+}
+.btnpage .zui-table .con span {
+  margin-right: 15px;
 }

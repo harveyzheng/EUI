@@ -20,14 +20,30 @@ ul{ list-style: none;}
 h1, h2, h3, h4, h5, h6{ font-weight: normal;}
 table{ border-collapse: collapse; border-spacing: 0;}
 a img, img, button{ border:none;}
-a, a:active, a:hover{ outline: none; text-decoration: none; color: @black; cursor: pointer;}
+a, a:active, a:hover, input[type=range]:focus{ outline: none; text-decoration: none; color: @black; cursor: pointer;}
 article, aside, details, figcaption, figure, footer, header, nav, section, summary{ display: block;}
 ins{ text-decoration: none;}
-input[class*=".zui-"]{ -webkit-appearance: none;}
+input[class*=".zui-"],input[type="range"]::-webkit-slider-thumb{ -webkit-appearance: none;}
 input[class*=".zui-"], button[class*=".zui-"]{ vertical-align: middle;}
 button, select, .zui-switch-label, .zui-radio-label, .zui-checkbox-label{ cursor: pointer; user-select: none;}
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder{ color: @gray2;}
 .zui-upload-file[type="file"]{ color: transparent;}
+input[type="range"]::-webkit-slider-thumb{
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
+    background-color: @primary;
+    .zui-radius;
+    box-shadow: none;
+}
+input[type="range"]{
+    width: 100%;
+    vertical-align: middle;
+    background-color: @gray4;
+    .zui-radius;
+    height:5px;
+    box-shadow: none;
+}
 
 // 滚动条美化
 ::-webkit-scrollbar{ width: 7px; height: 7px;}
@@ -185,7 +201,8 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-btn[zui*="danger"]:hover{ background: @danger-hover;}
 .zui-btn[zui*="danger"]:active{ background: @danger-active;}
 
-.zui-ipt[disabled],.zui-btn[disabled], .zui-btn[disabled]:hover, .zui-btn[disabled]:active{ 
+.zui-ipt[disabled],.zui-btn[disabled], .zui-btn[disabled]:hover, .zui-btn[disabled]:active,
+.zui-ipt[zui*="disabled"],.zui-btn[zui*="disabled"], .zui-btn[zui*="disabled"]:hover, .zui-btn[zui*="disabled"]:active{ 
     cursor: not-allowed; 
     color:@gray2;
     .zui-border;
@@ -199,16 +216,16 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 }
 
 // 大小
+.zui-size-md, [zui*="md"], .zui-btn, .zui-ipt{
+    padding: 0 15px; 
+    height: 38px; 
+    font-size: 14px;
+    i{ font-size: 16px;}
+}
 .zui-size-sm, [zui*="sm"]{
     padding: 0 10px; 
     height: 28px; 
     font-size: 12px;
-    i{ font-size: 16px;}
-}
-.zui-size-md, [zui*="md"]{
-    padding: 0 15px; 
-    height: 38px; 
-    font-size: 14px;
     i{ font-size: 16px;}
 }
 .zui-size-lg, [zui*="lg"]{
@@ -224,12 +241,14 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     text-indent: 10px; 
     .zui-border;
     color: @black;
+    vertical-align: middle;
 }
 
 // zui-date时间选择
 .zui-date-wrap{
     display: inline-block;
     position: relative;
+    vertical-align: middle;
     .zui-date{
         width: 100%;
         cursor: pointer;
@@ -250,7 +269,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 
 // 圆角
 .zui-radius, [zui*="radius"]{
-    border-radius: 300px;
+    border-radius: 300px !important;
 }
 
 // 边距
@@ -276,11 +295,12 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         position: absolute;
         left: 0;
         background: @white;
-        box-shadow: 0 0 7px @gray4;
-        .zui-border;
+        box-shadow: 0 0 7px @gray3;
+        border-radius: 4px;
         z-index: -1;
         overflow-y: auto;
         opacity: 0;
+        overflow: hidden;
         transform:translateY(25px);
         dd{
             padding: 0 10px;
@@ -403,6 +423,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 }
 
 .zui-radio-label, .zui-checkbox-label{
+    vertical-align: middle;
     display: inline-block;
     span{
         margin-left: 7px;
@@ -446,7 +467,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         width: 60px;
         height: 24px;
         line-height: 22px;
-        border-radius: 300px !important;
+        .zui-radius;
         .zui-border;
         background: @white;
         .zui-icon-switch{
@@ -663,6 +684,12 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 
 .zui-table[zui*="hover"]{
     tbody tr:hover{
+        background: @gray6;
+    }
+}
+
+.zui-table[zui*="even"]{
+    tbody tr:nth-of-type(even){
         background: @gray6;
     }
 }
@@ -1049,17 +1076,15 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 // 日期插件
 .zui-calendar{ 
     position: absolute; 
-    width: 220px;
+    width: 210px;
     .zui-shadow;
     border-radius: 4px;
     background:@white; 
     overflow: hidden;
     text-align: center;
     z-index: 1110;
-
-    top:120px;
-    left: 400px;
-
+    top:0;
+    left: 0;
     &-main{
         &-title{
             width: 100%; 
@@ -1067,6 +1092,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
             overflow: hidden;
             position: relative;
             background: @white;
+            z-index: 10;
             &-tit{
                 display: block;
                 color: @gray1;
@@ -1126,24 +1152,27 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
                     background: @primary-hover;
                 }
                 .select{
+                    color: @white !important;
                     background: @primary-active;
                 }
             }
             .zui-caltab-day{
-                line-height: 30px; 
+                line-height: 24px; 
                 th{
                     background: @primary; 
                     font-size: 13px;
                     font-weight: normal; 
                     color: @white;
+                    line-height: 30px;
                 }
                 td{
                     width: 30px;
+                    padding: 3px;
                     a,span{
                         display: block;
-                        width: 30px;
-                        height: 30px;
+                        width: 24px;
                         .zui-radius;
+                        .zui-anim-fast;
                     }
                     span{
                         color: @gray3;
@@ -1151,12 +1180,37 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
                     .nextD,.prevD{
                         color: @gray4;
                     }
+                    .nextD:hover,.prevD:hover{
+                        color: @white;
+                    }
                 }
             }
             .zui-caltab-month td, .zui-caltab-year td{
                 width: 25%;
                 height: 50px; 
                 line-height: 50px;
+            }
+            .zui-calendar-times{
+                padding: 5px;
+                &-item{
+                    line-height: 30px;
+                }
+                &-title,&-con{
+                    display: inline-block;
+                }
+                &-title{
+                    width: 20%;
+                }
+                &-con{
+                    width: 80%;
+                    i{
+                        font-style: normal;
+                        margin: 0 3px;
+                    }
+                    i.on{
+                        color: @primary;
+                    }
+                }
             }
         }
     }
