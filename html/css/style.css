@@ -1,0 +1,157 @@
+::-webkit-scrollbar-thumb {
+  background: #cdcecf;
+}
+html,
+body,
+.wrapper {
+  height: 100%;
+}
+body {
+  background: #f0f0f0;
+  min-width: 1140px;
+  padding-top: 50px;
+}
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 12;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  margin-bottom: 20px;
+  background: #46484a;
+  box-shadow: 0 0 10px #232527;
+}
+.header .wrapper {
+  background: none;
+  overflow: hidden;
+}
+.header .logo img {
+  margin-top: 10px;
+}
+.header input {
+  width: 240px;
+}
+.header span {
+  position: relative;
+}
+.header span i {
+  position: absolute;
+  right: 5px;
+  top: 1px;
+}
+.wrapper {
+  width: 1140px;
+  height: 100%;
+  overflow-y: auto;
+  margin: 0 auto;
+  background: #fff;
+}
+.wrapper .nav {
+  position: fixed;
+  width: 220px;
+  height: 100%;
+  top: 0;
+  padding: 70px 0 20px 0;
+  overflow-y: auto;
+  border-right: 1px solid #f0f0f0;
+  background: #fff;
+  z-index: 10;
+}
+.wrapper .nav dl {
+  padding-bottom: 15px;
+}
+.wrapper .nav dt,
+.wrapper .nav dd a {
+  display: block;
+}
+.wrapper .nav dt {
+  padding-left: 25px;
+  background: #f8f8f8;
+  border-left: 3px solid #55BBEE;
+  margin-bottom: 15px;
+  line-height: 40px;
+  font-size: 16px;
+}
+.wrapper .nav dd a {
+  padding-left: 30px;
+  line-height: 34px;
+}
+.wrapper .nav dd a i {
+  font-style: normal;
+  margin-left: 10px;
+  color: #cdcecf;
+}
+.wrapper .nav dd a:hover,
+.wrapper .nav dd a.on {
+  color: #55BBEE;
+}
+.wrapper .main {
+  position: relative;
+  margin-left: 220px;
+  padding: 20px;
+  background: #fff;
+}
+.wrapper .main .main-title {
+  color: #46484a;
+  font-size: 22px;
+  padding: 0 15px;
+}
+.wrapper .main .main-info {
+  background: #f8f8f8;
+  padding: 10px;
+  border-left: 3px solid #55BBEE;
+  line-height: 24px;
+  margin: 20px auto;
+  color: #898b8d;
+}
+.wrapper .main .main-info span {
+  margin: 0 10px;
+  color: #46484a;
+}
+.wrapper .main .main-info a {
+  color: #898b8d;
+  border-bottom: 1px solid #898b8d;
+}
+.wrapper .main .main-info a:hover {
+  color: #66CCFF;
+  border-bottom: 1px solid #66CCFF;
+}
+.wrapper .main h6 {
+  margin: 30px auto 20px;
+  font-size: 18px;
+}
+.iconpage td {
+  width: 20%;
+  line-height: 24px;
+}
+.iconpage i {
+  font-size: 24px;
+}
+.iconpage span {
+  display: block;
+  color: #898b8d;
+}
+.iconpage td:hover span {
+  color: #66CCFF;
+}
+.colorpage {
+  line-height: 24px;
+}
+.colorpage div + div {
+  padding-left: 10px;
+}
+.colorpage div {
+  padding: 10px 0;
+  border-radius: 4px;
+}
+.btnpage .zui-table {
+  margin-top: 15px;
+}
+.btnpage .zui-table .con {
+  width: 80%;
+}
+.btnpage .zui-table .con span {
+  margin-right: 15px;
+}
