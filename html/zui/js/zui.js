@@ -6,10 +6,68 @@ qq：269144551
 官网：http://www.zjw7.com/
 */
 
-// zui-start 严格模式
+// zui 采用es6语法
 "use strict";
-
+console.info('%c官方QQ交流群：523772110 查看开发文档请前往 http://www.zjw7.com', 'color:#5be');
 const Zui=function(){
+    // 获取zui.js部署的地址
+    const js = document.scripts;
+    for(let i=0;i<js.length;i++){
+        let s=js[i].src;
+        if(s.indexOf('zui.js')>=0||s.indexOf('zui-min.js')>=0){
+            this.path=s.substring(0,s.lastIndexOf("/")+1);
+        };
+    };
+    // init初始化
+    this.init=c=>{
+        if(c){
+            // 局部初始化
+            c.split(',').forEach(n=>{
+                switch(n){
+                    case '.zui-radio','.zui-checkbox','.zui-switch': zui.marquee($(n));
+                    break;
+                    case '.zui-select': zui.select($(n));
+                    break;
+                    case '.zui-upload': zui.uploadimg($(n));
+                    break;
+                    case '.zui-date': zui.optiondate($(n));
+                    break;
+                    case '.zui-pre': zui.precode($(n));
+                    break;
+                    case '.zui-nav': zui.nav($(n));
+                    break;
+                    case '.zui-tab': 
+                        zui.tabcut({
+                            wrap:'.zui-tab',
+                            menu:'.zui-tab-menu',
+                            main:'.zui-tab-main'
+                        });
+                    break;
+                };
+            });
+        }else{
+            c='全局';
+            zui.marquee($('.zui-radio'));
+            zui.marquee($('.zui-checkbox'));
+            zui.marquee($('.zui-switch'));
+            zui.select($('.zui-select'));
+            zui.uploadimg($('.zui-upload'));
+            zui.optiondate($('.zui-date'));
+            $('img').one('error',function(){
+                let ph=zui.path;
+                $(this).attr("src", zui.path+"../images/transparency.png").addClass('zui-img-error');
+            });
+            zui.tabcut({
+                wrap:'.zui-tab',
+                menu:'.zui-tab-menu',
+                main:'.zui-tab-main'
+            });
+            zui.precode($('.zui-pre'));
+            zui.nav($('.zui-nav'));
+        };
+        // 初始化完
+        console.info('%c搞定，'+c+'完成初始化', 'color:#5b8');
+    };
     return;
 };
 // 确认窗、询问窗
@@ -22,7 +80,7 @@ Zui.prototype.layer=data=>{
     const style=data.style||'primary';
     let dom='<div class="zui-layer zui-layer-shade"></div>'+
             '<div class="zui-layer zui-layer-main">'+
-                '<div class="zui-layer-main-title zui-bg-'+style+'">'+title+'<i class="zui-layer-main-close zui-icon-guanbi"></i></div>'+
+                '<div class="zui-layer-main-title" zui="'+style+'">'+title+'<i class="zui-layer-main-close zui-icon-guanbi"></i></div>'+
                 '<div class="zui-layer-main-info">'+data.info+'</div>';
                 if(type=='alert'){
                     // 确认窗 按钮组
@@ -166,17 +224,17 @@ Zui.prototype.marquee=el=>{
         const $n=$(n);
         if($n.parents('.zui-radio-label').length||$n.parents('.zui-checkbox-label').length||$n.parents('.zui-switch-label').length) return; //防止重复替换
         let dom;
-        const nm=$n.attr('name')||'';
-        const ckd=$n.attr('checked')||'';
-        const v=$n.val()||'';
         const tit=$n.attr('title')||'无标题';
-        const c=$n.attr('class');
-        const id=$n.attr('id')||'';
+        const o_ab=n.attributes;
+        let o_ar='';
+        for(let j=0;j<o_ab.length;j++){
+            o_ar+=' '+o_ab[j].name+'="'+o_ab[j].value+'"';
+        };
         if($n.hasClass('zui-radio')){
             // zui-radio
             dom=
             '<label class="zui-radio-label">'+
-                '<input id="'+id+'" class="'+c+'" type="radio" name="'+nm+'"'+ckd+' value="'+v+'">'+
+                '<input '+o_ar+' type="radio">'+
                 '<i class="zui-icon-radio"></i>'+
                 '<span>'+tit+'</span>'+
             '</label>';
@@ -184,7 +242,7 @@ Zui.prototype.marquee=el=>{
             // zui-checkbox
             dom=
             '<label class="zui-checkbox-label">'+
-                '<input id="'+id+'" class="'+c+'" type="checkbox" name="'+nm+'"'+ckd+' value="'+v+'">'+
+                '<input '+o_ar+' type="checkbox">'+
                 '<i class="zui-icon-checkbox"></i>'+
                 '<span>'+tit+'</span>'+
             '</label>';
@@ -192,7 +250,7 @@ Zui.prototype.marquee=el=>{
             // zui-switch
             dom=
             '<label class="zui-switch-label">'+
-                '<input id="'+id+'" class="'+c+'" zui-info="'+$n.attr('zui')+'" type="checkbox" name="'+nm+'"'+ckd+' value="'+v+'">'+
+                '<input '+o_ar+' type="checkbox">'+
                 '<div class="zui-switch-view">'+
                     '<i class="zui-icon-switch"></i>'+
                     '<span class="zui-switch-info"></span>'+
@@ -201,6 +259,43 @@ Zui.prototype.marquee=el=>{
         };
         $n.replaceWith(dom);
     });
+    // 开关按钮
+    if(el.attr('class')=='zui-switch'){
+        $('.zui-switch').each(function(){
+            const z=v=>{
+                let n;
+                if(v.indexOf(',')>=0){
+                    n=v.split(',');
+                    n.forEach(c=>{
+                        if(c.indexOf('|')>=0) n=c;
+                    });
+                }else{
+                    n=[v];
+                };
+                return n;
+            };
+            let txt=z($(this).attr('zui'));
+            txt.forEach(n=>{
+                if(n.indexOf('|')>=0) txt=n.split('|');
+            });
+            const on=txt[0];
+            const off=txt[1];
+            const info=$(this).parent().find('.zui-switch-info');
+            const that=$(this);
+            // 判断info填写内容
+            function cge(){
+                if(that.is(':checked')){
+                    info.text(on);
+                }else{
+                    info.text(off);
+                };
+            };
+            // 初始化
+            cge();
+            // 绑定change
+            $(this).off().change(cge);
+        });
+    };
     return false;
 };
 
@@ -209,51 +304,71 @@ Zui.prototype.select=el=>{
     el.each((i,n)=>{
         const $n=$(n);
         if($n.parents('.zui-select-wrap').length) return; //防止重复替换
+        //获取select自定义属性
+        const i_ab=n.attributes;
+        let i_ar='';
+        for(let j=0;j<i_ab.length;j++){
+            if(i_ab[j].name!='disabled') i_ar+=' '+i_ab[j].name+'="'+i_ab[j].value+'"';
+        };
         let dom;
-        let dd='';
         const item=$n.children();
+        let dd='';
         let ed='';
         let vl='';
         // dd列表
         item.each((i,op)=>{
-            const $op=$(op);
-            const v=$op.val();
-            const t=$op.text();
-            let c='';
-            if($op.is(':selected')){
-                c='zui-option';
-                ed=$op.text();
-                vl=$op.val();
+            // 获取op自定义属性
+            const o_ab=op.attributes;
+            let o_ar='';
+            for(let j=0;j<o_ab.length;j++){
+                if(o_ab[j].name!='class'&&o_ab[j].name!='value') o_ar+=' '+o_ab[j].name+'="'+o_ab[j].value+'"';
             };
-            dd+='<dd class="'+c+'" zui-val="'+v+'">'+t+'</dd>';
+            const $op=$(op);
+            const v=$.trim($op.val());
+            let t=$.trim($op.text());
+            let c=$op.attr('class')||'';
+            if($op.is(':selected')){
+                c+=' zui-option';
+                ed=t;
+                vl=v;
+            };
+            const src=o_ar.split('"')||o_ar.split("'");
+            if(o_ar.indexOf('zui-img')>=0) t='<span class="zui-select-img"><img src="'+src[1]+'"></span>'+'<span class="zui-select-txt">'+t+'</span>';
+            dd+='<dd class="'+c+'" '+o_ar+' zui-val="'+v+'">'+t+'</dd>';
         });
         // zui-select-wrap
-        const nm=$n.attr('name')||'';
-        const c=$n.attr('class');
-        const id=$n.attr('id')||'';
-        const z=$n.attr('zui')||'md';
+        const db=$n.attr('disabled')||'';
         dom=
         '<div class="zui-select-wrap">'+
-            '<input class="'+c+' zui-ipt" id="'+id+'" zui="'+z+'" name="'+nm+'" type="text" value="'+ed+'" zui-val="'+vl+'" readonly>'+
+            '<input '+i_ar+' type="text" value="'+ed+'" zui-val="'+vl+'" readonly '+db+'>'+
             '<i class="zui-select-arrow"></i>'+
             '<dl class="zui-option-list">'+
                 dd+
             '</dl>'+
         '</div> ';
 
-        // 替换
+        // 替换select
         let that=$(dom);
         $n.replaceWith(that);
 
         // 事件绑定
         that.on('click',function(){
+            if($(this).find('.zui-select').attr('disabled')) return;
             $('.zui-select-wrap').not(this).removeClass('zui-select-open');
             $(this).toggleClass('zui-select-open');
         });
         that.find('dd').on('click',function(){
             $(this).addClass('zui-option').siblings().removeClass('zui-option');
-            that.find('.zui-select').val($(this).text()).attr('zui-val',$(this).attr('zui-val'));
+            that.find('.zui-select').val($(this).text()).attr('zui-val',$(this).attr('zui-val')).trigger('change');
         });
+    });
+    // 关闭绑定
+    $('body').on('click',(e)=>{
+        let el=$(e.target);
+        // 关闭select
+        if(el.parents('.zui-select-wrap').length==0){
+            $('.zui-select-wrap').removeClass('zui-select-open');
+        };
     });
     return false;
 };
@@ -304,7 +419,7 @@ Zui.prototype.precode=el=>{
                 // 如果开头空格大于等于第一行，截取空格后的内容（删减空格）
                 if(spa>=sp) s=s.substring(sp,s.length);
                 // 判断是否为注释
-                if(s.trim().substring(0,2)=='//' && i!=str.length-1){
+                if(s.trim().substring(0,2)=='//' || s.indexOf('!--')!=-1 && i!=str.length-1){
                      dom+='<li class="zui-pre-annotations"><span>'+s+'</span></li>';
                 }else if(i!=str.length-1){
                      dom+='<li><span>'+s+'</span></li>';
@@ -350,7 +465,7 @@ Zui.prototype.uploadimg=el=>{
         c.each((ii,nn)=>{
             const $nn=$(nn);
             if(!$nn.find('.zui-upload-item-main')){
-                // do
+                // 把简化版的html完成
             };
         });
         // 查看图片
@@ -613,17 +728,62 @@ Zui.prototype.imgfocus=da=>{
 
 // 日历模块
 Zui.prototype.calendar=c=>{
-    // 初始化
-    c.upper=c.upper||NaN;
-    c.lower=c.lower||NaN;
-    c.format=c.format||'';
-
-    let $n = $(c.el);
-
+    let $n = c;
     // zui-date绑定
     $n.on("click",function(){
         $('.zui-calendar').remove();
-        $n=$(this);
+        let ts,up,lw,z;
+        z=$n.attr('zui');
+        z.split(',').forEach(n=>{
+            if(n.indexOf(':')){
+                let c=n.split(':');
+                switch(c[0]){
+                    case 'times': ts=c[1];
+                    break;
+                    case 'upper': up=c[1];
+                    break;
+                    case 'lower': lw=c[1];
+                };
+            };
+        });
+        // 参数初始化
+        c.upper=up||NaN;
+        c.lower=lw||NaN;
+        c.times=ts||'false';
+        // 上限参数
+        if(c.upper){
+            if(c.upper=='today'){
+                // 上限今天
+                c.upper=new Date();
+            }else if(c.upper.indexOf('.')>=0||c.upper.indexOf('#')>=0){
+                let b=$(c.upper).val();
+                if(b){
+                    c.upper=new Date(b);
+                };
+            }else{
+                c.upper=new Date(c.upper);
+            };
+        };
+        // 下限参数
+        if(c.lower){
+            c.lower.toString();
+            if(c.lower=='today'){
+                // 如果下限是今天，今天也要可选
+                const d=new Date();
+                // 计算昨天
+                const y=d=>{
+
+                };
+                c.lower=new Date(y(d));
+            }else if(c.lower.indexOf('.')>=0||c.lower.indexOf('#')>=0){
+                let b=$(c.lower).val();
+                if(b){
+                    c.lower=new Date(b);
+                };
+            }else{
+                c.lower=new Date(c.lower);
+            };
+        };
         cd($n);
         // 点击外部隐藏
         $(document).mouseup(e=>{
@@ -631,16 +791,47 @@ Zui.prototype.calendar=c=>{
                 that.remove();
             };
         });
+        // 关闭
+        $(document).on('click','.zui-calendar .close',()=>{
+            that.remove();
+        });
+        // 现在时间
+        $(document).on('click','.zui-calendar .now',()=>{
+            vto(c.times);
+            that.remove();
+        });
     });
 
-    // 模块初始化
+    // 输出现在时间
+    let vto=zt=>{
+        let tod=new Date();
+        let m=tod.getMonth()+1;
+        if(m<10) m='0'+m;
+        let d=tod.getDate();
+        if(d<10) d='0'+d;
+        let h,n,s,v;
+        v=tod.getFullYear()+'-'+m+'-'+d;
+        if(zt){
+            h=tod.getHours();
+            if(h<10) h='0'+h;
+            n=tod.getMinutes();
+            if(n<10) n='0'+n;
+            s=tod.getSeconds();
+            if(s<10) s='0'+s;
+            v+=' '+h+':'+n+':'+s;
+        };
+        ttt=v;
+        $n.val(v);
+    };
+
+    // 初始化
     let today,e,f,q,that;
     const cd=n=>{
         if(!$n.val()==''){
             today = new Date($n.val());
         }else{
             today = new Date();
-        }
+        };
         e = today.getFullYear();
         f = today.getMonth();
         q = today.getDate();
@@ -670,10 +861,10 @@ Zui.prototype.calendar=c=>{
         // 出现位置
         that.css({
             'top': t(),
+            'left':0
         });
-
         // 加载时分秒选择功能
-        hns(c.format);
+        hns(c.times);
 
         // 绑定选择日期
         bindDay();
@@ -687,6 +878,7 @@ Zui.prototype.calendar=c=>{
 
     // 时分秒
     const hns=d=>{
+        if(!c.times) return;
         let sp=$n.val().split(' ');
         if(sp.length>1){
             sp=sp[1].split(':');
@@ -702,20 +894,51 @@ Zui.prototype.calendar=c=>{
         t+=    '</div>';
         t+=    '<div class="zui-calendar-times-item">';
         t+=        '<span class="zui-calendar-times-title">小时</span>';
-        t+=        '<span class="zui-calendar-times-con"><input id="zui-range-hh" type="range" min="00" max="24" step="1" value="'+sp[0]+'"></span>';
+        t+=        '<span class="zui-calendar-times-con"><b class="zui-calendar-times-minus">&minus;</b><b class="zui-calendar-times-plus">&plus;</b><input id="zui-range-hh" type="range" min="00" max="24" step="1" value="'+sp[0]+'"></span>';
         t+=    '</div>';
         t+=    '<div class="zui-calendar-times-item">';
         t+=        '<span class="zui-calendar-times-title">分钟</span>';
-        t+=        '<span class="zui-calendar-times-con"><input id="zui-range-nn" type="range" min="00" max="60" step="1" value="'+sp[1]+'"></span>';
+        t+=        '<span class="zui-calendar-times-con"><b class="zui-calendar-times-minus">&minus;</b><b class="zui-calendar-times-plus">&plus;</b><input id="zui-range-nn" type="range" min="00" max="60" step="1" value="'+sp[1]+'"></span>';
         t+=    '</div>';
         t+=    '<div class="zui-calendar-times-item">';
         t+=        '<span class="zui-calendar-times-title">秒钟</span>';
-        t+=        '<span class="zui-calendar-times-con"><input id="zui-range-ss" type="range" min="00" max="60" step="1" value="'+sp[2]+'"></span>';
+        t+=        '<span class="zui-calendar-times-con"><b class="zui-calendar-times-minus">&minus;</b><b class="zui-calendar-times-plus">&plus;</b><input id="zui-range-ss" type="range" min="00" max="60" step="1" value="'+sp[2]+'"></span>';
+        t+=    '</div>';
+        t+=    '<div class="zui-calendar-times-item zui-calendar-times-now">';
+        t+=        '<button class="zui-btn now" zui="sm,primary,pull-left">当前时间</button>';
+        t+=        '<button class="zui-btn close" zui="sm,pull-right">关闭</button>';
         t+=    '</div>';
         t+='</div>';
 
         const $dom=$(t);
         that.find('.zui-calendar-main-con').append($dom);
+
+        that.find('.zui-calendar-times-con b').click(function(){
+            const ipt=$(this).siblings('input');
+            let v=Number(ipt.val());
+            if($(this).hasClass('zui-calendar-times-minus')&&v>ipt.attr('min')){
+                v-=1;
+            }else if($(this).hasClass('zui-calendar-times-plus')&&v<ipt.attr('max')){
+                v+=1;
+            };
+            ipt.val(v);
+            if(v.toString().length==1) v='0'+v;
+            let m=gId(ipt.attr('id'));
+            cg(v,m);
+            f();
+        });
+
+        let gId=id=>{
+            let m;
+            switch(id){
+                case 'zui-range-hh': m='#zui-calendar-times-show-hh';
+                break;
+                case 'zui-range-nn': m='#zui-calendar-times-show-nn';
+                break;
+                default: m='#zui-calendar-times-show-ss';
+            };
+            return m;
+        };
 
         // 获取时分秒显示值
         const h=$dom.find('#zui-range-hh');
@@ -727,22 +950,19 @@ Zui.prototype.calendar=c=>{
             $(this).on('mousemove change',function(e){
                 let v=$(this).val();
                 if(v.length==1) v='0'+v;
-                let m;
-                const id=$(this).attr('id');
-                if(id=='zui-range-hh'){
-                    m='#zui-calendar-times-show-hh';
-                }else if(id=='zui-range-nn'){
-                    m='#zui-calendar-times-show-nn';
-                }else{
-                    m='#zui-calendar-times-show-ss';
-                };
-                m=$dom.find(m);
-                // 动态显示值
-                m.addClass('on').text(v);
+                let m=gId($(this).attr('id'));
+                cg(v,m);
                 // 输出
                 if(e.type=='change') f();
             });
         });
+        // 改变数值
+        let cg=(v,m)=>{
+            m=$dom.find(m);
+            m=$dom.find(m);
+            // 动态显示值
+            m.addClass('on').text(v);
+        };
         // 鼠标放开滑块
         $dom.find('input[type="range"]').on('mouseup',function(){
             $(this).off('mousemove');
@@ -758,24 +978,28 @@ Zui.prototype.calendar=c=>{
                 if($dom.find('.zui-calendar-times-show i').length!=i+1) hhh+=':';
             });
             $dom.find('.on').removeClass('on');
+            // 如果还没选ttt，输出当天
+            if(!ttt){
+                vto();
+            };
             $n.val(ttt+hhh);
-        }
+        };
     };
     // 绑定日期选择
     const bindDay=()=>{
-        that.find(".zui-caltab-day a").mouseup(function(){
+        that.find(".zui-caltab-day a").mousedown(function(){
             let a = new Date(that.find(".currentYear").text() + "/" + that.find(".currentMonth").text() + "/1");
             let d = $(this).text();
-            if ($(this).hasClass("prevD")) {
+            if($(this).hasClass("prevD")) {
                 // 如果选择上个月的天数
                 a.setMonth(a.getMonth() - 1);
                 a.setDate(d);
-                that.find(".zui-prev-month").triggerHandler("mouseup");
-            } else if ($(this).hasClass("nextD")) {
+                that.find(".zui-prev-month").triggerHandler("mousedown");
+            }else if($(this).hasClass("nextD")) {
                 // 如果选择下个月的天数
                 a.setMonth(a.getMonth() + 1);
                 a.setDate(d);
-                that.find(".zui-next-month").triggerHandler("mouseup");
+                that.find(".zui-next-month").triggerHandler("mousedown");
             };
             // 输出日期
             ttt = a.getFullYear() + "-" + (Number(a.getMonth() + 1) < 10 ? "0" + Number(a.getMonth() + 1) : Number(a.getMonth() + 1)) + "-" + (Number(d) < 10 ? "0" + d: d);
@@ -786,7 +1010,7 @@ Zui.prototype.calendar=c=>{
                 d == $(this).text() && !$(this).hasClass("prevD") && !$(this).hasClass("nextD") && $(this).addClass("select");
             });
 
-            if(c.format.indexOf('hh')<0 && c.format.indexOf('nn')<0 && c.format.indexOf('ss')<0){
+            if(!c.times){
                 $n.val(ttt);
                 that.remove();
             }else{
@@ -797,7 +1021,7 @@ Zui.prototype.calendar=c=>{
     };
     // 绑定月份选择
     const bindMonth=()=>{
-        that.find(".zui-caltab-month a").mouseup(function() {
+        that.find(".zui-caltab-month a").mousedown(function() {
             const a = setD(Number(that.find(".currentYear").text()), Number($(this).attr("val")));
             that.find(".currentMonth").text(Number($(this).attr("val")) + 1);
             update('close',a);
@@ -806,7 +1030,7 @@ Zui.prototype.calendar=c=>{
     };
     // 选择年份选择
     const bindYear=()=>{
-        that.find(".zui-caltab-year a").mouseup(function() {
+        that.find(".zui-caltab-year a").mousedown(function() {
             const a = setD(Number($(this).text()), Number(that.find(".currentMonth").text()) - 1);
             that.find(".currentYear").text(Number($(this).text()));
             update('close',a);
@@ -826,51 +1050,50 @@ Zui.prototype.calendar=c=>{
         newDate.setMonth(newDate.getMonth() + 1);
         newDate.setDate(0);
         let o = newDate.getDate(),
-        g = "<table class='zui-caltab-day'>";
-        g += "<tr><th>\u65e5</th><th>\u4e00</th><th>\u4e8c</th><th>\u4e09</th><th>\u56db</th><th>\u4e94</th><th>\u516d</th></tr>";
-        let i = w(),
+        g = "<table class='zui-caltab-day'><tr><th>\u65e5</th><th>\u4e00</th><th>\u4e8c</th><th>\u4e09</th><th>\u56db</th><th>\u4e94</th><th>\u516d</th></tr>",
+        i = w(),
         l = "",
         p = "",
         t = "";
         let xx=5;
         if(m>4&&o>30) xx=6;
-        for (let x = 0; x < xx; x++) {
+        for(let x = 0; x < xx; x++){
             g += "<tr>";
-            for (let y = 0; y < 7; y++) {
+            for(let y = 0; y < 7; y++){
                 let j = x * 7 + y + 1 - m;
                 p = l = "";
-                if (c.lower != NaN && c.lower > new Date(newDate.getFullYear(), newDate.getMonth(), j) || c.upper != NaN && new Date(newDate.getFullYear(), newDate.getMonth(), j) > c.upper) if (0 < j && j <= o) {
-                    if (newDate.getFullYear() == e && newDate.getMonth() == f && j == q) l = "current";
-                    g += "<td><span class='" + l + "'>" + j + "</span></td>"
-                } else if (j <= 0) {
-                    if (newDate.getFullYear() == e && newDate.getMonth() - 1 == f && h == q) l = "current";
+                if(c.lower != NaN && c.lower > new Date(newDate.getFullYear(), newDate.getMonth(), j) || c.upper != NaN && new Date(newDate.getFullYear(), newDate.getMonth(), j) > c.upper) if(0 < j && j <= o) {
+                    if(newDate.getFullYear() == e && newDate.getMonth() == f && j == q) l = "current";
+                    g += "<td><span class='" + l + "'>" + j + "</span></td>";
+                }else if(j <= 0) {
+                    if(newDate.getFullYear() == e && newDate.getMonth() - 1 == f && h == q) l = "current";
                     g += "<td><span class='" + l + "' " + t + ">" + h + "</span></td>";
-                    h++
-                } else {
-                    if (j > o) {
-                        if (newDate.getFullYear() == e && newDate.getMonth() + 1 == f && d == q) l = "current";
+                    h++;
+                }else{
+                    if(j > o) {
+                        if(newDate.getFullYear() == e && newDate.getMonth() + 1 == f && d == q) l = "current";
                         g += "<td><span class='" + l + "' " + t + ">" + d + "</span></td>";
-                        d++
-                    }
-                } else if (0 < j && j <= o) {
-                    if (newDate.getFullYear() == e && newDate.getMonth() == f && j == q) l = "current";
-                    if (newDate.getFullYear() == i.getFullYear() && newDate.getMonth() == i.getMonth() && j == i.getDate()) p = "select";
-                    g += "<td><a class='" + p + " " + l + "'>" + j + "</a></td>"
-                } else if (j <= 0) {
-                    if (newDate.getFullYear() == e && newDate.getMonth() - 1 == f && h == q) l = "current";
-                    if (newDate.getFullYear() == i.getFullYear() && newDate.getMonth() - 1 == i.getMonth() && h == i.getDate()) p = "select";
+                        d++;
+                    };
+                }else if(0 < j && j <= o) {
+                    if(newDate.getFullYear() == e && newDate.getMonth() == f && j == q) l = "current";
+                    if(newDate.getFullYear() == i.getFullYear() && newDate.getMonth() == i.getMonth() && j == i.getDate()) p = "select";
+                    g += "<td><a class='" + p + " " + l + "'>" + j + "</a></td>";
+                }else if(j <= 0) {
+                    if(newDate.getFullYear() == e && newDate.getMonth() - 1 == f && h == q) l = "current";
+                    if(newDate.getFullYear() == i.getFullYear() && newDate.getMonth() - 1 == i.getMonth() && h == i.getDate()) p = "select";
                     g += "<td><a class='prevD " + p + " " + l + "' " + t + ">" + h + "</a></td>";
-                    h++
-                } else if (j > o) {
-                    if (newDate.getFullYear() == e && newDate.getMonth() + 1 == f && d == q) l = "current";
-                    if (newDate.getFullYear() == i.getFullYear() && newDate.getMonth() + 1 == i.getMonth() && d == i.getDate()) p = "select";
+                    h++;
+                }else if(j > o) {
+                    if(newDate.getFullYear() == e && newDate.getMonth() + 1 == f && d == q) l = "current";
+                    if(newDate.getFullYear() == i.getFullYear() && newDate.getMonth() + 1 == i.getMonth() && d == i.getDate()) p = "select";
                     g += "<td><a class='nextD " + p + " " + l + "' " + t + ">" + d + "</a></td>";
                     d++;
-                }
+                };
                 g = g.replace("class=' '", "");
-            }
-            g += "</tr>"
-        }
+            };
+            g += "</tr>";
+        };
         g += "</table>";
         return g;
     };
@@ -907,27 +1130,27 @@ Zui.prototype.calendar=c=>{
         h = "",
         m = "",
         o = "";
-        for (let g = 0; g < 3; g++) {
+        for(let g = 0; g < 3; g++) {
             b += "<tr>";
-            for (let i = 0; i < 4; i++) {
+            for(let i = 0; i < 4; i++) {
                 m = h = "";
-                if (g + 1 * i + 1 != 1 && (g + 1) * (i + 1) != 12) {
-                    if (a == d.getFullYear()) h = "select";
-                    if (a == e) m = "current";
+                if(g + 1 * i + 1 != 1 && (g + 1) * (i + 1) != 12) {
+                    if(a == d.getFullYear()) h = "select";
+                    if(a == e) m = "current";
                     b += "<td><a class='" + h + " " + m + "' >" + a + "</a></td>";
                     a++
-                } else if (g + 1 * i + 1 == 1) {
-                    if (a - 1 == d.getFullYear()) h = "select";
-                    if (a - 1 == e) m = "current";
-                    b += "<td><a class='prevY " + h + " " + m + "' " + o + ">" + (a - 1) + "</a></td>"
-                } else {
-                    if (a == d.getFullYear()) h = "select";
-                    if (a == e) m = "current";
-                    b += "<td><a class='nextY " + h + " " + m + "' " + o + ">" + a + "</a></td>"
-                }
-            }
-            b += "</tr>"
-        }
+                }else if(g + 1 * i + 1 == 1) {
+                    if(a - 1 == d.getFullYear()) h = "select";
+                    if(a - 1 == e) m = "current";
+                    b += "<td><a class='prevY " + h + " " + m + "' " + o + ">" + (a - 1) + "</a></td>";
+                }else{
+                    if(a == d.getFullYear()) h = "select";
+                    if(a == e) m = "current";
+                    b += "<td><a class='nextY " + h + " " + m + "' " + o + ">" + a + "</a></td>";
+                };
+            };
+            b += "</tr>";
+        };
         b += "</table>";
         return b;
     };
@@ -947,7 +1170,7 @@ Zui.prototype.calendar=c=>{
                 reserve.html(d);
             }else{
                 enabled.html(d);
-            }
+            };
         };
     };
     // 格式化日期
@@ -959,24 +1182,24 @@ Zui.prototype.calendar=c=>{
     };
     // 操作绑定
     const mp=()=>{
-        that.find(".zui-prev-month").mouseup(()=>{
-            if ($('.zui-calendar').find(".zui-calendar-reserve > .zui-caltab-month").length > 0) {
+        that.find(".zui-prev-month").mousedown(()=>{
+            if($('.zui-calendar').find(".zui-calendar-reserve > .zui-caltab-month").length > 0) {
                 d = setM(Number($('.zui-calendar').find(".currentYear").text()) - 1);
                 update('prev',d,true);
                 bindMonth();
-                $('.zui-calendar').find(".currentYear").text(Number($('.zui-calendar').find(".currentYear").text()) - 1)
-            } else if ($('.zui-calendar').find(".zui-calendar-reserve > .zui-caltab-year").length > 0) {
+                $('.zui-calendar').find(".currentYear").text(Number($('.zui-calendar').find(".currentYear").text()) - 1);
+            }else if($('.zui-calendar').find(".zui-calendar-reserve > .zui-caltab-year").length > 0) {
                 d = setY(Number($('.zui-calendar').find(".currentYear").text()) - 10);
                 update('prev',d,true);
                 bindYear();
-                $('.zui-calendar').find(".currentYear").text(Number($('.zui-calendar').find(".currentYear").text()) - 10)
-            }else if ($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-day").length > 0) {
+                $('.zui-calendar').find(".currentYear").text(Number($('.zui-calendar').find(".currentYear").text()) - 10);
+            }else if($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-day").length > 0) {
                 const a = $('.zui-calendar').find(".currentYear"),
                 b = $('.zui-calendar').find(".currentMonth"),
                 d = setD(Number(a.text()), Number(b.text()) - 2);
                 update('prev',d);
-                if (Number(b.text()) != 1) b.text(Number(b.text()) - 1);
-                else {
+                if(Number(b.text()) != 1) b.text(Number(b.text()) - 1);
+                else{
                     a.text(Number(a.text()) - 1);
                     b.text("12");
                 }
@@ -984,24 +1207,24 @@ Zui.prototype.calendar=c=>{
             };
             return false;
         });
-        that.find(".zui-next-month").mouseup(()=>{
-            if (that.find(".zui-calendar-reserve > .zui-caltab-month").length > 0) {
+        that.find(".zui-next-month").mousedown(()=>{
+            if(that.find(".zui-calendar-reserve > .zui-caltab-month").length > 0) {
                 d = setM(Number(that.find(".currentYear").text()) + 1);
                 update('next',d,true);
                 bindMonth();
                 that.find(".currentYear").text(Number(that.find(".currentYear").text()) + 1)
-            } else if (that.find(".zui-calendar-reserve > .zui-caltab-year").length > 0) {
+            }else if(that.find(".zui-calendar-reserve > .zui-caltab-year").length > 0) {
                 d = setY(Number(that.find(".currentYear").text()) + 10);
                 update('next',d,true);
                 bindYear();
                 that.find(".currentYear").text(Number(that.find(".currentYear").text()) + 10)
-            }else if (that.find(".zui-calendar-enabled > .zui-caltab-day").length > 0) {
+            }else if(that.find(".zui-calendar-enabled > .zui-caltab-day").length > 0) {
                 const a = that.find(".currentYear"),
                 b = that.find(".currentMonth"),
                 d = setD(Number(a.text()), Number(b.text()));
                 update('next',d);
-                if (Number(b.text()) != 12) b.text(Number(b.text()) + 1);
-                else {
+                if(Number(b.text()) != 12) b.text(Number(b.text()) + 1);
+                else{
                     a.text(Number(a.text()) + 1);
                     b.text("1");
                 }
@@ -1009,13 +1232,13 @@ Zui.prototype.calendar=c=>{
             };
             return false;
         });
-        that.find(".zui-month-txt").mouseup(()=>{
+        that.find(".zui-month-txt").mousedown(()=>{
             const a = setM(Number(that.find(".currentYear").text()));
             update('open',a);
             bindMonth();
             return false;
         });
-        that.find(".zui-year-txt").mouseup(()=>{
+        that.find(".zui-year-txt").mousedown(()=>{
             const a = setY(Number(that.find(".currentYear").text()));
             update('open',a);
             bindYear();
@@ -1024,93 +1247,137 @@ Zui.prototype.calendar=c=>{
     };
 };
 
-// 日期选择
+// zui-date绑定
 Zui.prototype.optiondate=el=>{
     el.each((i,n)=>{
-        let $n=$(n);
-        let nm=$n.attr('name')||'';
-        let c=$n.attr('class');
-        let id=$n.attr('id')||'';
-        let z=$n.attr('zui')||'md';
-        let ed=$n.val()||'';
-        let dom=
+        // 获取自定义属性
+        const o_ab=n.attributes;
+        let o_ar='';
+        for(let j=0;j<o_ab.length;j++){
+            o_ar+=' '+o_ab[j].name+'="'+o_ab[j].value+'"';
+        };
+        const $n=$(n);
+        const dom=
             '<div class="zui-date-wrap">'+
-                '<input class="'+c+' zui-ipt" id="'+id+'" zui="'+z+'" name="'+nm+'" type="text" value="'+ed+'" readonly>'+
+                '<input '+o_ar+' readonly>'+
                 '<i class="zui-icon-date"></i>'+
             '</div>';
-        let that=$(dom);
+            const that=$(dom);
         $n.replaceWith(that);
+        
         // 绑定插件
+        zui.calendar(that.find('.zui-date'));
     });
-    zui.calendar({
-        el:'.zui-date',                                    // 绑定类名
-        format:'yyyy-mm-dd hh:nn:ss',                     // 时间格式
-        upper: new Date(),                               // 日期上限，默认：NaN(不限制)
-        lower: new Date("2011/01/01")                   // 日期下限，默认：NaN(不限制)
+};
+
+// nav导航
+Zui.prototype.nav=el=>{
+    el.each((i,n)=>{
+        const $n=$(n);
+        // 添加下划线元素
+        $n.append('<div class="zui-nav-sliding"></div>');
+        const $s=$n.find('.zui-nav-sliding');
+
+        const $li=$n.find('li');
+        // ul左距
+        const uw=$n.offset().left;
+
+        // 初始化下划线位置和长度
+        $s.css({
+            width:$n.find('.active').innerWidth(),
+            left:$n.find('.active').offset().left-uw
+        });
+        // hover事件和click更改active
+        let sto;
+        $li.off().hover(function(){
+            // 下划线移动并改变长度
+            const w=$(this).innerWidth();
+            $s.css({width:w,left:$(this).offset().left-uw});
+            // 展开二级
+            $(this).find('.zui-nav-child').addClass('open');
+            $(this).siblings().find('.zui-nav-child').removeClass('open');
+            clearTimeout(sto);
+        },function(){
+            // 下划线移动回active处,延时500ms
+            const $at=$n.find('.active');
+            const that=$(this);
+            sto=setTimeout(function(){
+                $s.css({width:$at.innerWidth(),left:$at.offset().left-uw});
+                // 收起二级
+                that.find('.zui-nav-child').removeClass('open');
+            },500);
+        }).click(function(){
+            $(this).addClass('active').siblings().removeClass('active');
+        });
     });
-}
+};
 
-// init初始化
-Zui.prototype.init=()=>{
-        // radio处理
-        zui.marquee($('.zui-radio'));
-        // checkbox处理
-        zui.marquee($('.zui-checkbox'));
-        // switch处理
-        zui.marquee($('.zui-switch'));
-        // select处理
-        zui.select($('.zui-select'));
-        // 图片上传
-        zui.uploadimg($('.zui-upload'));
-        // 选择日期
-        zui.optiondate($('.zui-date'));
-        // 开关按钮
-        $('.zui-switch').each(function(){
-            let txt=$(this).attr('zui-info').split('|');
-            let on=txt[0];
-            let off=txt[1];
-            let info=$(this).siblings('div').find('.zui-switch-info');
-            let that=$(this);
-            // 判断info填写内容
-            function cge(){
-                if(that.is(':checked')){
-                    info.text(on);
-                }else{
-                    info.text(off);
-                }
+// linkage联动
+Zui.prototype.linkage=d=>{
+    // 分割select元素  获取数据
+    const st=d.el.split(',');
+    if(!$(st[0]).length) return; // 没找到一级select，返回
+
+    const dt=d.data;
+
+    // 接收selected索引，遍历data，对比索引输出数据
+    const sc=(ii,x)=>{
+        // 获取对应省份所有数据
+        const c=dt[x[0]];
+        // 遍历x数据索引
+        st.forEach((n,i)=>{
+            // 更新change事件之后的select
+            if(i>ii){
+                let dd=c[i];
+                if(i>1)dd=dd[x[i-1]];
+                let op='';
+                dd.forEach((p,z)=>{
+                    op+='<option value="'+p+'">'+p+'</option>';
+                });
+                $(n).html(op);
             };
-            // 初始化
-            cge();
-            // 绑定change
-            $(this).off().change(cge);
         });
-
-        // body 点击 关闭一些窗口
-        $('body').on('click',(e)=>{
-            let el=$(e.target);
-            // 关闭select
-            if(el.parents('.zui-select-wrap').length==0){
-                $('.zui-select-wrap').removeClass('zui-select-open');
+        if(d.call) d.call();
+    };
+    // change调用此函数，获取selected索引值，传给sc输出数据
+    const cg=ii=>{
+        let x=[];
+        for(let i=0;i<st.length;i++){
+            // 如果change的是一级，初始化其他的索引为0
+            let dx;
+            if(ii==0 && i==0 || ii!=0){
+                dx=$(st[i]+' option:selected').index();
+            }else{
+                dx=0;
             };
-            
+            x.push(dx);
+        };
+        // 传个change的select索引，不更新上级，传下级数据索引
+        sc(ii,x);
+    };
+    // select绑定change事件，并传元素索引，辨别触发的是第几个select
+    st.forEach((n,i)=>{
+        $(n).off().on('change',function(){
+            cg(i);
         });
-        // img加载失败
-        $("img").one("error",function(){
-            $(this).attr("src", "white.png").addClass('zui-img-error');
-        });
-        //绑定tab
-        zui.tabcut({
-            wrap:'.zui-tab',
-            menu:'.zui-tab-menu',
-            main:'.zui-tab-main'
-        });
+    });
 
-        // pre编辑器处理
-        zui.precode($('.zui-pre'));
+    // 初始化输出一级option
+    const t=()=>{
+        let op='';
+        dt.forEach(n=>{
+            op+='<option value="'+n[0]+'">'+n[0]+'</option>';
+        });
+        $(st[0]).html(op);
+        // 默认选择第一项
+        cg(0);
+    };
+    t();
 };
 
 // 实例化Zui
 const zui=new Zui();
+
 
 // 轮播方法
 //     zui.imgfocus({
@@ -1123,7 +1390,3 @@ const zui=new Zui();
 //     });
 
 // 弹出查看图片方法
-
-// 要把init方法整理一下，以 zui.init({  调用的模块：$('对应元素')  })；的方式实现初始化，并且单独初始化某个模块，不要每次都全局初始化
-// radio 默认选中没有高亮bug
-

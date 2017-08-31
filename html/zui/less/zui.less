@@ -9,9 +9,6 @@
 // message组1200；
 // 日期插件1110；
 
-// button、input、select默认md大小
-
-
 // 样式重置
 *{ box-sizing: border-box; padding: 0; margin: 0;}
 html, body{ width: 100%; color: @black; background: @white; line-height: 1; font-size: 14px; font-family: 'Arial','Microsoft YaHei';}
@@ -19,28 +16,38 @@ html, body{ width: 100%; color: @black; background: @white; line-height: 1; font
 ul{ list-style: none;}
 h1, h2, h3, h4, h5, h6{ font-weight: normal;}
 table{ border-collapse: collapse; border-spacing: 0;}
-a img, img, button{ border:none;}
+a img, img, button, fieldset{ border:none;}
 a, a:active, a:hover, input[type=range]:focus{ outline: none; text-decoration: none; color: @black; cursor: pointer;}
 article, aside, details, figcaption, figure, footer, header, nav, section, summary{ display: block;}
 ins{ text-decoration: none;}
-input[class*=".zui-"],input[type="range"]::-webkit-slider-thumb{ -webkit-appearance: none;}
+.zui-layer-shade, .zui-calendar, .zui-select{ user-select: none;}
+input[class*=".zui-"],input[type="range"],input[type="range"]::-webkit-slider-thumb,input[type=range]::-webkit-slider-runnable-track{ -webkit-appearance: none;}
 input[class*=".zui-"], button[class*=".zui-"]{ vertical-align: middle;}
-button, select, .zui-switch-label, .zui-radio-label, .zui-checkbox-label{ cursor: pointer; user-select: none;}
+button, select, .zui-switch-label, .zui-btn, .zui-radio-label, .zui-checkbox-label{ cursor: pointer; user-select: none;}
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder{ color: @gray2;}
 .zui-upload-file[type="file"]{ color: transparent;}
 input[type="range"]::-webkit-slider-thumb{
     cursor: pointer;
-    height: 20px;
-    width: 20px;
-    background-color: @primary;
+    height: 15px;
+    width: 15px;
+    background-color: @white;
+    border: 1px solid @gray3;
+    margin-top: -5px;
     .zui-radius;
+    box-shadow: none;
+}
+input[type="range"]::-webkit-slider-thumb:hover{
+    background: @primary;
+    border-color: @primary-active;
+}
+input[type=range]::-webkit-slider-runnable-track{
+    height: 5px;
     box-shadow: none;
 }
 input[type="range"]{
     width: 100%;
     vertical-align: middle;
     background-color: @gray4;
-    .zui-radius;
     height:5px;
     box-shadow: none;
 }
@@ -48,8 +55,9 @@ input[type="range"]{
 // 滚动条美化
 ::-webkit-scrollbar{ width: 7px; height: 7px;}
 ::-webkit-scrollbar-track-piece{ background: transparent; border-radius: 8px;}
-::-webkit-scrollbar-thumb{ height: 7px; background: @gray2; border-radius: 8px;}
-::-webkit-scrollbar-thumb:hover{background: @gray1;}
+::-webkit-scrollbar-thumb{ height: 7px; background: @gray3; border-radius: 8px;}
+::-webkit-scrollbar-thumb:hover{background: @gray2;}
+::-webkit-scrollbar-thumb:active{background: @gray1;}
 body::-webkit-scrollbar-track-piece{ background: @gray4;}
 
 // 选中文本颜色与背景色
@@ -75,26 +83,26 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 @danger-hover:#f88;
 @danger-active:#e55;
 
-@black:#232527; //背景、字体
-@gray1:#46484a; //背景、字体
-@gray2:#898b8d; //字体
-@gray3:#cdcecf; //border
-@gray4:#e0e2e4; //border
-@gray5:#f0f0f0; //bg
-@gray6:#f8f8f8; //用于hover背景
+@black:#283038; //背景、字体
+@gray1:#434c56; //背景、字体
+@gray2:#8995a1; //字体
+@gray3:#c4cbd3; //border
+@gray4:#dde3e9; //border
+@gray5:#f1f4f7; //bg
+@gray6:#f5f8fb; //用于hover背景
 @white:#fff; //白色字体
 
 // 内容宽度
 @wrap:1140px;
 
 // 基本属性类
-.zui-float-left,[zui*="pull-left"]{ float: left !important;}
-.zui-float-right, [zui*="pull-right"]{ float: right !important;}
+.zui-pull-left,[zui*="pull-left"]{ float: left !important;}
+.zui-pull-right, [zui*="pull-right"]{ float: right !important;}
 .zui-txt-left, [zui*="txt-left"]{ text-align: left !important;}
 .zui-txt-center, [zui*="txt-center"]{ text-align: center !important;}
 .zui-txt-right, [zui*="txt-right"]{ text-align: right !important;}
-.zui-clearfix{ display:block; clear:both;}
-.zui-clearfix:after{ content:"."; display:block; height:0; clear:both; visibility:hidden;}
+.zui-clearfix, [zui*="clearfix"]{ display:block; clear:both;}
+.zui-clearfix:after, [zui*="clearfix"]:after{ content:"."; display:block; height:0; font-size:0; clear:both; visibility:hidden;}
 
 // 动画延时
 .zui-anim-no, [zui*="anim-no"]{ transition: all 0s;}
@@ -201,8 +209,8 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-btn[zui*="danger"]:hover{ background: @danger-hover;}
 .zui-btn[zui*="danger"]:active{ background: @danger-active;}
 
-.zui-ipt[disabled],.zui-btn[disabled], .zui-btn[disabled]:hover, .zui-btn[disabled]:active,
-.zui-ipt[zui*="disabled"],.zui-btn[zui*="disabled"], .zui-btn[zui*="disabled"]:hover, .zui-btn[zui*="disabled"]:active{ 
+.zui-ipt[disabled],.zui-btn[disabled], .zui-btn[disabled]:hover, .zui-btn[disabled]:active,.zui-select[disabled],
+.zui-ipt[zui*="disabled"],.zui-btn[zui*="disabled"], .zui-btn[zui*="disabled"]:hover, .zui-btn[zui*="disabled"]:active,.zui-select[zui=disabled]{ 
     cursor: not-allowed; 
     color:@gray2;
     .zui-border;
@@ -215,19 +223,19 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 }
 
 // 大小
-.zui-size-md, [zui*="md"], .zui-btn, .zui-ipt{
+[zui*="md"], .zui-btn, .zui-ipt, .zui-select, .zui-date{
     padding: 0 15px; 
     height: 38px; 
     font-size: 14px;
     i{ font-size: 16px;}
 }
-.zui-size-sm, [zui*="sm"]{
+[zui*="sm"]{
     padding: 0 10px; 
     height: 28px; 
     font-size: 12px;
     i{ font-size: 16px;}
 }
-.zui-size-lg, [zui*="lg"]{
+[zui*="lg"]{
     padding: 0 30px; 
     height: 44px; 
     font-size: 16px;
@@ -235,12 +243,18 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 }
 
 // input初始化
-.zui-ipt, .zui-date{ 
+.zui-ipt, .zui-date, .zui-select, .zui-linkage{ 
     padding: 0; 
     text-indent: 10px; 
     .zui-border;
     color: @black;
     vertical-align: middle;
+}
+
+// zui-linkage联动select
+.zui-linkage{
+    text-indent: 0;
+    background: @white;
 }
 
 // zui-date时间选择
@@ -260,6 +274,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         transform: translateY(-50%);
         cursor: pointer;
         .zui-anim-fast;
+        color: @gray2;
     }
     .zui-icon-date:hover, .zui-date:hover+.zui-icon-date{
         color: @primary-active;
@@ -298,8 +313,8 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         border-radius: 4px;
         z-index: -1;
         overflow-y: auto;
+        overflow-x: hidden;
         opacity: 0;
-        overflow: hidden;
         transform:translateY(25px);
         dd{
             padding: 0 10px;
@@ -535,7 +550,6 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     height: 100%;
     left: 0;
     top: 0;
-    user-select: none;
     background: @black;
     .zui-anim-fast;
     opacity: 0;
@@ -614,6 +628,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         text-align: center;
         align-items:center;
         em{
+            font-style: normal;
             font-size: 14px;
             line-height: 16px;
         }
@@ -661,7 +676,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         background: @gray5;
     }
     td,th{
-        padding: 10px 10px;
+        padding: 10px;
         white-space:nowrap;
         line-height: 20px;
         vertical-align: middle;
@@ -860,19 +875,19 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 
 // 源码编辑器
 .zui-pre{
-    background: @black;
+    background: @gray6;
     border-radius: 4px;
     overflow: hidden;
     margin: 20px auto;
-    font-family: 'Arial';
+    font-family: 'Arial','Microsoft YaHei';
     h3{
         padding: 0 15px;
-        background: @gray1;
-        color: @white;
+        background: @gray4;
+        color: @gray1;
         font-size: 16px;
         line-height: 44px;
         i{
-            color: @gray2;
+            color: @gray3;
             font-size: 12px;
             font-style: normal;
         }
@@ -880,6 +895,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     .zui-pre-ol{
         padding: 20px 0;
         line-height: 24px;
+        font-size: 12px;
         li{
             list-style: decimal;
             border-left: 2px solid @primary-active;
@@ -887,7 +903,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
             padding: 0 10px;
             color: @gray2;
             span{
-                color: @gray3;
+                color: @gray1;
             }
         }
         li.zui-pre-annotations span{
@@ -1095,7 +1111,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     background:@white; 
     overflow: hidden;
     text-align: center;
-    z-index: 1110;
+    z-index: 10;
     top:0;
     left: 0;
     &-main{
@@ -1185,7 +1201,6 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
                         display: block;
                         width: 24px;
                         .zui-radius;
-                        .zui-anim-fast;
                     }
                     span{
                         color: @gray3;
@@ -1204,6 +1219,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
                 line-height: 50px;
             }
             .zui-calendar-times{
+                border-top: 1px solid @gray5;
                 padding: 5px;
                 &-item{
                     line-height: 30px;
@@ -1216,6 +1232,38 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
                 }
                 &-con{
                     width: 80%;
+                    padding: 0 15px;
+                    position: relative;
+                    .zui-calendar-times-minus,.zui-calendar-times-plus{
+                        position: absolute;
+                        width: 15px;
+                        height: 15px;
+                        font-weight: normal;
+                        background: @gray5;
+                        border:1px solid @gray4;
+                        border-radius: 2px;
+                        line-height: 14px;
+                        font-size: 12px;
+                        text-align: center;
+                        top: 50%;
+                        transform: translateY(-6px);
+                        cursor: pointer;
+                        left: 0;
+                    }
+                    .zui-calendar-times-plus{
+                        left: auto;
+                        right: 0;
+                    }
+                    .zui-calendar-times-minus:hover,.zui-calendar-times-plus:hover{
+                        background: @primary;
+                        color: @white;
+                        border-color: @primary-active;
+                    }
+                }
+                .zui-calendar-times-show{
+                    .zui-calendar-times-con{
+                        padding: 0;
+                    }
                     i{
                         font-style: normal;
                         margin: 0 3px;
@@ -1224,7 +1272,84 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
                         color: @primary;
                     }
                 }
+                .zui-calendar-times-now{
+                    border-top: 1px solid @gray5;
+                    padding-top: 5px;
+                    overflow: hidden;
+                    margin-top: 10px;
+                }
             }
         }
     }
+}
+
+// 图片加载失败
+.zui-img-error{
+    width: 118px;
+    height: 78px;
+    background: url(../images/img-error.png) no-repeat center @white;
+    .zui-border;
+}
+
+// 导航
+.zui-nav{
+    position: relative;
+    background: @black;
+    &-item{
+        position: relative;
+        float: left;
+        padding: 0 15px;
+        a{
+            color: @gray2;
+            .zui-anim-normal;
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+        a:hover{
+            color: @white;
+        }
+    }
+    .active{
+        a{
+            color: @white;
+        }
+    }
+    &-child{
+        position: absolute;
+        overflow: hidden;
+        .zui-anim-normal;
+        z-index: 10;
+        left: 50%;
+        transform: translate(-50%,30px);
+        height: 0;
+        opacity: 0;
+        background: @gray1;
+        border-radius: 4px;
+        .zui-shadow;
+        dd{
+            line-height: 40px;
+        }
+        a{
+            font-size: 12px;
+            padding: 0 10px;
+            display: block;
+            white-space: nowrap; 
+        }
+        a:hover{background: @black;}
+    }
+    &-child.open{
+        opacity: 1;
+        transform: translate(-50%,0);
+        height: auto;
+    }
+    &-sliding{
+        position: absolute;
+        .zui-anim-normal;
+        bottom: 0;
+        left: 0;
+        width: 80px;
+        height: 2px;
+        z-index: 9;
+        background: @primary-active;
+    }    
 }

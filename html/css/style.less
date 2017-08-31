@@ -1,40 +1,37 @@
 
 
 // 颜色
-@primary:#66CCFF;
-@primary-hover:#77DDFF;
-@primary-active:#55BBEE;
+@primary:#6cf;
+@primary-hover:#7df;
+@primary-active:#5be;
 
-@done:#66CC99;
-@done-hover:#77DDAA;
-@done-active:#55BB88;
+@done:#6c9;
+@done-hover:#7da;
+@done-active:#5b8;
 
-@warn:#F7B824;
-@warn-hover:#f8c935;
-@warn-active:#e6a713;
+@warn:#fb1;
+@warn-hover:#fc2;
+@warn-active:#ea0;
 
-@danger:#FF6666;
-@danger-hover:#FF7777;
-@danger-active:#EE5555;
+@danger:#f66;
+@danger-hover:#f88;
+@danger-active:#e55;
 
-@black:#232527; //背景、字体
-@gray1:#46484a; //背景、字体
-@gray2:#898b8d; //字体
-@gray3:#cdcecf; //border
-@gray4:#e0e2e4; //border
-@gray5:#f0f0f0; //bg
-@gray6:#f8f8f8; //用于hover背景
+@black:#283038; //背景、字体
+@gray1:#434c56; //背景、字体
+@gray2:#8995a1; //字体
+@gray3:#c4cbd3; //border
+@gray4:#dde3e9; //border
+@gray5:#f1f4f7; //bg
+@gray6:#f5f8fb; //用于hover背景
 @white:#fff; //白色字体
-
 // 内容宽度
 @wrap:1140px;
-
-// 滚动条颜色
-::-webkit-scrollbar-thumb{ background: @gray3;}
 
 // 文档页面css
 html,body,.wrapper{
     height: 100%;
+    color: @gray1;
 }
 body{
     background: @gray5;
@@ -51,27 +48,40 @@ body{
     height: 50px;
     line-height: 50px;
     margin-bottom: 20px;
-    background: @gray1;
+    background: @black;
     box-shadow: 0 0 10px @black;
     .wrapper{
         background: none;
-        overflow: hidden;
-    }
-    .logo{
-        img{
-            margin-top: 10px;
+        overflow:visible;
+        .logo{
+            img{
+                vertical-align: middle;
+            }
         }
-    }
-    input{
-        width: 240px;
-    }
-    span{
-        position: relative;
-    }
-    span i{
-        position: absolute;
-        right: 5px;
-        top: 1px;
+        .search{
+            position: relative;
+            margin-left: 100px;
+            input{
+                width: 240px;
+                background: #121314;
+                border: none;
+                color: @gray5;
+            }
+            input:focus{
+                background: @white;
+                color: @gray1;
+            }
+            i{
+                position: absolute;
+                right: 8px;
+                top: 1px;
+                color: @gray2;
+                font-weight: bold;
+            }
+            input:focus + i{
+                color: @gray1;
+            }
+        }
     }
 }
 
@@ -88,11 +98,12 @@ body{
         top: 0;
         padding: 70px 0 20px 0;
         overflow-y: auto;
-        border-right: 1px solid @gray5;
+        border-right: 1px solid @gray4;
         background: @white;
         z-index: 10;
         dl{
             padding-bottom: 15px;
+            color: @black;
         }
         dt,dd a{
             display: block;
@@ -131,13 +142,14 @@ body{
         .main-info{
             background: @gray6;
             padding: 10px;
-            border-left: 3px solid @primary-active;
+            border: 1px solid @gray4;
+            border-radius: 4px;
             line-height: 24px;
             margin: 20px auto;
-            color: @gray2;
+            color: @gray1;
             span{
                 margin: 0 10px;
-                color: @gray1;
+                color: @black;
             }
             a{
                 color: @gray2;

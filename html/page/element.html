@@ -263,3 +263,55 @@
         </div>
     </div>
 </div>
+<script>
+    $('#btn1').click(function(){
+        zui.prompts('这是一条提示信息！');
+    });
+    $('#btn2').click(function(){
+        zui.layer({
+            info:'Hello，我是一个通知窗！' //必填，内容
+        });
+    });
+    $('#btn3').click(function(){
+        zui.layer({
+            type:'confirm', //弹窗类别，默认为"alert"
+            style:'danger', //风格，颜色，默认为主色
+            title:'这是标题', //标题，默认为“通知”
+            info:'Hello，我是一个通知窗！', //必填，内容
+            okaycall:okay, //点击确定，回调函数绑定
+            okayParam:'你点了确定', //确定回调传参
+            cancelcall:cancel, //点击取消，回调函数绑定
+            cancelParam:'取消咯' //去掉回调传参
+        });
+    });
+    $('#btn4').click(function(){
+         zui.message({
+            tag:'', //标签名，默认为“消息”
+            style:'done', //风格，颜色，默认为主色
+            url:'', // 点击跳转地址，默认为#
+            target:'blank', //打开方式，默认self
+            title:'会议通知', //标题，默认为“系统消息”
+            info:'Hello，我是一个消息窗！' //必填，内容
+        });
+    });
+
+    $('#btn5').click(function(){
+         zui.message({
+            tag:'紧急', //标签名，默认为“消息”
+            style:'danger', //风格，颜色，默认为主色
+            url:'', // 点击跳转地址，默认为#
+            target:'blank', //打开方式，默认self
+            title:'会议通知', //标题，默认为“系统消息”
+            info:'请综合管理部所有员工，于今日下午3:30，在4楼2号会议厅举行例会！', //必填，内容
+            hide:false //是否自动关闭，默认true
+        });
+    });
+
+    // 测试用的，询问窗的点击回调函数
+    function okay(data){
+        alert(data)
+    }
+    function cancel(data){
+        alert(data)
+    }
+</script>

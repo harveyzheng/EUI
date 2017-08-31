@@ -4,12 +4,15 @@
         <meta content="webkit" name="renderer">
         <meta http-equiv=”X-UA-Compatible” content=”IE=Edge,chrome=1″>
         <!-- 默认Edge或webkit内核打开 -->
-        <title>ZUI-开发文档</title>
         <meta charset="UTF-8">
+        <title>开发文档 - ZUI模块化前端框架</title>
+        <meta name="description" content="快速搭建前端页面，轻量的模块化前端框架。">
+        <meta name="keywords" content="zui,ui框架,前端框架,js组件,js插件,前端模版">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta name="apple-mobile-web-app-status-bar-style" content="black"> 
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="format-detection" content="telephone=no">
+        <link rel="shortcut icon" href="images/z-icon.png" type="image/x-icon">
         
         <link rel="stylesheet" href="zui/less/zui.css?v1.0">
         <link rel="stylesheet" href="css/style.css">
@@ -19,50 +22,73 @@
     </head>
     <body>
     <header class="header">
-        <div class="wrapper zui-clearfix">
-            <span zui="pull-left"><a class="logo" href="/"><img src="images/zui-logo.png"></a></span>
-            <span zui="pull-right"><input class="zui-ipt" zui="sm" type="text" placeholder="请输入要搜索的模块或元素"><i class="zui-icon-search"></i></span>
+        <div class="wrapper" zui="clearfix">
+            <span zui="pull-left" class="logo"><a onclick="_hmt.push(['_trackEvent','logo','click','首页'])" href="index.html?page=introduction"><img src="images/zui-logo.png"></a></span>
+            <span zui="pull-left" class="search"><input class="zui-ipt" zui="sm,radius,anim-normal" type="text" placeholder="请输入要搜索的模块或元素"><i class="zui-icon-search"></i></span>
+            <ul class="zui-nav" zui="pull-right">
+                <li class="zui-nav-item">
+                    <a href="#">首页</a>
+                </li>
+                <li class="zui-nav-item active">
+                    <a href="#">文档</a>
+                    <dl class="zui-nav-child" zui="txt-center">
+                        <dd><a href="#">页面元素</a></dd>
+                        <dd><a href="#">功能模块</a></dd>
+                        <dd><a href="#">示例</a></dd>
+                        <dd><a href="#">示例</a></dd>
+                    </dl>
+                </li>
+                <li class="zui-nav-item">
+                    <a href="#">下载</a>
+                </li>
+                <li class="zui-nav-item">
+                    <a href="#">日志</a>
+                </li>
+                <li class="zui-nav-item">
+                    <a href="#">交流</a>
+                </li>
+            </ul>
         </div>
     </header>
     <div class="wrapper">
         <nav class="nav">
             <dl>
                 <dt>开发指南</dt>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','快速上手'])" href="javascript:;">快速上手</a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','书写规范'])" href="javascript:;">书写规范</a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','公共属性'])" href="javascript:;">公共属性<i>zui公用参数</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','快速上手'])" href="index.html?page=introduction">快速上手</a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','书写规范'])" href="index.html?page=standard">书写规范</a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','公共属性'])" href="index.html?page=commonality">公共属性<i>zui公用参数</i></a></dd>
             </dl>
             <dl>
                 <dt>页面元素</dt>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','颜色'])" href="javascript:;">颜色<i>color</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','图标'])" href="javascript:;">图标<i>zui-icon</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','导航'])" href="javascript:;">导航<i>zui-nav</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','按钮'])" href="javascript:;">按钮<i>zui-btn</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','输入框'])" href="javascript:;">输入框<i>zui-ipt</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','下拉框'])" href="javascript:;">下拉框<i>zui-select</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','表单'])" href="javascript:;">表单元素<i>zui-form</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','表格'])" href="javascript:;">表格<i>zui-table</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','列表'])" href="javascript:;">列表<i>zui-list</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','选项卡'])" href="javascript:;">选项卡<i>zui-tab</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','手风琴'])" href="javascript:;">手风琴<i>zui-fold</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','树状菜单'])" href="javascript:;">树状菜单<i>zui-tree</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','分页'])" href="javascript:;">分页<i>zui-page</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','流布局'])" href="javascript:;">流布局<i>zui-row</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','其他'])" href="javascript:;">其他<i>element</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','颜色'])" href="index.html?page=color">颜色<i>color</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','图标'])" href="index.html?page=zui-icon">图标<i>zui-icon</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','导航'])" href="index.html?page=zui-nav">导航<i>zui-nav</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','按钮'])" href="index.html?page=zui-btn">按钮<i>zui-btn</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','输入框'])" href="index.html?page=zui-ipt">输入框<i>zui-ipt</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','下拉框'])" href="index.html?page=zui-select">下拉框<i>zui-select</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','表单'])" href="index.html?page=zui-form">表单元素<i>zui-form</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','表格'])" href="index.html?page=zui-table">表格<i>zui-table</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','列表'])" href="index.html?page=zui-list">列表<i>zui-list</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','选项卡'])" href="index.html?page=zui-tab">选项卡<i>zui-tab</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','手风琴'])" href="index.html?page=zui-fold">手风琴<i>zui-fold</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','树状菜单'])" href="index.html?page=zui-tree">树状菜单<i>zui-tree</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','分页'])" href="index.html?page=zui-page">分页<i>zui-page</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','流布局'])" href="index.html?page=zui-row">流布局<i>zui-row</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','其他'])" href="index.html?page=element">其他<i>element</i></a></dd>
             </dl>
             <dl>
                 <dt>功能模块</dt>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','加载'])" href="javascript:;">加载<i>loading</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','进度条'])" href="javascript:;">进度条<i>progress</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','警告窗'])" href="javascript:;">警告窗<i>prompts</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','信息窗'])" href="javascript:;">信息窗<i>message</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','弹出层'])" href="javascript:;">弹出层<i>layer</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','日期选择'])" href="javascript:;">日期选择<i>date</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','图片查看'])" href="javascript:;">图片查看<i>imgview</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','多图查看'])" href="javascript:;">多图查看<i>imglayer</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','图片轮播'])" href="javascript:;">图片轮播<i>imgfocus</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','图片上传'])" href="javascript:;">图片上传<i>uploadimg</i></a></dd>
-                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','代码展示'])" href="javascript:;">代码展示<i>precode</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','加载'])" href="index.html?pageloading">加载<i>loading</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','进度条'])" href="index.html?page=progress">进度条<i>progress</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','警告窗'])" href="index.html?page=prompts">警告窗<i>prompts</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','信息窗'])" href="index.html?page=message">信息窗<i>message</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','弹出层'])" href="index.html?page=layer">弹出层<i>layer</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','日期选择'])" href="index.html?page=date">日期选择<i>date</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','图片查看'])" href="index.html?page=imgview">图片查看<i>imgview</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','多图查看'])" href="index.html?page=imglayer">多图查看<i>imglayer</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','图片轮播'])" href="index.html?page=imgfocus">图片轮播<i>imgfocus</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','图片上传'])" href="index.html?page=uploadimg">图片上传<i>uploadimg</i></a></dd>
+                <dd><a onclick="_hmt.push(['_trackEvent','nav','click','代码展示'])" href="index.html?page=precode">代码展示<i>precode</i></a></dd>
             </dl>
         </nav>
         <div class="main">
@@ -71,59 +97,3 @@
      </div> <!-- wrapper -->
     </body>
 </html>
-<script>
-    $('#btn1').click(function(){
-        zui.prompts('这是一条提示信息！');
-    });
-    $('#btn2').click(function(){
-        zui.layer({
-            info:'Hello，我是一个通知窗！' //必填，内容
-        });
-    });
-    $('#btn3').click(function(){
-        zui.layer({
-            type:'confirm', //弹窗类别，默认为"alert"
-            style:'danger', //风格，颜色，默认为主色
-            title:'这是标题', //标题，默认为“通知”
-            info:'Hello，我是一个通知窗！', //必填，内容
-            okaycall:okay, //点击确定，回调函数绑定
-            okayParam:'你点了确定', //确定回调传参
-            cancelcall:cancel, //点击取消，回调函数绑定
-            cancelParam:'取消咯' //去掉回调传参
-        });
-    });
-    $('#btn4').click(function(){
-         zui.message({
-            tag:'', //标签名，默认为“消息”
-            style:'done', //风格，颜色，默认为主色
-            url:'', // 点击跳转地址，默认为#
-            target:'blank', //打开方式，默认self
-            title:'会议通知', //标题，默认为“系统消息”
-            info:'Hello，我是一个消息窗！' //必填，内容
-        });
-    });
-
-    $('#btn5').click(function(){
-         zui.message({
-            tag:'紧急', //标签名，默认为“消息”
-            style:'danger', //风格，颜色，默认为主色
-            url:'', // 点击跳转地址，默认为#
-            target:'blank', //打开方式，默认self
-            title:'会议通知', //标题，默认为“系统消息”
-            info:'请综合管理部所有员工，于今日下午3:30，在4楼2号会议厅举行例会！', //必填，内容
-            hide:false //是否自动关闭，默认true
-        });
-    });
-
-    // 测试用的，询问窗的点击回调函数
-    function okay(data){
-        alert(data)
-    }
-    function cancel(data){
-        alert(data)
-    }
-
-    // 初始化
-    zui.init();
-    
-</script>
