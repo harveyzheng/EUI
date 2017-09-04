@@ -1,21 +1,27 @@
-
+/*
+2017-09-03
+name：zui开发文档-less样式表
+by：harvey
+qq：269144551
+官网：http://www.zjw7.com/
+*/
 
 // 颜色
 @primary:#6cf;
-@primary-hover:#7df;
-@primary-active:#5be;
+@primary-light:#7df;
+@primary-dark:#5be;
 
 @done:#6c9;
-@done-hover:#7da;
-@done-active:#5b8;
+@done-light:#7da;
+@done-dark:#5b8;
 
 @warn:#fb1;
-@warn-hover:#fc2;
-@warn-active:#ea0;
+@warn-light:#fc2;
+@warn-dark:#ea0;
 
 @danger:#f66;
-@danger-hover:#f88;
-@danger-active:#e55;
+@danger-light:#f88;
+@danger-dark:#e55;
 
 @black:#283038; //背景、字体
 @gray1:#434c56; //背景、字体
@@ -111,7 +117,7 @@ body{
         dt{
             padding-left: 25px;
             background: @gray6;
-            border-left: 3px solid @primary-active;
+            border-left: 3px solid @primary-dark;
             margin-bottom: 15px;
             line-height: 40px;
             font-size: 16px;
@@ -126,7 +132,7 @@ body{
             }
         }
         dd a:hover,dd a.on{
-            color: @primary-active;
+            color: @primary-dark;
         }
     }
     .main{
@@ -136,33 +142,44 @@ body{
         background: @white;
         .main-title{
             color: @gray1;
-            font-size: 22px;
-            padding: 0 15px;
+            font-size: 26px;
         }
-        .main-info{
-            background: @gray6;
-            padding: 10px;
+        .main-info,h6+p span{
+            background: @gray5;
+            padding: 8px 15px;
             border: 1px solid @gray4;
             border-radius: 4px;
             line-height: 24px;
             margin: 20px auto;
             color: @gray1;
+        }
+        .main-info{
             span{
-                margin: 0 10px;
-                color: @black;
-            }
-            a{
-                color: @gray2;
-                border-bottom: 1px solid @gray2;
-            }
-            a:hover{
-                color: @primary;
-                border-bottom: 1px solid @primary;
+                margin: 0 5px;
+                display: inline-block;
+                color: @primary-dark;
             }
         }
         h6{ 
             margin: 30px auto 20px;
             font-size: 18px;
+        }
+        h6+p{
+            margin-bottom: 20px;
+            line-height: 28px;
+        }
+        h6+p span{
+            padding: 2px 4px;
+            margin: 0 5px;
+        }
+        .zui-table{
+            margin: 20px 0;
+            .con{
+                width: 80%;
+                span{
+                    margin-right: 15px;
+                }
+            }
         }
     }
 }
@@ -195,15 +212,4 @@ body{
         border-radius: 4px;
     }
 }
-// 按钮页面
-.btnpage{
-    .zui-table{
-        margin-top: 15px;
-        .con{
-            width: 80%;
-            span{
-                margin-right: 15px;
-            }
-        }
-    }
-}
+

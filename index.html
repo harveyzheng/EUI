@@ -13,12 +13,21 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="format-detection" content="telephone=no">
         <link rel="shortcut icon" href="images/z-icon.png" type="image/x-icon">
-        
         <link rel="stylesheet" href="zui/less/zui.css?v1.0">
         <link rel="stylesheet" href="css/style.css">
+        <script>
+        // 百度统计
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?2fef5d4b271a913ed2e378ae1a45aadf";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
         <script src="zui/js/jquery-2.1.4.min.js"></script>
         <script src="zui/js/zui.js?v1.0"></script>
-        <script src="js/script.js"></script>
+        <script src="js/loadpage.js"></script>
     </head>
     <body>
     <header class="header">
@@ -97,3 +106,6 @@
      </div> <!-- wrapper -->
     </body>
 </html>
+<script>
+    zui.init('.zui-nav');
+</script>

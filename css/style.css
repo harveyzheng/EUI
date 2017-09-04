@@ -1,3 +1,10 @@
+/*
+2017-09-03
+name：zui开发文档-less样式表
+by：harvey
+qq：269144551
+官网：http://www.zjw7.com/
+*/
 html,
 body,
 .wrapper {
@@ -107,12 +114,12 @@ body {
 }
 .wrapper .main .main-title {
   color: #434c56;
-  font-size: 22px;
-  padding: 0 15px;
+  font-size: 26px;
 }
-.wrapper .main .main-info {
-  background: #f5f8fb;
-  padding: 10px;
+.wrapper .main .main-info,
+.wrapper .main h6 + p span {
+  background: #f1f4f7;
+  padding: 8px 15px;
   border: 1px solid #dde3e9;
   border-radius: 4px;
   line-height: 24px;
@@ -120,20 +127,30 @@ body {
   color: #434c56;
 }
 .wrapper .main .main-info span {
-  margin: 0 10px;
-  color: #283038;
-}
-.wrapper .main .main-info a {
-  color: #8995a1;
-  border-bottom: 1px solid #8995a1;
-}
-.wrapper .main .main-info a:hover {
-  color: #6cf;
-  border-bottom: 1px solid #6cf;
+  margin: 0 5px;
+  display: inline-block;
+  color: #5be;
 }
 .wrapper .main h6 {
   margin: 30px auto 20px;
   font-size: 18px;
+}
+.wrapper .main h6 + p {
+  margin-bottom: 20px;
+  line-height: 28px;
+}
+.wrapper .main h6 + p span {
+  padding: 2px 4px;
+  margin: 0 5px;
+}
+.wrapper .main .zui-table {
+  margin: 20px 0;
+}
+.wrapper .main .zui-table .con {
+  width: 80%;
+}
+.wrapper .main .zui-table .con span {
+  margin-right: 15px;
 }
 .iconpage td {
   width: 20%;
@@ -158,13 +175,4 @@ body {
 .colorpage div {
   padding: 10px 0;
   border-radius: 4px;
-}
-.btnpage .zui-table {
-  margin-top: 15px;
-}
-.btnpage .zui-table .con {
-  width: 80%;
-}
-.btnpage .zui-table .con span {
-  margin-right: 15px;
 }

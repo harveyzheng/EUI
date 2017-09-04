@@ -1,8 +1,16 @@
+/*
+2017-09-03
+name：zui框架-less样式表
+by：harvey
+qq：269144551
+官网：http://www.zjw7.com/
+*/
 @import url('../iconfont/iconfont.css');
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: 'Arial', 'Microsoft YaHei';
 }
 html,
 body {
@@ -11,7 +19,6 @@ body {
   background: #fff;
   line-height: 1;
   font-size: 14px;
-  font-family: 'Arial', 'Microsoft YaHei';
 }
 :focus {
   outline: none;
@@ -281,11 +288,11 @@ h6 {
   border: 1px solid #dde3e9;
   border-radius: 4px;
   line-height: 20px;
+  font-weight: normal;
   vertical-align: middle;
 }
 .zui-btn i,
 .zui-btn span {
-  line-height: 20px;
   display: inline-block;
   vertical-align: top;
 }
@@ -307,41 +314,45 @@ h6 {
 .zui-btn[zui*="danger"] {
   border: none !important;
 }
+[zui*="default"] {
+  background: #fff !important;
+  color: #434c56;
+}
 [zui*="primary"] {
-  background: #6cf;
+  background: #6cf !important;
 }
 .zui-btn[zui*="primary"]:hover {
-  background: #7df;
+  background: #7df !important;
 }
 .zui-btn[zui*="primary"]:active {
-  background: #5be;
+  background: #5be !important;
 }
 [zui*="done"] {
-  background: #6c9;
+  background: #6c9 !important;
 }
 .zui-btn[zui*="done"]:hover {
-  background: #7da;
+  background: #7da !important;
 }
 .zui-btn[zui*="done"]:active {
-  background: #5b8;
+  background: #5b8 !important;
 }
 [zui*="warn"] {
-  background: #fb1;
+  background: #fb1 !important;
 }
 .zui-btn[zui*="warn"]:hover {
-  background: #fc2;
+  background: #fc2 !important;
 }
 .zui-btn[zui*="warn"]:active {
-  background: #ea0;
+  background: #ea0 !important;
 }
 [zui*="danger"] {
-  background: #f66;
+  background: #f66 !important;
 }
 .zui-btn[zui*="danger"]:hover {
-  background: #f88;
+  background: #f88 !important;
 }
 .zui-btn[zui*="danger"]:active {
-  background: #e55;
+  background: #e55 !important;
 }
 .zui-ipt[disabled],
 .zui-btn[disabled],
@@ -372,6 +383,7 @@ h6 {
 .zui-date {
   padding: 0 15px;
   height: 38px;
+  line-height: 38px;
   font-size: 14px;
 }
 [zui*="md"] i,
@@ -384,14 +396,16 @@ h6 {
 [zui*="sm"] {
   padding: 0 10px;
   height: 28px;
+  line-height: 28px;
   font-size: 12px;
 }
 [zui*="sm"] i {
   font-size: 16px;
 }
 [zui*="lg"] {
-  padding: 0 30px;
+  padding: 0 20px;
   height: 44px;
+  line-height: 44px;
   font-size: 16px;
 }
 [zui*="lg"] i {
@@ -445,7 +459,9 @@ h6 {
 .zui-radio-label + .zui-radio-label,
 .zui-checkbox-label + .zui-checkbox-label,
 .zui-switch-label + .zui-switch-label,
-.zui-select-wrap + .zui-select-wrap {
+.zui-select-wrap + .zui-select-wrap,
+.zui-select-wrap + .zui-btn,
+.zui-select-wrap + .zui-ipt {
   margin-left: 10px;
 }
 .zui-select-wrap {
@@ -453,11 +469,20 @@ h6 {
   vertical-align: middle;
   position: relative;
 }
-.zui-select-wrap .zui-select {
+.zui-select-wrap .zui-select,
+.zui-select-wrap .zui-select[zui*="md"] {
   cursor: pointer;
   width: 100%;
   vertical-align: top;
   transition: all 0.2s;
+  padding-right: 25px;
+  text-overflow: ellipsis;
+}
+.zui-select-wrap .zui-select[zui*="sm"] {
+  padding-right: 20px;
+}
+.zui-select-wrap .zui-select[zui*="lg"] {
+  padding-right: 30px;
 }
 .zui-select-wrap .zui-option-list {
   width: 100%;
@@ -473,10 +498,31 @@ h6 {
   overflow-x: hidden;
   opacity: 0;
   transform: translateY(25px);
+  top: 42px;
+  line-height: 24px;
+  font-size: 14px;
 }
 .zui-select-wrap .zui-option-list dd {
-  padding: 0 10px;
   cursor: pointer;
+  padding: 7px 10px;
+}
+.zui-select-wrap .zui-option-list dd .zui-select-img,
+.zui-select-wrap .zui-option-list dd .zui-select-txt {
+  display: inline-block;
+  vertical-align: middle;
+}
+.zui-select-wrap .zui-option-list dd .zui-select-img img,
+.zui-select-wrap .zui-option-list dd .zui-select-txt img {
+  display: block;
+}
+.zui-select-wrap .zui-option-list dd .zui-select-img + .zui-select-txt,
+.zui-select-wrap .zui-option-list dd .zui-select-txt + .zui-select-img {
+  margin-left: 5px;
+}
+.zui-select-wrap .zui-option-list dd[disabled] {
+  background: #f1f4f7 !important;
+  cursor: not-allowed;
+  color: #c4cbd3;
 }
 .zui-select-wrap .zui-option-list dd:hover {
   background: #f5f8fb;
@@ -486,36 +532,41 @@ h6 {
   background: #6cf;
   color: #fff;
 }
-.zui-select-wrap .zui-select[zui*="sm"] + i + .zui-option-list {
-  top: 30px;
-  line-height: 28px;
-  font-size: 12px;
-}
 .zui-select-wrap .zui-select[zui*="md"] + i + .zui-option-list {
   top: 42px;
-  line-height: 36px;
+  line-height: 24px;
   font-size: 14px;
+}
+.zui-select-wrap .zui-select[zui*="sm"] + i + .zui-option-list {
+  top: 30px;
+  line-height: 14px;
+  font-size: 12px;
 }
 .zui-select-wrap .zui-select[zui*="lg"] + i + .zui-option-list {
   top: 48px;
-  line-height: 42px;
-  font-size: 14px;
+  line-height: 24px;
+  font-size: 16px;
+}
+.zui-select-wrap .zui-select[zui*="lg"] + i + .zui-option-list dd {
+  padding: 10px;
 }
 .zui-select-wrap .zui-select-arrow {
   content: '';
   transition: all 0.2s;
   position: absolute;
   right: 10px;
+  top: 16px;
   border-top: 6px solid #c4cbd3;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
 }
-.zui-select-wrap .zui-select[zui*="sm"] + .zui-select-arrow {
-  top: 12px;
-  border-width: 5px;
-}
 .zui-select-wrap .zui-select[zui*="md"] + .zui-select-arrow {
   top: 16px;
+}
+.zui-select-wrap .zui-select[zui*="sm"] + .zui-select-arrow {
+  top: 12px;
+  right: 7px;
+  border-width: 5px;
 }
 .zui-select-wrap .zui-select[zui*="lg"] + .zui-select-arrow {
   top: 18px;
@@ -524,15 +575,16 @@ h6 {
 .zui-select-wrap .zui-select[zui*="top"] + .zui-select-arrow {
   transform: rotate(180deg);
 }
+.zui-select-wrap .zui-select[zui*="md,top"] + i + .zui-option-list,
+.zui-select-wrap .zui-select[zui*="top,md"] + i + .zui-option-list,
+.zui-select-wrap .zui-select[zui*="top"] + i + .zui-option-list {
+  top: auto;
+  bottom: 42px;
+}
 .zui-select-wrap .zui-select[zui*="sm,top"] + i + .zui-option-list,
 .zui-select-wrap .zui-select[zui*="top,sm"] + i + .zui-option-list {
   top: auto;
   bottom: 30px;
-}
-.zui-select-wrap .zui-select[zui*="md,top"] + i + .zui-option-list,
-.zui-select-wrap .zui-select[zui*="top,md"] + i + .zui-option-list {
-  top: auto;
-  bottom: 42px;
 }
 .zui-select-wrap .zui-select[zui*="lg,top"] + i + .zui-option-list,
 .zui-select-wrap .zui-select[zui*="top,lg"] + i + .zui-option-list {
@@ -725,6 +777,9 @@ h6 {
   position: relative;
   line-height: 34px;
   font-size: 14px;
+}
+.zui-layer-main-title[zui*="default"] {
+  border-bottom: 1px solid #dde3e9;
 }
 .zui-layer-main-close {
   position: absolute;
@@ -991,36 +1046,37 @@ h6 {
   border-radius: 4px;
   overflow: hidden;
   margin: 20px auto;
-  font-family: 'Arial', 'Microsoft YaHei';
 }
-.zui-pre h3 {
+.zui-pre-title {
   padding: 0 15px;
   background: #dde3e9;
   color: #434c56;
   font-size: 16px;
   line-height: 44px;
+  font-family: 'Microsoft YaHei';
 }
-.zui-pre h3 i {
+.zui-pre-title i {
   color: #c4cbd3;
   font-size: 12px;
   font-style: normal;
 }
-.zui-pre .zui-pre-ol {
+.zui-pre-ol {
   padding: 20px 0;
   line-height: 24px;
   font-size: 12px;
 }
-.zui-pre .zui-pre-ol li {
+.zui-pre-ol li {
   list-style: decimal;
   border-left: 2px solid #5be;
-  margin-left: 50px;
+  margin-left: 35px;
   padding: 0 10px;
   color: #8995a1;
 }
-.zui-pre .zui-pre-ol li span {
+.zui-pre-ol li span {
   color: #434c56;
+  font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
 }
-.zui-pre .zui-pre-ol li.zui-pre-annotations span {
+.zui-pre-ol li.zui-pre-annotations span {
   color: #5b8;
 }
 .zui-upload-item {
@@ -1407,22 +1463,25 @@ h6 {
 .zui-nav {
   position: relative;
   background: #283038;
+  height: 50px;
+  line-height: 50px;
 }
 .zui-nav-item {
   position: relative;
-  float: left;
+  display: inline-block;
   padding: 0 15px;
 }
-.zui-nav-item a {
+.zui-nav-item > a {
   color: #8995a1;
+  display: block;
   transition: all 0.4s;
-  padding: 10px 15px;
+  padding: 0 15px;
   font-size: 14px;
 }
-.zui-nav-item a:hover {
+.zui-nav-item > a:hover {
   color: #fff;
 }
-.zui-nav .active a {
+.zui-nav .active > a {
   color: #fff;
 }
 .zui-nav-child {
@@ -1443,12 +1502,15 @@ h6 {
 }
 .zui-nav-child a {
   font-size: 12px;
-  padding: 0 10px;
+  transition: all 0.2s;
   display: block;
+  color: #c4cbd3;
+  padding: 0 20px;
   white-space: nowrap;
 }
 .zui-nav-child a:hover {
   background: #283038;
+  color: #fff;
 }
 .zui-nav-child.open {
   opacity: 1;
@@ -1464,4 +1526,101 @@ h6 {
   height: 2px;
   z-index: 9;
   background: #5be;
+}
+.zui-tree * {
+  vertical-align: top;
+}
+.zui-tree-node {
+  display: block;
+  font-size: 0;
+  cursor: pointer;
+}
+.zui-tree-node:hover {
+  background: #f5f8fb;
+}
+.zui-tree-node:hover > .zui-tree-text,
+.zui-tree-node:hover > i {
+  color: #5be;
+}
+.zui-tree-check {
+  display: none;
+}
+.zui-tree-check + .zui-icon-catalog {
+  width: 20px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 16px;
+}
+.zui-tree-check + .zui-icon-catalog:before {
+  content: "\e667";
+}
+.zui-tree-check:checked + .zui-icon-catalog:before {
+  content: "\e64c";
+  font-size: 18px;
+}
+.zui-tree-check + .zui-icon-item {
+  width: 20px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 16px;
+}
+.zui-tree-check + .zui-icon-item:before {
+  content: "\e6e4";
+}
+.zui-tree-check:checked + .zui-icon-item:before {
+  content: "\e6e5";
+  color: #5be;
+}
+.zui-tree-text {
+  font-size: 14px;
+  display: inline-block;
+  line-height: 30px;
+  padding: 0 5px;
+}
+.zui-tree-check:checked + i + span + .zui-tree-context {
+  height: auto;
+}
+.zui-tree-context {
+  padding-left: 22px;
+  height: 0;
+  overflow: hidden;
+}
+.zui-page {
+  font-size: 0;
+  padding: 20px 0;
+}
+.zui-page li {
+  display: inline-block;
+}
+.zui-page li a {
+  display: block;
+  font-size: 14px;
+  padding: 0 15px;
+  line-height: 30px;
+  border: 1px solid #dde3e9;
+  border-radius: 4px;
+}
+.zui-page li a:hover {
+  background: #6cf;
+  border-color: #5be;
+  color: #fff;
+}
+.zui-page li a:active {
+  background: #5be;
+}
+.zui-page .active a {
+  background: #6cf;
+  border-color: #5be;
+  color: #fff;
+}
+.zui-page[zui*="txt-right"] li {
+  margin-left: 10px;
+}
+.zui-page[zui*="txt-left"] li {
+  margin-right: 10px;
+}
+.zui-page[zui*="txt-center"] li {
+  margin: 0 5px;
 }

@@ -1,7 +1,7 @@
 /*
 2017-08-11
-name：z-ui
-author：harvey
+name：zui框架-核心js
+by：harvey
 qq：269144551
 官网：http://www.zjw7.com/
 */
@@ -9,6 +9,8 @@ qq：269144551
 // zui 采用es6语法
 "use strict";
 console.info('%c官方QQ交流群：523772110 查看开发文档请前往 http://www.zjw7.com', 'color:#5be');
+
+// Zui核心构造函数
 const Zui=function(){
     // 获取zui.js部署的地址
     const js = document.scripts;
@@ -24,29 +26,33 @@ const Zui=function(){
             // 局部初始化
             c.split(',').forEach(n=>{
                 switch(n){
-                    case '.zui-radio','.zui-checkbox','.zui-switch': zui.marquee($(n));
-                    break;
+                    case '.zui-radio':
+                    case '.zui-checkbox':
+                    case '.zui-switch': zui.marquee($(n));
+                        break;
                     case '.zui-select': zui.select($(n));
-                    break;
+                        break;
                     case '.zui-upload': zui.uploadimg($(n));
-                    break;
+                        break;
                     case '.zui-date': zui.optiondate($(n));
-                    break;
+                        break;
                     case '.zui-pre': zui.precode($(n));
-                    break;
+                        break;
                     case '.zui-nav': zui.nav($(n));
-                    break;
+                        break;
                     case '.zui-tab': 
                         zui.tabcut({
                             wrap:'.zui-tab',
                             menu:'.zui-tab-menu',
                             main:'.zui-tab-main'
                         });
-                    break;
+                        break;
+                    default:
+                        return console.error('%c初始化失败，没找到'+c, 'color:#f66');
                 };
             });
+            console.info('%c搞定，'+c+'完成初始化', 'color:#5b8');
         }else{
-            c='全局';
             zui.marquee($('.zui-radio'));
             zui.marquee($('.zui-checkbox'));
             zui.marquee($('.zui-switch'));
@@ -64,12 +70,12 @@ const Zui=function(){
             });
             zui.precode($('.zui-pre'));
             zui.nav($('.zui-nav'));
+            console.info('%c搞定，全局完成初始化', 'color:#5b8');
         };
-        // 初始化完
-        console.info('%c搞定，'+c+'完成初始化', 'color:#5b8');
     };
     return;
 };
+
 // 确认窗、询问窗
 Zui.prototype.layer=data=>{
     // 先删除已存在窗口
@@ -97,10 +103,10 @@ Zui.prototype.layer=data=>{
     const okay=that.find('.zui-layer-okay');
     const cancel=that.find('.zui-layer-cancel');
     if(data.okaycall){
-        okay.on('click',()=>data.okaycall(data.okayParam));
+        okay.on('click',()=>data.okaycall(data.okayparam));
     };
     if(data.cancelcall){
-        cancel.on('click',()=>data.cancelcall(data.cancelParam));
+        cancel.on('click',()=>data.cancelcall(data.cancelparam));
     };
 
     // 进入动画
@@ -228,7 +234,7 @@ Zui.prototype.marquee=el=>{
         const o_ab=n.attributes;
         let o_ar='';
         for(let j=0;j<o_ab.length;j++){
-            o_ar+=' '+o_ab[j].name+'="'+o_ab[j].value+'"';
+            if(o_ab[j].name!="type") o_ar+=' '+o_ab[j].name+'="'+o_ab[j].value+'"';
         };
         if($n.hasClass('zui-radio')){
             // zui-radio
@@ -283,7 +289,7 @@ Zui.prototype.marquee=el=>{
             const info=$(this).parent().find('.zui-switch-info');
             const that=$(this);
             // 判断info填写内容
-            function cge(){
+            const cge=()=>{
                 if(that.is(':checked')){
                     info.text(on);
                 }else{
@@ -321,7 +327,7 @@ Zui.prototype.select=el=>{
             const o_ab=op.attributes;
             let o_ar='';
             for(let j=0;j<o_ab.length;j++){
-                if(o_ab[j].name!='class'&&o_ab[j].name!='value') o_ar+=' '+o_ab[j].name+'="'+o_ab[j].value+'"';
+                if(o_ab[j].name!='class' && o_ab[j].name!='value') o_ar+=' '+o_ab[j].name+'="'+o_ab[j].value+'"';
             };
             const $op=$(op);
             const v=$.trim($op.val());
@@ -340,7 +346,7 @@ Zui.prototype.select=el=>{
         const db=$n.attr('disabled')||'';
         dom=
         '<div class="zui-select-wrap">'+
-            '<input '+i_ar+' type="text" value="'+ed+'" zui-val="'+vl+'" readonly '+db+'>'+
+            '<input '+i_ar+' type="text" value="'+ed+'" zui-val="'+vl+'" zui-txt="'+ed+'" readonly '+db+'>'+
             '<i class="zui-select-arrow"></i>'+
             '<dl class="zui-option-list">'+
                 dd+
@@ -358,8 +364,9 @@ Zui.prototype.select=el=>{
             $(this).toggleClass('zui-select-open');
         });
         that.find('dd').on('click',function(){
+            if($(this).attr('disabled')) return false;
             $(this).addClass('zui-option').siblings().removeClass('zui-option');
-            that.find('.zui-select').val($(this).text()).attr('zui-val',$(this).attr('zui-val')).trigger('change');
+            that.find('.zui-select').val($(this).text()).attr({'zui-val':$(this).attr('zui-val'),'zui-txt':$(this).text()}).trigger('change');
         });
     });
     // 关闭绑定
@@ -403,7 +410,7 @@ Zui.prototype.tabcut=data=>{
 Zui.prototype.precode=el=>{
     el.each((i,n)=>{
         const $n=$(n);
-        if($n.find('.zui-load').length) return; //防止重复装载
+        if($n.find('.zui-pre-title').length) return; //防止重复装载
         // 初始化内容：替换<>，分割成数组
         const str=$n.html().replace(/</g, "&lt;").replace(/>/g, "&gt;").split("\n");
         let dom='<ol class="zui-pre-ol">';
@@ -414,7 +421,7 @@ Zui.prototype.precode=el=>{
             // 记录开头空格数量
             if(i<1){
                 sp=spa;
-                $n.html('<h3 class="zui-load">'+s.trim()+'<i zui="pull-right">www.zjw7.com</i></h3>');
+                $n.html('<h3 class="zui-pre-title">'+s.trim()+'<i zui="pull-right">www.zjw7.com</i></h3>');
             }else{
                 // 如果开头空格大于等于第一行，截取空格后的内容（删减空格）
                 if(spa>=sp) s=s.substring(sp,s.length);
@@ -537,7 +544,7 @@ Zui.prototype.uploadfile=(el,dt)=>{
         // 生成一个img
         const img=new Image();
         img.src=b;
-        img.onload=function () {
+        img.onload=function(){
             //宽高比例
             const w=img.width;
             const h=img.height;
@@ -739,9 +746,9 @@ Zui.prototype.calendar=c=>{
                 let c=n.split(':');
                 switch(c[0]){
                     case 'times': ts=c[1];
-                    break;
+                        break;
                     case 'upper': up=c[1];
-                    break;
+                        break;
                     case 'lower': lw=c[1];
                 };
             };
@@ -932,9 +939,9 @@ Zui.prototype.calendar=c=>{
             let m;
             switch(id){
                 case 'zui-range-hh': m='#zui-calendar-times-show-hh';
-                break;
+                    break;
                 case 'zui-range-nn': m='#zui-calendar-times-show-nn';
-                break;
+                    break;
                 default: m='#zui-calendar-times-show-ss';
             };
             return m;
@@ -1375,8 +1382,15 @@ Zui.prototype.linkage=d=>{
     t();
 };
 
+// 分页
+Zui.prototype.paging=dt=>{
+    const el=$(dt.el);
+};
+
 // 实例化Zui
 const zui=new Zui();
+
+
 
 
 // 轮播方法

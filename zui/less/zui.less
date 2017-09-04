@@ -1,5 +1,11 @@
+/*
+2017-09-03
+name：zui框架-less样式表
+by：harvey
+qq：269144551
+官网：http://www.zjw7.com/
+*/
 
-// 规范
 // z-index：
 // 页面元素1-10；
 // 组件100-999；
@@ -10,8 +16,8 @@
 // 日期插件1110；
 
 // 样式重置
-*{ box-sizing: border-box; padding: 0; margin: 0;}
-html, body{ width: 100%; color: @black; background: @white; line-height: 1; font-size: 14px; font-family: 'Arial','Microsoft YaHei';}
+*{ box-sizing: border-box; padding: 0; margin: 0; font-family: 'Arial','Microsoft YaHei';}
+html, body{ width: 100%; color: @black; background: @white; line-height: 1; font-size: 14px;}
 :focus{ outline: none;}
 ul{ list-style: none;}
 h1, h2, h3, h4, h5, h6{ font-weight: normal;}
@@ -38,7 +44,7 @@ input[type="range"]::-webkit-slider-thumb{
 }
 input[type="range"]::-webkit-slider-thumb:hover{
     background: @primary;
-    border-color: @primary-active;
+    border-color: @primary-dark;
 }
 input[type=range]::-webkit-slider-runnable-track{
     height: 5px;
@@ -61,27 +67,27 @@ input[type="range"]{
 body::-webkit-scrollbar-track-piece{ background: @gray4;}
 
 // 选中文本颜色与背景色
-::selection{ color:@white; background:@primary-hover;}
+::selection{ color:@white; background:@primary-light;}
 
 // 导入iconfont
 @import url('../iconfont/iconfont.css');
 
 // 颜色
 @primary:#6cf;
-@primary-hover:#7df;
-@primary-active:#5be;
+@primary-light:#7df;
+@primary-dark:#5be;
 
 @done:#6c9;
-@done-hover:#7da;
-@done-active:#5b8;
+@done-light:#7da;
+@done-dark:#5b8;
 
 @warn:#fb1;
-@warn-hover:#fc2;
-@warn-active:#ea0;
+@warn-light:#fc2;
+@warn-dark:#ea0;
 
 @danger:#f66;
-@danger-hover:#f88;
-@danger-active:#e55;
+@danger-light:#f88;
+@danger-dark:#e55;
 
 @black:#283038; //背景、字体
 @gray1:#434c56; //背景、字体
@@ -177,9 +183,9 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     color: @black; 
     .zui-border;
     line-height: 20px;
+    font-weight: normal;
     vertical-align: middle;
     i,span{
-        line-height: 20px;
         display: inline-block;
         vertical-align: top;
     }
@@ -188,26 +194,27 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     }
 }
 .zui-btn:hover{ color: @primary; border-color: @primary;}
-.zui-btn:active{ color: @primary-active; border-color: @primary-active;}
+.zui-btn:active{ color: @primary-dark; border-color: @primary-dark;}
 
 .zui-btn[zui*="primary"], .zui-btn[zui*="done"], .zui-btn[zui*="warn"], .zui-btn[zui*="danger"]{
     .zui-nobor;
 }
-[zui*="primary"]{ background: @primary;}
-.zui-btn[zui*="primary"]:hover{ background: @primary-hover;}
-.zui-btn[zui*="primary"]:active{ background: @primary-active;}
+[zui*="default"]{ background: @white !important; color: @gray1;}
+[zui*="primary"]{ background: @primary !important;}
+.zui-btn[zui*="primary"]:hover{ background: @primary-light !important;}
+.zui-btn[zui*="primary"]:active{ background: @primary-dark !important;}
 
-[zui*="done"]{ background: @done;}
-.zui-btn[zui*="done"]:hover{ background: @done-hover;}
-.zui-btn[zui*="done"]:active{ background: @done-active;}
+[zui*="done"]{ background: @done !important;}
+.zui-btn[zui*="done"]:hover{ background: @done-light !important;}
+.zui-btn[zui*="done"]:active{ background: @done-dark !important;}
 
-[zui*="warn"]{ background: @warn;}
-.zui-btn[zui*="warn"]:hover{ background: @warn-hover;}
-.zui-btn[zui*="warn"]:active{ background: @warn-active;}
+[zui*="warn"]{ background: @warn !important;}
+.zui-btn[zui*="warn"]:hover{ background: @warn-light !important;}
+.zui-btn[zui*="warn"]:active{ background: @warn-dark !important;}
 
-[zui*="danger"]{ background: @danger;}
-.zui-btn[zui*="danger"]:hover{ background: @danger-hover;}
-.zui-btn[zui*="danger"]:active{ background: @danger-active;}
+[zui*="danger"]{ background: @danger !important;}
+.zui-btn[zui*="danger"]:hover{ background: @danger-light !important;}
+.zui-btn[zui*="danger"]:active{ background: @danger-dark !important;}
 
 .zui-ipt[disabled],.zui-btn[disabled], .zui-btn[disabled]:hover, .zui-btn[disabled]:active,.zui-select[disabled],
 .zui-ipt[zui*="disabled"],.zui-btn[zui*="disabled"], .zui-btn[zui*="disabled"]:hover, .zui-btn[zui*="disabled"]:active,.zui-select[zui=disabled]{ 
@@ -225,19 +232,22 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 // 大小
 [zui*="md"], .zui-btn, .zui-ipt, .zui-select, .zui-date{
     padding: 0 15px; 
-    height: 38px; 
+    height: 38px;
+    line-height: 38px;
     font-size: 14px;
     i{ font-size: 16px;}
 }
 [zui*="sm"]{
     padding: 0 10px; 
-    height: 28px; 
+    height: 28px;
+    line-height: 28px;
     font-size: 12px;
     i{ font-size: 16px;}
 }
 [zui*="lg"]{
-    padding: 0 30px; 
+    padding: 0 20px;
     height: 44px; 
+    line-height: 44px;
     font-size: 16px;
     i{ font-size: 22px;}
 }
@@ -277,7 +287,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         color: @gray2;
     }
     .zui-icon-date:hover, .zui-date:hover+.zui-icon-date{
-        color: @primary-active;
+        color: @primary-dark;
     }
 }
 
@@ -287,7 +297,16 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 }
 
 // 边距
-.zui-btn+.zui-btn, .zui-ipt+.zui-btn, .zui-ipt+.zui-ipt, .zui-radio-label+.zui-radio-label, .zui-checkbox-label+.zui-checkbox-label, .zui-switch-label+.zui-switch-label, .zui-select-wrap+.zui-select-wrap{ 
+.zui-btn + .zui-btn,
+.zui-ipt + .zui-btn,
+.zui-ipt + .zui-ipt,
+.zui-radio-label + .zui-radio-label,
+.zui-checkbox-label + .zui-checkbox-label,
+.zui-switch-label + .zui-switch-label,
+.zui-select-wrap + .zui-select-wrap,
+.zui-select-wrap + .zui-btn,
+.zui-select-wrap + .zui-ipt
+{ 
     margin-left: 10px;
 }
 
@@ -296,11 +315,19 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     display: inline-block;
     vertical-align: middle;
     position: relative;
-    .zui-select{
+    .zui-select,.zui-select[zui*="md"]{
         cursor: pointer;
         width: 100%;
         vertical-align: top;
         .zui-anim-fast;
+        padding-right: 25px;
+        text-overflow: ellipsis;
+    }
+    .zui-select[zui*="sm"]{ 
+        padding-right: 20px;
+    }
+    .zui-select[zui*="lg"]{ 
+        padding-right: 30px;
     }
     .zui-option-list{
         width: 100%;
@@ -316,9 +343,27 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         overflow-x: hidden;
         opacity: 0;
         transform:translateY(25px);
+        top: 42px; 
+        line-height: 24px; 
+        font-size: 14px;
         dd{
-            padding: 0 10px;
             cursor: pointer;
+            padding: 7px 10px;
+            .zui-select-img,.zui-select-txt{
+                display: inline-block;
+                vertical-align: middle;
+                img{
+                    display: block;
+                }
+            }
+            .zui-select-img+.zui-select-txt,.zui-select-txt+.zui-select-img{
+                margin-left: 5px;
+            }
+        }
+        dd[disabled]{
+            background: @gray5 !important;
+            cursor: not-allowed;
+            color: @gray3;
         }
         dd:hover{
             background: @gray6;
@@ -328,36 +373,41 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
             color: @white;
         }
     }
-    .zui-select[zui*="sm"] + i + .zui-option-list{ 
-        top: 30px; 
-        line-height: 28px; 
-        font-size: 12px;
-    }
     .zui-select[zui*="md"] + i + .zui-option-list{ 
         top: 42px; 
-        line-height: 36px; 
+        line-height: 24px; 
         font-size: 14px;
+    }
+    .zui-select[zui*="sm"] + i + .zui-option-list{ 
+        top: 30px; 
+        line-height: 14px; 
+        font-size: 12px;
     }
     .zui-select[zui*="lg"] + i + .zui-option-list{ 
         top: 48px; 
-        line-height: 42px; 
-        font-size: 14px;
+        line-height: 24px; 
+        font-size: 16px;
+        dd{
+            padding: 10px;
+        }
     }
     .zui-select-arrow{
         content: '';
         .zui-anim-fast;
         position: absolute;
         right: 10px;
+        top: 16px;
         border-top: 6px solid @gray3;
         border-left: 6px solid transparent;
         border-right: 6px solid transparent;
     }
-    .zui-select[zui*="sm"] + .zui-select-arrow{
-        top: 12px;
-        border-width: 5px;
-    }
     .zui-select[zui*="md"] + .zui-select-arrow{
         top: 16px;
+    }
+    .zui-select[zui*="sm"] + .zui-select-arrow{
+        top: 12px;
+        right: 7px;
+        border-width: 5px;
     }
     .zui-select[zui*="lg"] + .zui-select-arrow{
         top: 18px;
@@ -368,13 +418,13 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     .zui-select[zui*="top"] + .zui-select-arrow{
         transform:rotate(180deg);
     }
+    .zui-select[zui*="md,top"] + i + .zui-option-list, .zui-select[zui*="top,md"] + i + .zui-option-list,.zui-select[zui*="top"] + i + .zui-option-list{ 
+        top: auto; 
+        bottom: 42px;
+    }
     .zui-select[zui*="sm,top"] + i + .zui-option-list, .zui-select[zui*="top,sm"] + i + .zui-option-list{ 
         top: auto; 
         bottom: 30px;
-    }
-    .zui-select[zui*="md,top"] + i + .zui-option-list, .zui-select[zui*="top,md"] + i + .zui-option-list{ 
-        top: auto; 
-        bottom: 42px;
     }
     .zui-select[zui*="lg,top"] + i + .zui-option-list, .zui-select[zui*="top,lg"] + i + .zui-option-list{ 
         top: auto; 
@@ -503,7 +553,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     }
     .zui-switch:checked + .zui-switch-view{
         background: @primary;
-        border-color: @primary-hover;
+        border-color: @primary-light;
         .zui-icon-switch{
             left: 38px;
             background: @white;
@@ -577,6 +627,9 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         position: relative;
         line-height: 34px;
         font-size: 14px;
+    }
+    &-title[zui*="default"]{
+        border-bottom: 1px solid @gray4;
     }
     &-close{
         position: absolute;
@@ -879,35 +932,36 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     border-radius: 4px;
     overflow: hidden;
     margin: 20px auto;
-    font-family: 'Arial','Microsoft YaHei';
-    h3{
+    &-title{
         padding: 0 15px;
         background: @gray4;
         color: @gray1;
         font-size: 16px;
         line-height: 44px;
+        font-family: 'Microsoft YaHei';
         i{
             color: @gray3;
             font-size: 12px;
             font-style: normal;
         }
     }
-    .zui-pre-ol{
+    &-ol{
         padding: 20px 0;
         line-height: 24px;
         font-size: 12px;
         li{
             list-style: decimal;
-            border-left: 2px solid @primary-active;
-            margin-left: 50px;
+            border-left: 2px solid @primary-dark;
+            margin-left: 35px;
             padding: 0 10px;
             color: @gray2;
             span{
                 color: @gray1;
+                font-family: Consolas,'Liberation Mono',Menlo,Courier,monospace;
             }
         }
         li.zui-pre-annotations span{
-            color: @done-active;
+            color: @done-dark;
         }
     }
 }
@@ -986,7 +1040,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
                     background: @primary;
                 }
                 span:hover{
-                    background: @primary-hover;
+                    background: @primary-light;
                 }
             }
         }
@@ -1178,11 +1232,11 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
                 }
                 a:hover,.select{
                     color: @white;
-                    background: @primary-hover;
+                    background: @primary-light;
                 }
                 .select{
                     color: @white !important;
-                    background: @primary-active;
+                    background: @primary-dark;
                 }
             }
             .zui-caltab-day{
@@ -1257,7 +1311,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
                     .zui-calendar-times-minus:hover,.zui-calendar-times-plus:hover{
                         background: @primary;
                         color: @white;
-                        border-color: @primary-active;
+                        border-color: @primary-dark;
                     }
                 }
                 .zui-calendar-times-show{
@@ -1295,22 +1349,25 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-nav{
     position: relative;
     background: @black;
+    height: 50px;
+    line-height: 50px;
     &-item{
         position: relative;
-        float: left;
+        display: inline-block;
         padding: 0 15px;
-        a{
+        >a{
             color: @gray2;
+            display: block;
             .zui-anim-normal;
-            padding: 10px 15px;
+            padding: 0 15px;
             font-size: 14px;
         }
-        a:hover{
+        >a:hover{
             color: @white;
         }
     }
     .active{
-        a{
+        >a{
             color: @white;
         }
     }
@@ -1331,11 +1388,16 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         }
         a{
             font-size: 12px;
-            padding: 0 10px;
+            .zui-anim-fast;
             display: block;
+            color: @gray3;
+            padding: 0 20px;
             white-space: nowrap; 
         }
-        a:hover{background: @black;}
+        a:hover{
+            background: @black;
+            color: @white;
+        }
     }
     &-child.open{
         opacity: 1;
@@ -1350,6 +1412,107 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         width: 80px;
         height: 2px;
         z-index: 9;
-        background: @primary-active;
+        background: @primary-dark;
     }    
+}
+
+// 树状图
+.zui-tree{
+    *{
+        vertical-align: top;
+    }
+    &-node{
+        display: block;
+        font-size: 0;
+        cursor: pointer;
+    }
+    &-node:hover{
+        background: @gray6;
+    }
+    &-node:hover > .zui-tree-text, &-node:hover > i{
+        color: @primary-dark;
+    }
+    &-check{
+        display: none;
+    }
+    &-check + .zui-icon-catalog{
+        width: 20px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        font-size: 16px;
+    }
+    &-check + .zui-icon-catalog:before{
+        content: "\e667";
+    }
+    &-check:checked + .zui-icon-catalog:before{
+        content: "\e64c";
+        font-size: 18px;
+    }
+    &-check + .zui-icon-item{
+        width: 20px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        font-size: 16px;
+    }
+    &-check + .zui-icon-item:before{
+        content: "\e6e4";
+    }
+    &-check:checked + .zui-icon-item:before{
+        content: "\e6e5";
+        color: @primary-dark;
+    }
+    &-text{
+        font-size: 14px;
+        display: inline-block;
+        line-height: 30px;
+        padding: 0 5px;
+    }
+    &-check:checked + i + span + .zui-tree-context{
+        height: auto;
+    }
+    &-context{
+        padding-left: 22px;
+        height: 0;
+        overflow: hidden;
+    }
+}
+
+// 分页
+.zui-page{
+    font-size: 0;
+    padding: 20px 0;
+    li{
+        display: inline-block;
+        a{
+            display: block;
+            font-size: 14px;
+            padding: 0 15px;
+            line-height: 30px;
+            .zui-border;
+        }
+        a:hover{
+            background: @primary;
+            border-color: @primary-dark;
+            color: @white;
+        }
+        a:active{
+            background: @primary-dark;
+        }
+    }
+    .active a{
+        background: @primary;
+        border-color: @primary-dark;
+        color: @white;
+    }
+}
+.zui-page[zui*="txt-right"]{
+    li{ margin-left: 10px;}
+}
+.zui-page[zui*="txt-left"]{
+    li{ margin-right: 10px;}
+}
+.zui-page[zui*="txt-center"]{
+    li{ margin: 0 5px;}
 }

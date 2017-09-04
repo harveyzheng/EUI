@@ -1,58 +1,14 @@
-<div class="zui-parting main-title" zui="lg"><span>按钮</span></div>
+<h2 class="main-title">按钮 zui-btn</h2>
 <div class="main-info">
-    按钮元素：<span>class="zui-btn"</span><br>
-    示例用法：<span>&lt;button class="zui-btn" zui="lg,primary"&gt;示例按钮&lt;/button&gt;</span>
+    对<span>button、a</span>元素或任意元素设置<span>class="zui-btn"</span>建立一个标准按钮。通过追加<span>zui</span>属性来定义它的风格。可以多值组合设定风格。
 </div>
-<table class="zui-table" zui="even">
-    <thead>
-        <tr><th width="200">zui参数</th><th>说明</th></tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>primary</td>
-            <td>蓝色</td>
-        </tr>
-        <tr>
-            <td>done</td>
-            <td>绿色</td>
-        </tr>
-        <tr>
-            <td>warn</td>
-            <td>黄色</td>
-        </tr>
-        <tr>
-            <td>danger</td>
-            <td>红色</td>
-        </tr>
-        <tr>
-            <td>radius</td>
-            <td>圆角</td>
-        </tr>
-        <tr>
-            <td>sm</td>
-            <td>小号</td>
-        </tr>
-        <tr>
-            <td>md</td>
-            <td>中号</td>
-        </tr>
-        <tr>
-            <td>lg</td>
-            <td>大号</td>
-        </tr>
-        <tr>
-            <td>disabled</td>
-            <td>禁用</td>
-        </tr>
-    </tbody>
-</table>
 <div class="btnpage">
     <h6>常用按钮</h6>
-    <button class="zui-btn">默认按钮</button>
+    <input type="button" class="zui-btn" value="默认按钮">
     <button class="zui-btn" zui="primary">主色按钮</button>
-    <button class="zui-btn" zui="done">提交按钮</button>
-    <button class="zui-btn" zui="warn">提示按钮</button>
-    <button class="zui-btn" zui="danger">删除按钮</button>
+    <a class="zui-btn" zui="done">提交按钮</a>
+    <span class="zui-btn" zui="warn">提示按钮</span>
+    <p class="zui-btn" zui="danger">删除按钮</p>
     <table class="zui-table" zui="even">
         <tr>
             <td>默认按钮</td>
@@ -85,7 +41,7 @@
     </table>
     <h6>按钮大小</h6>
     <button class="zui-btn" zui="sm">小号按钮</button>
-    <button class="zui-btn" zui="md">中号大小</button>
+    <a class="zui-btn" zui="md">中号大小</a>
     <button class="zui-btn" zui="lg">大号按钮</button>
     <table class="zui-table" zui="even">
         <tr>
@@ -103,7 +59,7 @@
     </table>
     <h6>图标按钮</h6>
     <button class="zui-btn" zui="sm,primary"><i class="zui-icon-save"></i></button>
-    <button class="zui-btn" zui="radius,done"><i class="zui-icon-save"></i><span>中号圆角</span></button>
+    <a class="zui-btn" zui="radius,done"><i class="zui-icon-save"></i><span>中号圆角</span></a>
     <button class="zui-btn" zui="lg,warn"><i class="zui-icon-save"></i><span>大号图标</span></button>
     <table class="zui-table" zui="even">
         <tr>
@@ -126,35 +82,35 @@
         </tr>
     </table>
     <h6>组合用法、禁用按钮</h6>
-    <button class="zui-btn" zui="sm,radius,primary">按钮一</button>
-    <button class="zui-btn" zui="md,done,radius">按钮二</button>
-    <button class="zui-btn" zui="lg,radius,warn">按钮三</button>
-    <button class="zui-btn" zui="lg,danger,radius">按钮四</button>
-    <button class="zui-btn" zui="radius,disabled">按钮五</button>
-    <button class="zui-btn" zui="radius,sm,disabled">按钮六</button>
+    <button class="zui-btn" zui="sm,radius,primary">圆按钮一</button>
+    <button class="zui-btn" zui="md,done,radius">圆按钮二</button>
+    <button class="zui-btn" zui="lg,radius,warn">圆按钮三</button>
+    <button class="zui-btn" zui="lg,danger,radius">圆按钮四</button>
+    <button class="zui-btn" zui="radius,disabled">圆按钮五</button>
+    <button class="zui-btn" zui="radius,sm,disabled">圆按钮六</button>
     <table class="zui-table" zui="even">
         <tr>
-            <td>按钮一</td>
+            <td>圆按钮一</td>
             <td class="con"><span>class="zui-btn"</span><span>zui="sm,radius,primary"</span></td>
         </tr>
         <tr>
-            <td>按钮二</td>
+            <td>圆按钮二</td>
             <td class="con"><span>class="zui-btn"</span><span>zui="md,done,radius"</span></td>
         </tr>
         <tr>
-            <td>按钮三</td>
+            <td>圆按钮三</td>
             <td class="con"><span>class="zui-btn"</span><span>zui="lg,radius,warn"</span></td>
         </tr>
         <tr>
-            <td>按钮四</td>
+            <td>圆按钮四</td>
             <td class="con"><span>class="zui-btn"</span><span>zui="lg,danger,radius"</span></td>
         </tr>
         <tr>
-            <td>按钮五</td>
+            <td>圆按钮五</td>
             <td class="con"><span>class="zui-btn"</span><span>zui="radius,disabled"</span></td>
         </tr>
         <tr>
-            <td>按钮六</td>
+            <td>圆按钮六</td>
             <td class="con"><span>class="zui-btn"</span><span>zui="radius,sm,disabled"</span></td>
         </tr>
     </table>

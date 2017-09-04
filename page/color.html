@@ -1,46 +1,40 @@
-<div class="zui-parting main-title" zui="lg"><span>颜色</span></div>
+<h2 class="main-title">颜色 color</h2>
 <div class="main-info">
-    四种常用色提供设置背景用法，可用于设置按钮与色块。
+    简约优雅：ZUI以友好亮丽的蓝色为主色调，配以绿黄红辅色，鲜明亮丽的同时又不单调。7种中性色通过巧妙的搭配表现出页面层次感。
 </div>
-<h6>zui参数</h6>
-<table class="zui-table" zui="even">
-    <thead>
-        <tr><th width="200">参数</th><th>说明</th></tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>primary</td>
-            <td>主色调</td>
-        </tr>
-        <tr>
-            <td>done</td>
-            <td>成功色</td>
-        </tr>
-        <tr>
-            <td>warn</td>
-            <td>提示色</td>
-        </tr>
-        <tr>
-            <td>danger</td>
-            <td>警告色</td>
-        </tr>
-    </tbody>
-</table>
+
+<h6>主题色</h6>
+<p>一般用做按钮、背景、主题场景。</p>
+
 <div class="zui-row colorpage" zui="txt-center">
-    <div class="zui-col"><div zui="primary"><p>主色调</p><p>#66ccff</p></div></div>
-    <div class="zui-col"><div zui="done"><p>成功色</p><p>#66cc99</p></div></div>
-    <div class="zui-col"><div zui="warn"><p>提示色</p><p>#f7b824</p></div></div>
-    <div class="zui-col"><div zui="danger"><p>警告色</p><p>#ff6666</p></div></div>
+    <div class="zui-col"><div style="background:#77ddff; color:#fff;"><p>primary-light</p><p>#77ddff</p></div></div>
+    <div class="zui-col"><div zui="primary"><p>primary</p><p>#66ccff</p></div></div>
+    <div class="zui-col"><div style="background:#55bbee; color:#fff;"><p>primary-dark</p><p>#55bbee</p></div></div>
 </div>
-<div class="main-info">
-    下方颜色可用做背景、字色、边框、伪类色，不提供调用方法。
-</div>
+
+<h6>辅助色</h6>
+<p>用于搭配主题色，通常用于按钮、提示和状态。</p>
+
 <div class="zui-row colorpage" zui="txt-center">
-    <div class="zui-col"><div style="background:#283038;color:#fff;"><p>黑色</p><p>#283038</p></div></div>
-    <div class="zui-col"><div style="background:#434c56;color:#fff;"><p>字体色</p><p>#434c56</p></div></div>
-    <div class="zui-col"><div style="background:#8995a1;color:#fff;"><p>字体色</p><p>#8995a1</p></div></div>
-    <div class="zui-col"><div style="background:#c4cbd3;color:#434c56;"><p>边框色</p><p>#c4cbd3</p></div></div>
-    <div class="zui-col"><div style="background:#e0e2e4;color:#434c56;"><p>边框色</p><p>#dde3e9</p></div></div>
-    <div class="zui-col"><div style="background:#f0f0f0;color:#8995a1;"><p>hover</p><p>#f1f4f7</p></div></div>
-    <div class="zui-col"><div style="background:#f8f8f8;color:#8995a1;"><p>hover</p><p>#f5f8fb</p></div></div>
+    <div class="zui-col"><div zui="primary"><p>primary</p><p>#66ccff</p></div></div>
+    <div class="zui-col"><div zui="done"><p>done</p><p>#66cc99</p></div></div>
+    <div class="zui-col"><div zui="warn"><p>warn</p><p>#ffbb11</p></div></div>
+    <div class="zui-col"><div zui="danger"><p>danger</p><p>#ff6666</p></div></div>
 </div>
+
+<h6>中性色</h6>
+<p>一般用做背景、文本、边框，可通过不同深浅的中性色搭配出有层次的结构。</p>
+
+<div class="zui-row colorpage" zui="txt-center">
+    <div class="zui-col"><div style="background:#283038;color:#fff;"><p>#283038</p></div></div>
+    <div class="zui-col"><div style="background:#434c56;color:#fff;"><p>#434c56</p></div></div>
+    <div class="zui-col"><div style="background:#8995a1;color:#fff;"><p>#8995a1</p></div></div>
+    <div class="zui-col"><div style="background:#c4cbd3;color:#434c56;"><p>#c4cbd3</p></div></div>
+    <div class="zui-col"><div style="background:#dde3e9;color:#434c56;"><p>#dde3e9</p></div></div>
+    <div class="zui-col"><div style="background:#f1f4f7;color:#8995a1;"><p>#f1f4f7</p></div></div>
+    <div class="zui-col"><div style="background:#f5f8fb;color:#8995a1;"><p>#f5f8fb</p></div></div>
+</div>
+
+<script>
+    zui.init('.zui-pre');
+</script>

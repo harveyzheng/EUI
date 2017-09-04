@@ -1,1 +1,64 @@
-书写规范
+<h2 class="main-title">导航 zui-nav</h2>
+<div class="main-info">
+    提供一款热门的导航布局，有趣的下划线跟随与归位动画效果，可设置二级菜单。
+</div>
+
+<h6>导航示例</h6>
+<p></p>
+<ul class="zui-nav">
+    <li class="zui-nav-item">
+        <a href="#">首页</a>
+    </li>
+    <li class="zui-nav-item active">
+        <a href="#">产品</a>
+        <dl class="zui-nav-child" zui="txt-center">
+            <dd><a href="#">投资理财</a></dd>
+            <dd><a href="#">信用贷款</a></dd>
+            <dd><a href="#">抵押贷款</a></dd>
+            <dd><a href="#">小额贷款</a></dd>
+        </dl>
+    </li>
+    <li class="zui-nav-item">
+        <a href="#">服务</a>
+    </li>
+    <li class="zui-nav-item">
+        <a href="#">新闻</a>
+    </li>
+    <li class="zui-nav-item">
+        <a href="#">我们</a>
+    </li>
+</ul>
+<pre class="zui-pre">
+    HTML结构
+    <ul class="zui-nav">
+        <li class="zui-nav-item">
+            <a href="#">首页</a>
+        </li>
+        <li class="zui-nav-item active">
+            <a href="#">产品</a>
+            <dl class="zui-nav-child" zui="txt-center">
+                <dd><a href="#">投资理财</a></dd>
+                <dd><a href="#">信用贷款</a></dd>
+                <dd><a href="#">抵押贷款</a></dd>
+                <dd><a href="#">小额贷款</a></dd>
+            </dl>
+        </li>
+        <li class="zui-nav-item">
+            <a href="#">服务</a>
+        </li>
+        <li class="zui-nav-item">
+            <a href="#">新闻</a>
+        </li>
+        <li class="zui-nav-item">
+            <a href="#">我们</a>
+        </li>
+    </ul>
+</pre>
+<pre class="zui-pre">
+    javascript
+    // 加载 .zui-nav 模块
+    zui.init('.zui-nav');
+</pre>
+<script>
+    zui.init('.zui-nav,.zui-pre');
+</script>
