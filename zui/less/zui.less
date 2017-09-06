@@ -492,6 +492,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     display: inline-block;
     span{
         margin-left: 7px;
+        line-height: 20px;
     }
     // icon
     .zui-icon-radio,.zui-icon-checkbox{ 
@@ -696,11 +697,12 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         padding-top: 10px;
         padding-bottom: 5px;
         white-space:nowrap;
+        color: @black;
     }
     &-info{
         font-size: 14px;
         line-height: 20px;
-        color: @gray2;
+        color: @gray1;
     }
     &-close{
         position: absolute;
@@ -730,7 +732,6 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     }
     td,th{
         padding: 10px;
-        white-space:nowrap;
         line-height: 20px;
         vertical-align: middle;
         border: 1px solid @gray4;
@@ -938,7 +939,6 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         color: @gray1;
         font-size: 16px;
         line-height: 44px;
-        font-family: 'Microsoft YaHei';
         i{
             color: @gray3;
             font-size: 12px;
@@ -947,7 +947,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     }
     &-ol{
         padding: 20px 0;
-        line-height: 24px;
+        line-height: 20px;
         font-size: 12px;
         li{
             list-style: decimal;
@@ -1425,6 +1425,8 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         display: block;
         font-size: 0;
         cursor: pointer;
+        padding: 0 10px;
+        border-radius: 4px;
     }
     &-node:hover{
         background: @gray6;
@@ -1473,7 +1475,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         height: auto;
     }
     &-context{
-        padding-left: 22px;
+        padding-left: 14px;
         height: 0;
         overflow: hidden;
     }
@@ -1483,36 +1485,74 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-page{
     font-size: 0;
     padding: 20px 0;
-    li{
+    a{
         display: inline-block;
-        a{
-            display: block;
-            font-size: 14px;
-            padding: 0 15px;
-            line-height: 30px;
-            .zui-border;
-        }
-        a:hover{
-            background: @primary;
-            border-color: @primary-dark;
-            color: @white;
-        }
-        a:active{
-            background: @primary-dark;
-        }
+        font-size: 14px;
+        padding: 0 15px;
+        line-height: 30px;
+        .zui-border;
+        background: @white;
     }
-    .active a{
+    a:hover{
+        border-color: @primary;
+        color: @primary;
+    }
+    a:active{
+        border-color: @primary-dark;
+        color: @primary-dark;
+    }
+    a.active{
+        cursor:default;
         background: @primary;
         border-color: @primary-dark;
         color: @white;
     }
 }
 .zui-page[zui*="txt-right"]{
-    li{ margin-left: 10px;}
+    a{ margin-left: 10px;}
 }
 .zui-page[zui*="txt-left"]{
-    li{ margin-right: 10px;}
+    a{ margin-right: 10px;}
 }
 .zui-page[zui*="txt-center"]{
-    li{ margin: 0 5px;}
+    a{ margin: 0 5px;}
+}
+
+// 校验
+.zui-validate-error{
+    position: absolute;
+    white-space: nowrap;
+    opacity: 0.9;
+    z-index: 11;
+    padding: 0px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    background: #f66;
+    color: #fff;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+}
+.zui-validate-error:after{
+    position: absolute;
+    content: '';
+    top: 50%;
+    transform: translateY(-50%);
+    border: 5px solid transparent;
+}
+.zui-validate-bottom{
+    left: 0;
+    bottom: -28px;
+}
+.zui-validate-bottom:after{
+    left: 8px;
+    top: -4px;
+    border-bottom-color: @danger;
+}
+.zui-validate-right{
+    top:50%;
+    right: 0%;
+    transform: translate(100%,-50%);
+}
+.zui-validate-right:after{
+    left: -9px;
+    border-right-color: @danger;
 }

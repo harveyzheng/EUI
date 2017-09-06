@@ -47,8 +47,14 @@ const Zui=function(){
                             main:'.zui-tab-main'
                         });
                         break;
+                    case '.zui-form':
+                        zui.marquee($('.zui-radio'));
+                        zui.marquee($('.zui-checkbox'));
+                        zui.marquee($('.zui-switch'));
+                        zui.select($('.zui-select'));
+                        break;
                     default:
-                        return console.error('%c初始化失败，没找到'+c, 'color:#f66');
+                        return console.error('%c初始化失败，没找到'+c, 'color:#f33');
                 };
             });
             console.info('%c搞定，'+c+'完成初始化', 'color:#5b8');
@@ -147,7 +153,7 @@ Zui.prototype.message=data=>{
     // 生成dom
     const tag=data.tag||'消息';
     const style=data.style||'primary';
-    const title=data.title||'系统消息';
+    const title=data.title||'通知消息';
     const url=data.url||'#';
     const target=data.target||'self';
     let dom='<div class="zui-layer-message">'+
@@ -156,9 +162,7 @@ Zui.prototype.message=data=>{
                     '<span class="zui-layer-message-title">'+title+'</span>'+
                     '<span class="zui-layer-message-info">'+data.info+'</span>'+
                 '</a>';
-                if(data.hide==false){
-                    dom+='<a class="zui-layer-message-close">&times;</a>';
-                }
+                if(data.hide==false) dom+='<a class="zui-layer-message-close">&times;</a>';
     dom+='</div>';
     const that=$(dom);
     $('body').append(that);
@@ -186,7 +190,7 @@ Zui.prototype.message=data=>{
                     // 重新排序
                     zui.message_sequence();
                 },300);
-            }
+            };
         });
         // 延时关闭
         setTimeout(()=>{
@@ -447,11 +451,11 @@ Zui.prototype.uploadimg=el=>{
         const dt=z=>{
             let d={};
             z.forEach(n=>{
-                if(n.indexOf('max-')>=0){
+                if(n.indexOf('max:')>=0){
                     d.m=n.substring(4,n.length);
-                }else if(n.indexOf('size-')>=0){
+                }else if(n.indexOf('size:')>=0){
                     d.s=n.substring(5,n.length);
-                }else if(n.indexOf('compress-')>=0){
+                }else if(n.indexOf('compress:')>=0){
                     d.c=n.substring(9,n.length);
                 };
             });
@@ -834,8 +838,14 @@ Zui.prototype.calendar=c=>{
     // 初始化
     let today,e,f,q,that;
     const cd=n=>{
-        if(!$n.val()==''){
-            today = new Date($n.val());
+        let nv=$n.val();
+        if(nv!=''){
+            if(c.times=='true'){
+                const av=nv.split(' ');
+                nv=av[0];
+                hhh=' '+av[1];
+            };
+            today = new Date(nv);
         }else{
             today = new Date();
         };
@@ -858,6 +868,7 @@ Zui.prototype.calendar=c=>{
         k += "  </div>";
         k += "</div>";
         that=$(k);
+        
         $n.parent('.zui-date-wrap').append(that);
 
         // 计算出现位置，是否超出可视范围
@@ -885,7 +896,7 @@ Zui.prototype.calendar=c=>{
 
     // 时分秒
     const hns=d=>{
-        if(!c.times) return;
+        if(c.times!='true') return;
         let sp=$n.val().split(' ');
         if(sp.length>1){
             sp=sp[1].split(':');
@@ -1017,7 +1028,7 @@ Zui.prototype.calendar=c=>{
                 d == $(this).text() && !$(this).hasClass("prevD") && !$(this).hasClass("nextD") && $(this).addClass("select");
             });
 
-            if(!c.times){
+            if(c.times!='true'){
                 $n.val(ttt);
                 that.remove();
             }else{
@@ -1382,9 +1393,89 @@ Zui.prototype.linkage=d=>{
     t();
 };
 
-// 分页
+// 分页器
 Zui.prototype.paging=dt=>{
     const el=$(dt.el);
+    // 总页数/最后一页
+    const last=Math.ceil(dt.amount/dt.divide);
+    // 如果总页数=1,就隐藏掉分页器
+    if(last==1) return el.hide();
+
+    if(dt.show==undefined) dt.show=5;
+    if(dt.prev==undefined) dt.prev='上一页';
+    if(dt.first==undefined) dt.first='首页';
+    if(dt.last==undefined) dt.last='尾页';
+    if(dt.next==undefined) dt.next='下一页';
+
+    const pg=(current)=>{
+        let dom='';
+        // 是否载入prev和first
+        if(current!=1 && dt.prev!=''){
+            dom+='<a class="prev" href="javascript:;">'+dt.prev+'</a>';
+        };
+        if(current!=1 && dt.first!='' && last>dt.show){
+            dom+='<a class="first" href="javascript:;">'+dt.first+'</a>';
+        };
+
+        // 缩进值
+        const rt=parseInt((dt.show-1)/2);
+
+        // 循环开始条件值
+        let st=1;
+        if(current>rt) st=current-rt;
+        if(current>last-rt) st=last-dt.show+1;
+
+        // 生成分页按钮
+        for(let i=st;i<st+dt.show;i++){
+            // 如果超出总数退出循环
+            if(i>last) return;
+            // 如果是当前页
+            if(i==current){
+                dom+='<a class="active" href="javascript:;">'+i+'</a>';
+            }else if(i>0){
+                dom+='<a href="javascript:;">'+i+'</a>';
+            };
+        };
+
+        // 是否载入last和next
+        if(current!=last && dt.last!='' && last>dt.show){
+            dom+='<a class="last" href="javascript:;">'+dt.last+'</a>';
+        };
+        if(current!=last && dt.next!=''){
+            dom+='<a class="next" href="javascript:;">'+dt.next+'</a>';
+        };
+        el.html(dom);
+    };
+    pg(dt.current);
+
+    // 切换事件
+    $(document).on('click',dt.el+' a',function(){
+        const c=$(this).attr('class');
+        let index=0;
+        if(c=='active') return;
+        if(c==undefined){
+            index=Number($(this).text());
+        }else{
+            index=Number($(this).siblings('.active').text());
+        };
+        // 功能按钮操作
+        switch(c){
+            case 'prev': index--;
+                break;
+            case 'next': index++;
+                break;
+            case 'first': index=1;
+                break;
+            case 'last': index=last;
+                break;
+        };
+        // 防错拦截
+        if(index<1||index>last) return;
+        // 重置分页器
+        pg(index);
+        // 启动回调
+        dt.callback(index);
+    });
 };
 
 // 实例化Zui
