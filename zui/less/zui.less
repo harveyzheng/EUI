@@ -221,7 +221,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     cursor: not-allowed; 
     color:@gray2;
     .zui-border;
-    background: @gray4;
+    background: @gray5;
 }
 
 // 按钮字体白色
@@ -230,7 +230,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 }
 
 // 大小
-[zui*="md"], .zui-btn, .zui-ipt, .zui-select, .zui-date{
+[zui*="md"], .zui-btn, .zui-ipt, .zui-select, .zui-date, .zui-linkage{
     padding: 0 15px; 
     height: 38px;
     line-height: 38px;
@@ -271,9 +271,9 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-date-wrap{
     display: inline-block;
     position: relative;
+    width: auto;
     vertical-align: middle;
     .zui-date{
-        width: 100%;
         cursor: pointer;
         vertical-align: top;
     }
@@ -284,7 +284,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         transform: translateY(-50%);
         cursor: pointer;
         .zui-anim-fast;
-        color: @gray2;
+        color: @gray1;
     }
     .zui-icon-date:hover, .zui-date:hover+.zui-icon-date{
         color: @primary-dark;
@@ -297,16 +297,57 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 }
 
 // 边距
+.zui-date-wrap + .zui-date-wrap,
+.zui-select-wrap + .zui-select-wrap,
 .zui-btn + .zui-btn,
+.zui-btn + .zui-ipt,
+.zui-btn + .zui-radio-label,
+.zui-btn + .zui-checkbox-label,
+.zui-btn + .zui-date-wrap,
+.zui-btn + .zui-select-wrap,
+.zui-btn + .zui-switch-label,
 .zui-ipt + .zui-btn,
 .zui-ipt + .zui-ipt,
+.zui-ipt + .zui-radio-label,
+.zui-ipt + .zui-checkbox-label,
+.zui-ipt + .zui-date-wrap,
+.zui-ipt + .zui-select-wrap,
+.zui-ipt + .zui-switch-label,
+.zui-radio-label + .zui-btn,
+.zui-radio-label + .zui-ipt,
 .zui-radio-label + .zui-radio-label,
+.zui-radio-label + .zui-checkbox-label,
+.zui-radio-label + .zui-date-wrap,
+.zui-radio-label + .zui-select-wrap,
+.zui-radio-label + .zui-switch-label,
+.zui-checkbox-label + .zui-btn,
+.zui-checkbox-label + .zui-ipt,
+.zui-checkbox-label + .zui-radio-label,
 .zui-checkbox-label + .zui-checkbox-label,
-.zui-switch-label + .zui-switch-label,
-.zui-select-wrap + .zui-select-wrap,
+.zui-checkbox-label + .zui-date-wrap,
+.zui-checkbox-label + .zui-select-wrap,
+.zui-checkbox-label + .zui-switch-label,
+.zui-date-wrap + .zui-btn,
+.zui-date-wrap + .zui-ipt,
+.zui-date-wrap + .zui-radio-label,
+.zui-date-wrap + .zui-checkbox-label,
+.zui-date-wrap + .zui-date-wrap,
+.zui-date-wrap + .zui-select-wrap,
+.zui-date-wrap + .zui-switch-label,
 .zui-select-wrap + .zui-btn,
-.zui-select-wrap + .zui-ipt
-{ 
+.zui-select-wrap + .zui-ipt,
+.zui-select-wrap + .zui-radio-label,
+.zui-select-wrap + .zui-checkbox-label,
+.zui-select-wrap + .zui-date-wrap,
+.zui-select-wrap + .zui-select-wrap,
+.zui-select-wrap + .zui-switch-label,
+.zui-switch-label + .zui-btn,
+.zui-switch-label + .zui-ipt,
+.zui-switch-label + .zui-radio-label,
+.zui-switch-label + .zui-checkbox-label,
+.zui-switch-label + .zui-date-wrap,
+.zui-switch-label + .zui-select-wrap,
+.zui-switch-label + .zui-switch-label{ 
     margin-left: 10px;
 }
 
@@ -464,14 +505,15 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         margin-bottom: 15px;
         clear: both;
         .zui-form-label{
-            width: 120px;
-            padding: 0 15px;
+            width: 15%;
+            padding-right: 15px;
             text-align: right;
             float: left;
         }
         .zui-form-item{
-            margin: 0 120px;
-            .zui-ipt, .zui-select-wrap{
+            margin-left: 15%;
+            position: relative;
+            .zui-ipt, .zui-select-wrap, .zui-linkage{
                 width: 100%;
             }
             .zui-ipt-info{
@@ -937,8 +979,8 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         padding: 0 15px;
         background: @gray4;
         color: @gray1;
-        font-size: 16px;
-        line-height: 44px;
+        font-size: 14px;
+        line-height: 36px;
         i{
             color: @gray3;
             font-size: 12px;
@@ -1156,7 +1198,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     }
 }
 
-// 日期插件
+// 日期控件
 .zui-calendar{ 
     position: absolute; 
     width: 210px;
@@ -1252,15 +1294,15 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
                     width: 30px;
                     padding: 3px;
                     a,span{
-                        display: block;
                         width: 24px;
                         .zui-radius;
                     }
                     span{
-                        color: @gray3;
+                        color: @gray4;
+                        display: block;
                     }
                     .nextD,.prevD{
-                        color: @gray4;
+                        color: @gray2;
                     }
                     .nextD:hover,.prevD:hover{
                         color: @white;
@@ -1339,10 +1381,9 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 
 // 图片加载失败
 .zui-img-error{
-    width: 118px;
-    height: 78px;
+    width: 70px;
+    height: 54px;
     background: url(../images/img-error.png) no-repeat center @white;
-    .zui-border;
 }
 
 // 导航
@@ -1519,7 +1560,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 }
 
 // 校验
-.zui-validate-error{
+.zui-validate-error,.zui-validate-succee{
     position: absolute;
     white-space: nowrap;
     opacity: 0.9;
@@ -1527,11 +1568,15 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     padding: 0px 10px;
     border-radius: 4px;
     font-size: 12px;
-    background: #f66;
+    line-height: 28px;
+    background: @danger;
     color: #fff;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
 }
-.zui-validate-error:after{
+.zui-validate-succee{
+    background: @done;
+}
+.zui-validate-error:after,.zui-validate-succee:after{
     position: absolute;
     content: '';
     top: 50%;
@@ -1547,6 +1592,9 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     top: -4px;
     border-bottom-color: @danger;
 }
+.zui-validate-succee.zui-validate-bottom:after{
+    border-bottom-color: @done;
+}
 .zui-validate-right{
     top:50%;
     right: 0%;
@@ -1555,4 +1603,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-validate-right:after{
     left: -9px;
     border-right-color: @danger;
+}
+.zui-validate-succee.zui-validate-right:after{
+    border-right-color: @done;
 }

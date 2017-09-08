@@ -745,6 +745,7 @@ Zui.prototype.calendar=c=>{
         $('.zui-calendar').remove();
         let ts,up,lw,z;
         z=$n.attr('zui');
+        if(!z) z=''; // 防止没设置zui属性时报错
         z.split(',').forEach(n=>{
             if(n.indexOf(':')){
                 let c=n.split(':');
@@ -896,7 +897,7 @@ Zui.prototype.calendar=c=>{
 
     // 时分秒
     const hns=d=>{
-        if(c.times!='true') return;
+        if(d!='true') return;
         let sp=$n.val().split(' ');
         if(sp.length>1){
             sp=sp[1].split(':');
@@ -1478,10 +1479,411 @@ Zui.prototype.paging=dt=>{
     });
 };
 
+/*
+2017-09-03
+name：zui框架-表单校验模块
+by：harvey
+qq：269144551
+官网：http://www.zjw7.com/
+*/
+
+Zui.prototype.validate=dt=>{
+	// 非法名字
+	const ne = ["妈", "爸", "爹", "爷", "姐", "哥", "瞧瞧", "你猜", "高富帅", "白富美", "屌丝", "先生", "女士", "小姐", "帅哥", "美女", "啊啊", "习近平", "习大大", "奥巴马", "马化腾", "毛泽东", "尼玛", "你", "我", "草", "泥", "痴", "狗", "猫", "喵", "蛋", "主任", "老师", "师傅", "医生", "教授", "老", "猪", "呵呵", "贱", "二", "三", "四", "五", "六", "七", "八", "九", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖", "拾", "佰", "仟", "傻"];
+	// 百家姓数组
+	const bjx = ["赵","钱","孙","李","周","吴","郑","王","冯","陈","褚","卫","蒋","沈","韩","杨","朱","秦","尤","许","何","吕","施","张","孔","曹","严","华","金","魏","陶","姜","戚","谢","邹","喻","柏","水","窦","章","云","苏","潘","葛","奚","范","彭","郎","鲁","韦","昌","马","苗","凤","花","方","俞","任","袁","柳","酆","鲍","史","唐","费","廉","岑","薛","雷","贺","倪","汤","滕","殷","罗","毕","郝","邬","安","常","乐","于","时","傅","皮","卞","齐","康","伍","余","元","卜","顾","孟","平","黄","和","穆","萧","尹","姚","邵","湛","汪","祁","毛","禹","狄","米","贝","明","臧","计","伏","成","戴","谈","宋","茅","庞","熊","纪","舒","屈","项","祝","董","梁","杜","阮","蓝","闵","席","季","麻","强","贾","路","娄","危","江","童","颜","郭","梅","盛","林","刁","锺","徐","邱","骆","高","夏","蔡","田","樊","胡","凌","霍","虞","万","支","柯","昝","管","卢","莫","经","房","裘","缪","干","解","应","宗","丁","宣","贲","邓","郁","单","杭","洪","包","诸","左","石","崔","吉","钮","龚","程","嵇","邢","滑","裴","陆","荣","翁","荀","羊","於","惠","甄","麴","家","封","芮","羿","储","靳","汲","邴","糜","松","井","段","富","巫","乌","焦","巴","弓","牧","隗","山","谷","车","侯","宓","蓬","全","郗","班","仰","秋","仲","伊","宫","宁","仇","栾","暴","甘","钭","历","戎","祖","武","符","刘","景","詹","束","龙","叶","幸","司","韶","郜","黎","蓟","溥","印","宿","白","怀","蒲","邰","从","鄂","索","咸","籍","赖","卓","蔺","屠","蒙","池","乔","阳","郁","胥","能","苍","双","闻","莘","党","翟","谭","贡","劳","逄","姬","申","扶","堵","冉","宰","郦","雍","却","璩","桑","桂","濮","牛","寿","通","边","扈","燕","冀","僪","浦","尚","农","温","别","庄","晏","柴","瞿","阎","充","慕","连","茹","习","宦","艾","鱼","容","向","古","易","慎","戈","廖","庾","终","暨","居","衡","步","都","耿","满","弘","匡","国","文","寇","广","禄","阙","东","欧","殳","沃","利","蔚","越","夔","隆","师","巩","厍","聂","晁","勾","敖","融","冷","訾","辛","阚","那","简","饶","空","曾","毋","沙","乜","养","鞠","须","丰","巢","关","蒯","相","查","后","荆","红","游","竺","权","逮","盍","益","桓","公","万俟","司马","上官","欧阳","夏侯","诸葛","闻人","东方","赫连","皇甫","尉迟","公羊","澹台","公冶","宗政","濮阳","淳于","单于","太叔","申屠","公孙","仲孙","轩辕","令狐","钟离","宇文","长孙","慕容","司徒","司空","召","有","舜","丛","岳","寸","贰","皇","侨","彤","竭","端","赫","实","甫","集","象","翠","狂","辟","典","良","函","芒","苦","其","京","中","夕","之","章佳","那拉","冠","宾","香","果","纳喇","乌雅","范姜","碧鲁","张廖","张简","图门","太史","公叔","乌孙","完颜","马佳","佟佳","富察","费莫","蹇","称","诺","来","多","繁","戊","朴","回","毓","税","荤","靖","绪","愈","硕","牢","买","但","巧","枚","撒","泰","秘","亥","绍","以","壬","森","斋","释","奕","姒","朋","求","羽","用","占","真","穰","翦","闾","漆","贵","代","贯","旁","崇","栋","告","休","褒","谏","锐","皋","闳","在","歧","禾","示","是","委","钊","频","嬴","呼","大","威","昂","律","冒","保","系","抄","定","化","莱","校","么","抗","祢","綦","悟","宏","功","庚","务","敏","捷","拱","兆","丑","丙","畅","苟","随","类","卯","俟","友","答","乙","允","甲","留","尾","佼","玄","乘","裔","延","植","环","矫","赛","昔","侍","度","旷","遇","偶","前","由","咎","塞","敛","受","泷","袭","衅","叔","圣","御","夫","仆","镇","藩","邸","府","掌","首","员","焉","戏","可","智","尔","凭","悉","进","笃","厚","仁","业","肇","资","合","仍","九","衷","哀","刑","俎","仵","圭","夷","徭","蛮","汗","孛","乾","帖","罕","洛","淦","洋","邶","郸","郯","邗","邛","剑","虢","隋","蒿","茆","菅","苌","树","桐","锁","钟","机","盘","铎","斛","玉","线","针","箕","庹","绳","磨","蒉","瓮","弭","刀","疏","牵","浑","恽","势","世","仝","同","蚁","止","戢","睢","冼","种","涂","肖","己","泣","潜","卷","脱","谬","蹉","赧","浮","顿","说","次","错","念","夙","斯","完","丹","表","聊","源","姓","吾","寻","展","出","不","户","闭","才","无","书","学","愚","本","性","雪","霜","烟","寒","少","字","桥","板","斐","独","千","诗","嘉","扬","善","揭","祈","析","赤","紫","青","柔","刚","奇","拜","佛","陀","弥","阿","素","长","僧","隐","仙","隽","宇","祭","酒","淡","塔","琦","闪","始","星","南","天","接","波","碧","速","禚","腾","潮","镜","似","澄","潭","謇","纵","渠","奈","风","春","濯","沐","茂","英","兰","檀","藤","枝","检","生","折","登","驹","骑","貊","虎","肥","鹿","雀","野","禽","飞","节","宜","鲜","粟","栗","豆","帛","官","布","衣","藏","宝","钞","银","门","盈","庆","喜","及","普","建","营","巨","望","希","道","载","声","漫","犁","力","贸","勤","革","改","兴","亓","睦","修","信","闽","北","守","坚","勇","汉","练","尉","士","旅","五","令","将","旗","军","行","奉","敬","恭","仪","母","堂","丘","义","礼","慈","孝","理","伦","卿","问","永","辉","位","让","尧","依","犹","介","承","市","所","苑","杞","剧","第","零","谌","招","续","达","忻","六","鄞","战","迟","候","宛","励","粘","萨","邝","覃","辜","初","楼","城","区","局","台","原","考","妫","纳","泉","老","清","德","卑","过","麦","曲","竹","百","福","言","第五","佟","爱","年","笪","谯","哈","墨","南宫","赏","伯","佴","佘","牟","商","西门","东门","左丘","梁丘","琴","后","况","亢","缑","帅","微生","羊舌","海","归","呼延","南门","东郭","百里","钦","鄢","汝","法","闫","楚","晋","谷梁","宰父","夹谷","拓跋","壤驷","乐正","漆雕","公西","巫马","端木","颛孙","子车","督","仉","司寇","亓官","鲜于","锺离","盖","逯","库","郏","逢","阴","薄","厉","稽","闾丘","公良","段干","开","光","操","瑞","眭","泥","运","摩","伟","铁","迮","付"];
+    // 所有zui-rule元素
+    const ipt=$(dt.form).find('[zui-rule]');
+    // 获取zui-rule参数
+	const getv=z=>{
+		let ru={};
+		const v=z.split(',');
+		v.forEach(n=>{
+			const r=n.split(':');
+			switch(r[0]){
+				case 'rule': ru.rule=r[1];
+					break;
+				case 'required': ru.required=true;
+					break;
+				case 'length':
+					if(r[1].indexOf('~')!=-1){
+						const t=r[1].split('~');
+						ru.min=t[0];
+						ru.max=t[1];
+					}else{
+						ru.leng=r[1];
+					};
+                    break;
+                case 'interval':
+					if(r[1].indexOf('~')!=-1){
+						const t=r[1].split('~');
+						ru.minval=t[0];
+						ru.maxval=t[1];
+					}else{
+						ru.interval=r[1];
+					};
+					break;
+				case 'title': ru.title=r[1];
+					break;
+                case 'point': ru.point=r[1];
+                    if(r[1].indexOf('~')!=-1){
+                        const t=r[1].split('~');
+                        ru.point_min=t[0];
+                        ru.point_max=t[1];
+                    }else{
+                        ru.point=r[1];
+                    };
+					break;
+				case 'tip': ru.tip=r[1];
+					break;
+				case 'port': ru.port=r[1];
+                    break;
+                case 'contrast':
+                    if(r[1].indexOf('~')!=-1){
+                        const t=r[1].split('~');
+                        ru.contrast=t[0];
+                        ru.contrast_type=t[1];
+                    }else{
+                        ru.contrast=r[1];
+                    };
+					break;
+			};
+		});
+		return ru;
+	};
+	// 公共校验
+	const vd=(n,ru)=>{
+        // 如果文本框为禁用状态,直接通过
+        if(n.attr('disabled')) return verify.pass++;
+        // 取值
+		const v=n.val();
+		// 非必选值为空，跳过
+		if(v=='' && !ru.required) return verify.pass++;
+		// 判断校验类别
+		let vy;
+		switch(ru.rule){
+			case 'name':
+				vy=verify.name;
+				if(!ru.title) ru.title='姓名';
+				if(ru.min==undefined) ru.min=2;
+				if(ru.max==undefined) ru.max=6;
+				break;
+			case 'phone':
+				vy=verify.phone;
+				if(!ru.title) ru.title='手机号';
+				ru.leng=11;
+				break;
+			case 'number':
+				vy=verify.number;
+				if(!ru.title) ru.title='数字';
+				break;
+			case 'email':
+				vy=verify.email;
+				if(!ru.title) ru.title='邮箱';
+				break;
+			case 'idcard':
+				vy=verify.idcard;
+				if(!ru.title) ru.title='身份证';
+				ru.leng=18;
+				break;
+			case 'chinese':
+				vy=verify.chinese;
+				if(!ru.title) ru.title='内容';
+				break;
+			case 'checkbox':
+				vy=verify.checkbox;
+				if(!ru.title) ru.title='选项';
+				break;
+			case 'select':
+				vy=verify.select;
+				if(!ru.title) ru.title='下拉框';
+                break;
+            case 'account':
+				vy=verify.account;
+				if(!ru.title) ru.title='账号';
+                break;
+            case 'img':
+				vy=verify.img;
+				if(!ru.title) ru.title='图片';
+				break;
+			default: if(!ru.title) ru.title='';
+        };
+		// 如果是checkbox\select\img类型,直接去调用校验方法
+		if(ru.rule=='checkbox' || ru.rule=='select' || ru.rule=='img'){
+            return vy(n,ru);
+        };
+		// 公用校验规则
+		// 必选为空
+		if(v=='' && ru.required) return verify.error(n,ru,'不能为空！');
+		// 是否为默认值
+		if(dt.illegality){
+			for(let i in dt.illegality){
+				if(dt.illegality[i]==v) return verify.error(n,ru,'不能为默认值！');
+			};
+		};
+        // 长度校验
+        let leng=v.length;
+        if(v.indexOf('.')>0) leng-=1; //包含小数点,长度-1
+		if(ru.min!=undefined && leng<ru.min) return verify.error(n,ru,'长度不足！');
+		if(ru.max!=undefined && leng>ru.max) return verify.error(n,ru,'长度超出！');
+        if(ru.leng!=undefined && leng!=ru.leng) return verify.error(n,ru,'长度不正确！');
+        // 对比,默认对比是否相同
+        if(ru.contrast!=undefined){
+            // 默认相同
+            let contrast_type=true;
+            if(ru.contrast_type=='false') contrast_type=false;
+            const contrast=$(ru.contrast).val();
+            // 判断是否相同或不同
+            if(contrast!=v && contrast_type) return verify.error(n,ru,'不一致！');
+            if(contrast==v && !contrast_type) return verify.error(n,ru,'不能一致！');
+        };
+        // 删除原有错误提示
+        n.siblings('.zui-validate-error,.zui-validate-succee').remove();
+        if(!vy && !ru.port) return verify.pass++;
+		// 调用对应校验方法,return,防止执行下面的远程校验
+		if(vy) if(vy(n,ru)===false) return;
+        // 判断是否需要远程校验
+        if(ru.port) if(verify.port(n,ru)===false) return verify.pass--;
+	};
+	// 验证大法
+	const verify={
+		pass:0,
+		name:(n,ru)=>{
+			const v=n.val();
+			const reg = /^[\u4E00-\u9FA5]+$/;
+			// 是否为中文
+			if(!reg.test(v)) return verify.error(n,ru,'必须是中文！');
+			// 非法姓名判断
+			for(let i=0;i<ne.length;i++){
+				if(v.indexOf(ne[i])>=0) return verify.error(n,ru,'不合法！');
+			};
+			// 百家姓判断
+			if(bjx.indexOf(v.substr(0,1))!=-1||bjx.indexOf(v.substr(0,2))!=-1){
+				return verify.pass++;
+			}else{
+				return verify.error(n,ru,'姓氏非百家姓！');
+			};
+        },
+        chinese:(n,ru)=>{
+			const v=n.val();
+            const reg = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]");
+            const reg2 = /^[\u4E00-\u9FA5]+$/;
+            // 是否含符号
+			if(reg.test(v)) return verify.error(n,ru,'不能包含符号！');
+			// 是否为中文
+            if(!reg2.test(v)) return verify.error(n,ru,'必须是中文！');
+			return verify.pass++;
+        },
+        account:(n,ru)=>{
+            const v=n.val();
+            const reg = /^([a-z]|[A-Z])[0-9a-zA-Z_]+$/;
+            if(!reg.test(v)) return verify.error(n,ru,'格式不正确！');
+            return verify.pass++;
+        },
+		phone:(n,ru)=>{
+			const v=n.val();
+			const reg = /^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+			if(isNaN(v)) return verify.error(n,ru,'无效！');
+			if(!reg.test(v)) return verify.error(n,ru,'不正确！');
+			return verify.pass++;
+		},
+		number:(n,ru)=>{
+			const v=n.val();
+			// 是否为有效数字
+			if(isNaN(v)) return verify.error(n,ru,'无效！');
+			// 是否为正数
+            if(v<0) return verify.error(n,ru,'不能为负数！');
+			// 小数点位数判断
+			if(ru.point) if(v.indexOf('.')==-1 || v.split('.')[1].length!=ru.point) return verify.error(n,ru,'请保留位'+ru.point+'小数！');
+            // 数值区间判断
+            if(ru.minval!=undefined && v<ru.minval) return verify.error(n,ru,'不能小于'+ru.minval+'！');
+            if(ru.maxval!=undefined && v>ru.maxval) return verify.error(n,ru,'不能大于'+ru.maxval+'！');
+            if(ru.interval!=undefined && v!=ru.interval) return verify.error(n,ru,'必须等于'+ru.interval+'！');
+            return verify.pass++;
+		},
+		email:(n,ru)=>{
+			const v=n.val();
+			// 规则校验
+			const reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+			if(!reg.test(v)){
+				return verify.error(n,ru,'无效！');
+			};
+			return verify.pass++;
+		},
+		idcard:(n,ru)=>{
+			const v=n.val();
+			// 小写x转大写
+			if(v.substring(17)=='x') v=v.substring(0,17)+'X';
+
+			//身份证省的编码 
+			const idcity={ 
+				11:"北京",12:"天津",13:"河北",14:"山西",15:"内蒙古",
+				21:"辽宁",22:"吉林",23:"黑龙江",31:"上海",32:"江苏", 
+				33:"浙江",34:"安徽",35:"福建",36:"江西",37:"山东",41:"河南", 
+				42:"湖北",43:"湖南",44:"广东",45:"广西",46:"海南",50:"重庆", 
+				51:"四川",52:"贵州",53:"云南",54:"西藏",61:"陕西",62:"甘肃", 
+				63:"青海",64:"宁夏",65:"新疆",71:"台湾",81:"香港",82:"澳门",91:"国外" 
+			};
+			//取身份证前两位,校验省份 
+			if(!idcity[v.substr(0,2)]) return verify.error(n,ru,'省份不正确！');
+			
+			// 校验出生日期
+			const oy=v.substr(6,4) + '/' + v.substr(10,2) + '/'+v.substr(12,2);
+			const oday = new Date(oy);
+			const now_year = new Date().getFullYear();
+			let om=(oday.getMonth()+1);
+			let od=oday.getDate();
+			if(om<10) om='0'+om;
+			if(od<10) od='0'+od;
+			if(oy!=oday.getFullYear() + '/' + om + '/' + od) return verify.error(n,ru,'日期不正确！');
+			//判断年份的范围（1岁到120岁之间)
+			const tm = now_year - oday.getFullYear(); 
+			if(tm < 1 || tm > 120) return verify.error(n,ru,'出生年份不正确！');
+
+			// 最后一位校验码
+			const arr_i = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]; 
+			const arr_c = ['1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'];
+			let ct = 0;
+			for(let i = 0; i < 17; i ++){ 
+				ct += v.substr(i, 1) * arr_i[i];
+			};
+			const vn = arr_c[ct % 11]; 
+			if(vn != v.substr(17, 1)) return verify.error(n,ru,'号码不正确！');
+			return verify.pass++;
+		},
+		checkbox:(n,ru)=>{
+			const leng=n.find(':checked').length;
+            // 必选判断
+            if(leng==0 && ru.required) return verify.error(n,ru,'必须选择！');
+            // 选择数量判断
+            if(ru.min!=undefined && leng<ru.min) return verify.error(n,ru,'选项不足'+ru.min+'个！');
+            if(ru.max!=undefined && leng>ru.max) return verify.error(n,ru,'选项超出'+ru.max+'个！');
+            if(ru.leng!=undefined && leng!=ru.leng) return verify.error(n,ru,'选项必须为'+ru.leng+'个！');
+			n.siblings('.zui-validate-error,.zui-validate-succee').remove();
+			return verify.pass++;
+		},
+		select:(n,ru)=>{
+			const v=n.find(':selected').text();
+			// 必选判断
+			if(!ru.required) return verify.pass++;
+			// 判断是否非法值
+			if(dt.illegality){
+				for(let i in dt.illegality){
+					if(dt.illegality[i]==v) return verify.error(n,ru,'不能选默认项！');
+				};
+			};
+			n.siblings('.zui-validate-error,.zui-validate-succee').remove();
+			return verify.pass++;
+        },
+        img:(n,ru)=>{
+            const leng=n.find('img').length;
+            // 图片数量判断
+            if(ru.min!=undefined && leng<ru.min) return verify.error(n,ru,'不足'+ru.min+'张！');
+            if(ru.max!=undefined && leng>ru.max) return verify.error(n,ru,'超出'+ru.max+'张！');
+            if(ru.leng!=undefined && leng!=ru.leng) return verify.error(n,ru,'必须为'+ru.leng+'张！');
+            n.siblings('.zui-validate-error,.zui-validate-succee').remove();
+            return verify.pass++;
+        },
+        port:(n,ru)=>{
+            const v=n.val();
+            let pt='';
+			const pp=ru.port.split(']');
+			const pd=[];
+			pp.forEach(nn=>{
+				pd.push(nn.substring(1,nn.length));
+			});
+			$.ajax({
+				type:pd[0],
+				url: pd[1],
+				data: pd[2]+'='+v+'&'+pd[3], //key=value & key=value&
+				async:false, //同步进行
+				success:function(data){
+					return pt=data;
+				},
+				error:function(){
+					return pt='ajax_error';
+				}
+            });
+            // 判断ajax校验结果
+            if(pt!=''){
+                if(pt=='ajax_error'){
+                    return verify.error(n,ru,'校验时服务器异常！');
+                }else if(pt=='success'){
+                    // 成功提示
+                    return verify.error(n,ru,v+'可以使用！',true);
+                }else{
+                    return verify.error(n,ru,v+'不能使用！');
+                };
+            };
+        },
+		error:(n,ru,info,status)=>{
+            // 提示信息
+			let tip='';
+			if(ru.tip){
+				tip=ru.tip;
+			}else{
+				tip=ru.title+info;
+            };
+            // 获取样式配置
+			let pt='bottom';
+			if(dt.position) pt=dt.position;
+			// 渲染
+			const $pt=n.parent();
+            if($pt.css('position')=='static') $pt.css('position','relative');
+            n.siblings('.zui-validate-error,.zui-validate-succee').remove();
+            let ty='error';
+            if(status) ty='succee';
+            $pt.append('<div class="zui-validate-'+ty+' zui-validate-'+pt+'">'+tip+'</div>');
+            if(status){
+                // 成功
+                return true;
+            }else{
+                // 错误
+                return false;
+            };
+        }
+	};
+    // 判断是否绑定blur事件
+	if(dt.blur!=false){ 
+        $(document).on('blur',dt.form+' [zui-rule]',function(){
+            // 只读的输入框和select元素,blur时不校验,防止zui-select等元素校验时机错误
+            if($(this).attr('readonly') || $(this).prop("tagName")=='SELECT') return;
+            // 获取配置
+            let ru=getv($(this).attr('zui-rule')); 
+            // 调用公共校验
+            vd($(this),ru);
+        });
+    };
+
+	// 提交按钮，触发所有blur事件，再判断验证是否全部通过
+	$(dt.submit).click(()=>{
+		// 启动所绑表单所有ipt的blur事件，再次校验全部ipt
+		verify.pass=0;
+        ipt.each(function(){
+            // 获取配置
+            let ru=getv($(this).attr('zui-rule'));
+            // 开启校验
+            vd($(this),ru);
+
+            if($(this).attr('readonly') || $(this).prop("tagName")=='SELECT'){
+                // 绑定change后删除错误提示
+                $(this).one('mouseup',function(){
+                    $(this).siblings('.zui-validate-error,.zui-validate-succee').remove();
+                });
+            };
+        });
+        console.log('需要校验:'+ipt.length+'个元素，通过'+verify.pass+'个');
+        // 比对需要校验的元素数量与通过数量是否一致
+		if(verify.pass==ipt.length && verify.pass!=0){
+			// 校验通关，执行函数
+			dt.succee();
+		};
+	});
+};
+
+
 // 实例化Zui
 const zui=new Zui();
-
-
 
 
 // 轮播方法
@@ -1493,5 +1895,3 @@ const zui=new Zui();
 //         palytime:3000,  //播放间隔时间，默认为3000
 //         loop:true  //是否循环，可选，不填为true
 //     });
-
-// 弹出查看图片方法

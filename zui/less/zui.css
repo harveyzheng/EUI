@@ -368,7 +368,7 @@ h6 {
   color: #8995a1;
   border: 1px solid #dde3e9;
   border-radius: 4px;
-  background: #dde3e9;
+  background: #f1f4f7;
 }
 [zui*="primary"],
 [zui*="done"],
@@ -380,7 +380,8 @@ h6 {
 .zui-btn,
 .zui-ipt,
 .zui-select,
-.zui-date {
+.zui-date,
+.zui-linkage {
   padding: 0 15px;
   height: 38px;
   line-height: 38px;
@@ -390,7 +391,8 @@ h6 {
 .zui-btn i,
 .zui-ipt i,
 .zui-select i,
-.zui-date i {
+.zui-date i,
+.zui-linkage i {
   font-size: 16px;
 }
 [zui*="sm"] {
@@ -429,10 +431,10 @@ h6 {
 .zui-date-wrap {
   display: inline-block;
   position: relative;
+  width: auto;
   vertical-align: middle;
 }
 .zui-date-wrap .zui-date {
-  width: 100%;
   cursor: pointer;
   vertical-align: top;
 }
@@ -443,7 +445,7 @@ h6 {
   transform: translateY(-50%);
   cursor: pointer;
   transition: all 0.2s;
-  color: #8995a1;
+  color: #434c56;
 }
 .zui-date-wrap .zui-icon-date:hover,
 .zui-date-wrap .zui-date:hover + .zui-icon-date {
@@ -453,15 +455,57 @@ h6 {
 [zui*="radius"] {
   border-radius: 300px !important;
 }
+.zui-date-wrap + .zui-date-wrap,
+.zui-select-wrap + .zui-select-wrap,
 .zui-btn + .zui-btn,
+.zui-btn + .zui-ipt,
+.zui-btn + .zui-radio-label,
+.zui-btn + .zui-checkbox-label,
+.zui-btn + .zui-date-wrap,
+.zui-btn + .zui-select-wrap,
+.zui-btn + .zui-switch-label,
 .zui-ipt + .zui-btn,
 .zui-ipt + .zui-ipt,
+.zui-ipt + .zui-radio-label,
+.zui-ipt + .zui-checkbox-label,
+.zui-ipt + .zui-date-wrap,
+.zui-ipt + .zui-select-wrap,
+.zui-ipt + .zui-switch-label,
+.zui-radio-label + .zui-btn,
+.zui-radio-label + .zui-ipt,
 .zui-radio-label + .zui-radio-label,
+.zui-radio-label + .zui-checkbox-label,
+.zui-radio-label + .zui-date-wrap,
+.zui-radio-label + .zui-select-wrap,
+.zui-radio-label + .zui-switch-label,
+.zui-checkbox-label + .zui-btn,
+.zui-checkbox-label + .zui-ipt,
+.zui-checkbox-label + .zui-radio-label,
 .zui-checkbox-label + .zui-checkbox-label,
-.zui-switch-label + .zui-switch-label,
-.zui-select-wrap + .zui-select-wrap,
+.zui-checkbox-label + .zui-date-wrap,
+.zui-checkbox-label + .zui-select-wrap,
+.zui-checkbox-label + .zui-switch-label,
+.zui-date-wrap + .zui-btn,
+.zui-date-wrap + .zui-ipt,
+.zui-date-wrap + .zui-radio-label,
+.zui-date-wrap + .zui-checkbox-label,
+.zui-date-wrap + .zui-date-wrap,
+.zui-date-wrap + .zui-select-wrap,
+.zui-date-wrap + .zui-switch-label,
 .zui-select-wrap + .zui-btn,
-.zui-select-wrap + .zui-ipt {
+.zui-select-wrap + .zui-ipt,
+.zui-select-wrap + .zui-radio-label,
+.zui-select-wrap + .zui-checkbox-label,
+.zui-select-wrap + .zui-date-wrap,
+.zui-select-wrap + .zui-select-wrap,
+.zui-select-wrap + .zui-switch-label,
+.zui-switch-label + .zui-btn,
+.zui-switch-label + .zui-ipt,
+.zui-switch-label + .zui-radio-label,
+.zui-switch-label + .zui-checkbox-label,
+.zui-switch-label + .zui-date-wrap,
+.zui-switch-label + .zui-select-wrap,
+.zui-switch-label + .zui-switch-label {
   margin-left: 10px;
 }
 .zui-select-wrap {
@@ -618,16 +662,18 @@ h6 {
   clear: both;
 }
 .zui-form-main .zui-form-label {
-  width: 120px;
-  padding: 0 15px;
+  width: 15%;
+  padding-right: 15px;
   text-align: right;
   float: left;
 }
 .zui-form-main .zui-form-item {
-  margin: 0 120px;
+  margin-left: 15%;
+  position: relative;
 }
 .zui-form-main .zui-form-item .zui-ipt,
-.zui-form-main .zui-form-item .zui-select-wrap {
+.zui-form-main .zui-form-item .zui-select-wrap,
+.zui-form-main .zui-form-item .zui-linkage {
   width: 100%;
 }
 .zui-form-main .zui-form-item .zui-ipt-info {
@@ -1052,8 +1098,8 @@ h6 {
   padding: 0 15px;
   background: #dde3e9;
   color: #434c56;
-  font-size: 16px;
-  line-height: 44px;
+  font-size: 14px;
+  line-height: 36px;
 }
 .zui-pre-title i {
   color: #c4cbd3;
@@ -1370,16 +1416,16 @@ h6 {
 }
 .zui-calendar-main-con .zui-caltab-day td a,
 .zui-calendar-main-con .zui-caltab-day td span {
-  display: block;
   width: 24px;
   border-radius: 300px !important;
 }
 .zui-calendar-main-con .zui-caltab-day td span {
-  color: #c4cbd3;
+  color: #dde3e9;
+  display: block;
 }
 .zui-calendar-main-con .zui-caltab-day td .nextD,
 .zui-calendar-main-con .zui-caltab-day td .prevD {
-  color: #dde3e9;
+  color: #8995a1;
 }
 .zui-calendar-main-con .zui-caltab-day td .nextD:hover,
 .zui-calendar-main-con .zui-caltab-day td .prevD:hover {
@@ -1454,11 +1500,9 @@ h6 {
   margin-top: 10px;
 }
 .zui-img-error {
-  width: 118px;
-  height: 78px;
+  width: 70px;
+  height: 54px;
   background: url(../images/img-error.png) no-repeat center #fff;
-  border: 1px solid #dde3e9;
-  border-radius: 4px;
 }
 .zui-nav {
   position: relative;
@@ -1625,7 +1669,8 @@ h6 {
 .zui-page[zui*="txt-center"] a {
   margin: 0 5px;
 }
-.zui-validate-error {
+.zui-validate-error,
+.zui-validate-succee {
   position: absolute;
   white-space: nowrap;
   opacity: 0.9;
@@ -1633,11 +1678,16 @@ h6 {
   padding: 0px 10px;
   border-radius: 4px;
   font-size: 12px;
+  line-height: 28px;
   background: #f66;
   color: #fff;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
 }
-.zui-validate-error:after {
+.zui-validate-succee {
+  background: #6c9;
+}
+.zui-validate-error:after,
+.zui-validate-succee:after {
   position: absolute;
   content: '';
   top: 50%;
@@ -1653,6 +1703,9 @@ h6 {
   top: -4px;
   border-bottom-color: #f66;
 }
+.zui-validate-succee.zui-validate-bottom:after {
+  border-bottom-color: #6c9;
+}
 .zui-validate-right {
   top: 50%;
   right: 0%;
@@ -1661,4 +1714,7 @@ h6 {
 .zui-validate-right:after {
   left: -9px;
   border-right-color: #f66;
+}
+.zui-validate-succee.zui-validate-right:after {
+  border-right-color: #6c9;
 }
