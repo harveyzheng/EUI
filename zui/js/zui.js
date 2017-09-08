@@ -1499,55 +1499,71 @@ Zui.prototype.validate=dt=>{
 		let ru={};
 		const v=z.split(',');
 		v.forEach(n=>{
-			const r=n.split(':');
-			switch(r[0]){
-				case 'rule': ru.rule=r[1];
-					break;
-				case 'required': ru.required=true;
-					break;
-				case 'length':
-					if(r[1].indexOf('~')!=-1){
-						const t=r[1].split('~');
-						ru.min=t[0];
-						ru.max=t[1];
-					}else{
-						ru.leng=r[1];
-					};
-                    break;
-                case 'interval':
-					if(r[1].indexOf('~')!=-1){
-						const t=r[1].split('~');
-						ru.minval=t[0];
-						ru.maxval=t[1];
-					}else{
-						ru.interval=r[1];
-					};
-					break;
-				case 'title': ru.title=r[1];
-					break;
-                case 'point': ru.point=r[1];
-                    if(r[1].indexOf('~')!=-1){
-                        const t=r[1].split('~');
-                        ru.point_min=t[0];
-                        ru.point_max=t[1];
-                    }else{
-                        ru.point=r[1];
-                    };
-					break;
-				case 'tip': ru.tip=r[1];
-					break;
-				case 'port': ru.port=r[1];
-                    break;
-                case 'contrast':
-                    if(r[1].indexOf('~')!=-1){
-                        const t=r[1].split('~');
-                        ru.contrast=t[0];
-                        ru.contrast_type=t[1];
-                    }else{
-                        ru.contrast=r[1];
-                    };
-					break;
-			};
+            // 单独处理port值
+            if(n.indexOf('port:')!=-1){
+                // 处理port配置值
+                ru.port=n.substring(n.indexOf(':')+1,n.length).split('][');
+                const pd=[];
+                ru.port.forEach(nn=>{
+                    const lt=nn.indexOf('[');
+                    const rt=nn.indexOf(']');
+                    if(lt!=-1) nn=nn.substring(lt+1,nn.length);
+                    if(rt!=-1) nn=nn.substring(0,rt);
+                    pd.push(nn);
+                });
+                ru.port_type=pd[0];
+                ru.port_url=pd[1];
+                ru.port_key=pd[2];
+                ru.port_ignore=pd[3] || '';
+            }else{
+                const r=n.split(':');
+                switch(r[0]){
+                    case 'rule': ru.rule=r[1];
+                        break;
+                    case 'required': ru.required=true;
+                        break;
+                    case 'length':
+                        if(r[1].indexOf('~')!=-1){
+                            const t=r[1].split('~');
+                            ru.min=t[0];
+                            ru.max=t[1];
+                        }else{
+                            ru.leng=r[1];
+                        };
+                        break;
+                    case 'interval':
+                        if(r[1].indexOf('~')!=-1){
+                            const t=r[1].split('~');
+                            ru.minval=t[0];
+                            ru.maxval=t[1];
+                        }else{
+                            ru.interval=r[1];
+                        };
+                        break;
+                    case 'title': ru.title=r[1];
+                        break;
+                    case 'point':
+                        if(r[1].indexOf('~')!=-1){
+                            const t=r[1].split('~');
+                            ru.minpit=t[0];
+                            ru.maxpit=t[1];
+                        }else{
+                            ru.point=r[1];
+                        };
+                        break;
+                    case 'tip': ru.tip=r[1];
+                        break;
+                    case 'contrast':
+                        if(r[1].indexOf('~')!=-1){
+                            const t=r[1].split('~');
+                            ru.contrast=t[0];
+                            ru.contrast_type=t[1];
+                        }else{
+                            ru.contrast=r[1];
+                        };
+                        break;
+                };
+            };
 		});
 		return ru;
 	};
@@ -1635,14 +1651,19 @@ Zui.prototype.validate=dt=>{
             const contrast=$(ru.contrast).val();
             // 判断是否相同或不同
             if(contrast!=v && contrast_type) return verify.error(n,ru,'不一致！');
-            if(contrast==v && !contrast_type) return verify.error(n,ru,'不能一致！');
+            if(contrast==v && !contrast_type) return verify.error(n,ru,'不能相同！');
         };
         // 删除原有错误提示
         n.siblings('.zui-validate-error,.zui-validate-succee').remove();
-        if(!vy && !ru.port) return verify.pass++;
-		// 调用对应校验方法,return,防止执行下面的远程校验
-		if(vy) if(vy(n,ru)===false) return;
-        // 判断是否需要远程校验
+        // 是否指定校验方法
+		if(vy){
+            // 调用对应校验方法,未通过校验则return,防止执行下面的远程校验
+            if(vy(n,ru)===false) return;
+        }else{
+		    // 没指定校验方法，直接通过
+            verify.pass++;
+        };
+        // 判断是否需要远程校验，没通过pass--，因为前面的通过校验已经++了
         if(ru.port) if(verify.port(n,ru)===false) return verify.pass--;
 	};
 	// 验证大法
@@ -1693,8 +1714,18 @@ Zui.prototype.validate=dt=>{
 			if(isNaN(v)) return verify.error(n,ru,'无效！');
 			// 是否为正数
             if(v<0) return verify.error(n,ru,'不能为负数！');
-			// 小数点位数判断
-			if(ru.point) if(v.indexOf('.')==-1 || v.split('.')[1].length!=ru.point) return verify.error(n,ru,'请保留位'+ru.point+'小数！');
+            // 小数点位数判断
+            if(ru.minpit!=undefined || ru.maxpit!=undefined || ru.point!=undefined){
+                // 判断是否存在小数点
+                if(v.indexOf('.')==-1){
+                    let p=ru.point || ru.minpit+'~'+ru.maxpit;
+                    return verify.error(n,ru,'请保留'+p+'位小数！');
+                }else{
+                    const pit=v.split('.')[1].length;
+                    if(ru.point && pit!=ru.point) return verify.error(n,ru,'请保留'+ru.point+'位小数！');
+                    if(pit<ru.minpit || pit>ru.maxpit) return verify.error(n,ru,'请保留'+ru.minpit+'～'+ru.maxpit+'位小数！');
+                }
+            };
             // 数值区间判断
             if(ru.minval!=undefined && v<ru.minval) return verify.error(n,ru,'不能小于'+ru.minval+'！');
             if(ru.maxval!=undefined && v>ru.maxval) return verify.error(n,ru,'不能大于'+ru.maxval+'！');
@@ -1786,16 +1817,11 @@ Zui.prototype.validate=dt=>{
         },
         port:(n,ru)=>{
             const v=n.val();
-            let pt='';
-			const pp=ru.port.split(']');
-			const pd=[];
-			pp.forEach(nn=>{
-				pd.push(nn.substring(1,nn.length));
-			});
+            let pt=''; // 记录校验结果
 			$.ajax({
-				type:pd[0],
-				url: pd[1],
-				data: pd[2]+'='+v+'&'+pd[3], //key=value & key=value&
+				type:ru.port_type,
+				url:ru.port_url,
+				data:ru.port_key+'='+v+'&'+ru.port_ignore,
 				async:false, //同步进行
 				success:function(data){
 					return pt=data;
@@ -1854,11 +1880,12 @@ Zui.prototype.validate=dt=>{
             vd($(this),ru);
         });
     };
-
 	// 提交按钮，触发所有blur事件，再判断验证是否全部通过
 	$(dt.submit).click(()=>{
 		// 启动所绑表单所有ipt的blur事件，再次校验全部ipt
-		verify.pass=0;
+        verify.pass=0;
+        // 提交前重新获取并校验一次表单，防止一些动态加入的ipt没有绑定上，导致校验数量与总数量不符
+        const ipt=$(dt.form).find('[zui-rule]');
         ipt.each(function(){
             // 获取配置
             let ru=getv($(this).attr('zui-rule'));
@@ -1872,12 +1899,13 @@ Zui.prototype.validate=dt=>{
                 });
             };
         });
-        console.log('需要校验:'+ipt.length+'个元素，通过'+verify.pass+'个');
         // 比对需要校验的元素数量与通过数量是否一致
 		if(verify.pass==ipt.length && verify.pass!=0){
 			// 校验通关，执行函数
 			dt.succee();
-		};
+		}else{
+            if(dt.error) return dt.error();
+        };
 	});
 };
 
