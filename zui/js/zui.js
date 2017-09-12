@@ -90,8 +90,8 @@ Zui.prototype.popover=data=>{
     const type=data.type||'alert';
     const title=data.title||'通知';
     const style=data.style||'primary';
-    const oktext=data.oktext||'确定';
-    const closetext=data.closetext||'取消';
+    const okaytext=data.okaytext||'确定';
+    const canceltext=data.canceltext||'取消';
     let dom='<div class="zui-popover zui-popover-shade"></div>'+
             '<div class="zui-popover zui-popover-main">'+
                 '<div class="zui-popover-main-title" zui="'+style+'">'+title+'<i class="zui-popover-main-close zui-icon-guanbi"></i></div>'+
@@ -99,13 +99,13 @@ Zui.prototype.popover=data=>{
                 if(type=='prompt'){
                     dom+='<input class="zui-ipt zui-popover-ipt" zui="sm" placeholder="请输入...">'+'</div>';
                     // prompt 按钮组
-                    dom+='<div class="zui-popover-btn" zui="txt-right"><button zui="sm,'+style+'" class="zui-btn zui-popover-okay">'+oktext+'</button><button zui="sm" class="zui-btn zui-popover-cancel">'+closetext+'</button></div>';
+                    dom+='<div class="zui-popover-btn" zui="txt-right"><button zui="sm,'+style+'" class="zui-btn zui-popover-okay">'+okaytext+'</button><button zui="sm" class="zui-btn zui-popover-cancel">'+canceltext+'</button></div>';
                 }else if(type=='confirm'){
                     // confirm 按钮组
-                    dom+='</div><div class="zui-popover-btn" zui="txt-right"><button zui="sm,'+style+'" class="zui-btn zui-popover-okay">'+oktext+'</button><button zui="sm" class="zui-btn zui-popover-cancel">'+closetext+'</button></div>';
+                    dom+='</div><div class="zui-popover-btn" zui="txt-right"><button zui="sm,'+style+'" class="zui-btn zui-popover-okay">'+okaytext+'</button><button zui="sm" class="zui-btn zui-popover-cancel">'+canceltext+'</button></div>';
                 }else{
                     // alert 按钮组
-                    dom+='</div><div class="zui-popover-btn" zui="txt-right"><button zui="sm,'+style+'" class="zui-btn zui-popover-okay">'+oktext+'<button></div>';
+                    dom+='</div><div class="zui-popover-btn" zui="txt-right"><button zui="sm,'+style+'" class="zui-btn zui-popover-okay">'+okaytext+'<button></div>';
                 };
     dom+='</div>';
     // 插入dom
@@ -114,12 +114,9 @@ Zui.prototype.popover=data=>{
     // 按钮绑定-确定、取消事件
     const okay=that.find('.zui-popover-okay');
     const cancel=that.find('.zui-popover-cancel');
-    if(data.okaycall){
-        okay.on('click',()=>data.okaycall(data.okayparam,$('.zui-popover-btn').val()));
-    };
-    if(data.cancelcall){
-        cancel.on('click',()=>data.cancelcall(data.cancelparam,$('.zui-popover-btn').val()));
-    };
+    // 回调
+    if(data.okaycall) okay.on('click',()=>data.okaycall(data.okayparam,that.find('.zui-popover-ipt').val()));
+    if(data.cancelcall) cancel.on('click',()=>data.cancelcall(data.cancelparam,that.find('.zui-popover-ipt').val()));
     // 进入动画
     setTimeout(()=>{
         that.eq(0).addClass('on');
