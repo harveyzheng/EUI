@@ -9,7 +9,7 @@ qq：269144551
 // z-index：
 // 页面元素1-10；
 // 组件100-999；
-// zui-layer-shade背景层1000；
+// zui-popover-shade背景层1000；
 // 确认窗组1101；
 // 提示窗1102；
 // message组1200；
@@ -26,7 +26,7 @@ a img, img, button, fieldset{ border:none;}
 a, a:active, a:hover, input[type=range]:focus{ outline: none; text-decoration: none; color: @black; cursor: pointer;}
 article, aside, details, figcaption, figure, footer, header, nav, section, summary{ display: block;}
 ins{ text-decoration: none;}
-.zui-layer-shade, .zui-calendar, .zui-select{ user-select: none;}
+.zui-popover-shade, .zui-calendar, .zui-select, .zui-imgpopover, .zui-page{ user-select: none;}
 input[class*=".zui-"],input[type="range"],input[type="range"]::-webkit-slider-thumb,input[type=range]::-webkit-slider-runnable-track{ -webkit-appearance: none;}
 input[class*=".zui-"], button[class*=".zui-"]{ vertical-align: middle;}
 button, select, .zui-switch-label, .zui-btn, .zui-radio-label, .zui-checkbox-label{ cursor: pointer; user-select: none;}
@@ -620,9 +620,9 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     .zui-border;
 }
 
-// layer弹窗
+// popover弹窗
 // 提示窗
-.zui-layer-prompt{
+.zui-popover-prompt{
     position: fixed;
     left: 50%;
     top:60%;
@@ -637,7 +637,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 }
 
 // 阴影背景
-.zui-layer-shade{
+.zui-popover-shade{
     position: fixed;
     width: 100%;
     height: 100%;
@@ -649,12 +649,12 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     z-index: 1000;
 }
 
-.zui-layer-shade.on{
+.zui-popover-shade.on{
     opacity: 0.5;
 }
 
 // 确认窗
-.zui-layer-main{
+.zui-popover-main{
     position: fixed;
     left: 50%;
     top:60%;
@@ -688,20 +688,25 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         background: @white;
         padding: 10px;
         min-height: 80px;
+        input{
+            display: block;
+            width: 100%;
+            margin-top: 15px;
+        }
     }
-    .zui-layer-btn{
+    .zui-popover-btn{
         padding:10px;
         background: @white;
     }
 }
 
-.zui-layer-main.on, .zui-layer-prompt.on{
+.zui-popover-main.on, .zui-popover-prompt.on{
     top: 45%;
     opacity: 1;
 }
 
 // 消息提示
-.zui-layer-message{
+.zui-tags-message{
     width: 300px;
     height: 90px;
     position: fixed;
@@ -759,7 +764,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     }
 }
 
-.zui-layer-message.on{
+.zui-tags-message.on{
     right: 10px;
 }
 
@@ -997,6 +1002,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
             margin-left: 35px;
             padding: 0 10px;
             color: @gray2;
+            overflow-x: auto;
             span{
                 color: @gray1;
                 font-family: Consolas,'Liberation Mono',Menlo,Courier,monospace;
@@ -1120,7 +1126,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 }
 
 // 弹出图轮播
-.zui-imglayer{
+.zui-imgpopover{
     position: absolute;
     left: 0;
     top: 100%;
@@ -1146,14 +1152,14 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         font-size: 60px;
         transform: translateY(-50%);
         left: 50%;
-        margin-left: -@wrap/2-100px;
+        margin-left: -@wrap/2-60px;
         color: @white;
         .zui-anim-fast;
         font-weight: bold;
         z-index: 11;
     }
     &-next{
-        margin-left: @wrap/2+40px;
+        margin-left: @wrap/2;
         transform: translateY(-50%) rotateY(180deg);
     }
     &-prev:hover,&-next:hover{
@@ -1190,9 +1196,9 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         }
     }
 }
-.zui-imglayer.on{
+.zui-imgpopover.on{
     top: 0;
-    .zui-imglayer-close{
+    .zui-imgpopover-close{
         opacity: 1;
         top: 0;
     }
@@ -1606,4 +1612,31 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 }
 .zui-validate-succee.zui-validate-right:after{
     border-right-color: @done;
+}
+
+.zui-loading{
+    .zui-anim-normal;
+    position: absolute;
+    opacity: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    i{
+        position: absolute !important;
+        left: 50% !important;
+        top: 50% !important;
+        font-size: 30px !important;
+        color: @gray1 !important;
+        width: 40px !important;
+        height: 40px !important;
+        line-height: 40px !important;
+        text-align: center !important;
+        margin: -20px 0 0 -20px !important;
+    }
+}
+.zui-loading.open{
+    opacity: 1;
 }

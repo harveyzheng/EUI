@@ -83,45 +83,50 @@ const Zui=function(){
 };
 
 // 确认窗、询问窗
-Zui.prototype.layer=data=>{
+Zui.prototype.popover=data=>{
     // 先删除已存在窗口
-    $('.zui-layer').remove();
+    $('.zui-popover').remove();
     // 获取类别
     const type=data.type||'alert';
     const title=data.title||'通知';
     const style=data.style||'primary';
-    let dom='<div class="zui-layer zui-layer-shade"></div>'+
-            '<div class="zui-layer zui-layer-main">'+
-                '<div class="zui-layer-main-title" zui="'+style+'">'+title+'<i class="zui-layer-main-close zui-icon-guanbi"></i></div>'+
-                '<div class="zui-layer-main-info">'+data.info+'</div>';
-                if(type=='alert'){
-                    // 确认窗 按钮组
-                    dom+='<div class="zui-layer-btn" zui="txt-right"><button zui="sm,'+style+'" class="zui-btn zui-layer-okay">确定<button></div>';
+    const oktext=data.oktext||'确定';
+    const closetext=data.closetext||'取消';
+    let dom='<div class="zui-popover zui-popover-shade"></div>'+
+            '<div class="zui-popover zui-popover-main">'+
+                '<div class="zui-popover-main-title" zui="'+style+'">'+title+'<i class="zui-popover-main-close zui-icon-guanbi"></i></div>'+
+                '<div class="zui-popover-main-info">'+data.info;
+                if(type=='prompt'){
+                    dom+='<input class="zui-ipt zui-popover-ipt" zui="sm" placeholder="请输入...">'+'</div>';
+                    // prompt 按钮组
+                    dom+='<div class="zui-popover-btn" zui="txt-right"><button zui="sm,'+style+'" class="zui-btn zui-popover-okay">'+oktext+'</button><button zui="sm" class="zui-btn zui-popover-cancel">'+closetext+'</button></div>';
                 }else if(type=='confirm'){
-                    // 询问窗 按钮组
-                    dom+='<div class="zui-layer-btn" zui="txt-right"><button zui="sm,'+style+'" class="zui-btn zui-layer-okay">确定</button><button zui="sm" class="zui-btn zui-layer-cancel">取消</button></div>';
+                    // confirm 按钮组
+                    dom+='</div><div class="zui-popover-btn" zui="txt-right"><button zui="sm,'+style+'" class="zui-btn zui-popover-okay">'+oktext+'</button><button zui="sm" class="zui-btn zui-popover-cancel">'+closetext+'</button></div>';
+                }else{
+                    // alert 按钮组
+                    dom+='</div><div class="zui-popover-btn" zui="txt-right"><button zui="sm,'+style+'" class="zui-btn zui-popover-okay">'+oktext+'<button></div>';
                 };
     dom+='</div>';
     // 插入dom
     const that=$(dom);
     $('body').append(that);
     // 按钮绑定-确定、取消事件
-    const okay=that.find('.zui-layer-okay');
-    const cancel=that.find('.zui-layer-cancel');
+    const okay=that.find('.zui-popover-okay');
+    const cancel=that.find('.zui-popover-cancel');
     if(data.okaycall){
-        okay.on('click',()=>data.okaycall(data.okayparam));
+        okay.on('click',()=>data.okaycall(data.okayparam,$('.zui-popover-btn').val()));
     };
     if(data.cancelcall){
-        cancel.on('click',()=>data.cancelcall(data.cancelparam));
+        cancel.on('click',()=>data.cancelcall(data.cancelparam,$('.zui-popover-btn').val()));
     };
-
     // 进入动画
     setTimeout(()=>{
         that.eq(0).addClass('on');
         that.eq(1).addClass('on');
     },100);
     // 按钮绑定-移除对话框
-    $('.zui-layer-main button,.zui-layer-main-close').on('click',()=>{
+    $('.zui-popover-main button,.zui-popover-main-close').on('click',()=>{
         that.eq(0).removeClass('on');
         that.eq(1).removeClass('on');
         setTimeout(()=>{
@@ -134,9 +139,9 @@ Zui.prototype.layer=data=>{
 // 自动消失的提示窗
 Zui.prototype.prompts=info=>{
     // 先删除已存在窗口
-    if($('.zui-layer-prompt').length) $('.zui-layer-prompt').remove();
+    if($('.zui-popover-prompt').length) $('.zui-popover-prompt').remove();
     // 生成dom
-    const dom='<div class="zui-layer-prompt">'+info+'</div>';
+    const dom='<div class="zui-popover-prompt">'+info+'</div>';
     const that=$(dom);
     $('body').append(that);
     // 动画效果及延时关闭
@@ -156,20 +161,27 @@ Zui.prototype.message=data=>{
     const title=data.title||'通知消息';
     const url=data.url||'#';
     const target=data.target||'self';
-    let dom='<div class="zui-layer-message">'+
+    let dom='<div class="zui-tags-message">'+
                 '<a href="'+url+'" target="_'+target+'">'+
-                    '<span class="zui-layer-message-type" zui="'+style+'"><em>'+tag+'</em></span>'+
-                    '<span class="zui-layer-message-title">'+title+'</span>'+
-                    '<span class="zui-layer-message-info">'+data.info+'</span>'+
+                    '<span class="zui-tags-message-type" zui="'+style+'"><em>'+tag+'</em></span>'+
+                    '<span class="zui-tags-message-title">'+title+'</span>'+
+                    '<span class="zui-tags-message-info">'+data.info+'</span>'+
                 '</a>';
-                if(data.hide==false) dom+='<a class="zui-layer-message-close">&times;</a>';
+                if(data.hide==false) dom+='<a class="zui-tags-message-close">&times;</a>';
     dom+='</div>';
     const that=$(dom);
     $('body').append(that);
     
     // 动态高度
-    const leng=$('.zui-layer-message').length;
+    const leng=$('.zui-tags-message').length;
     that.css('top',(leng-1)*100+10);
+
+    // message 排序
+    const message_sequence=()=>{
+        return $('.zui-tags-message').each((i,n)=>{
+                    $(n).css('top',(i)*100+10);
+                });
+    };
 
     // 动画效果及延时关闭
     setTimeout(()=>that.addClass('on'),100);
@@ -188,7 +200,7 @@ Zui.prototype.message=data=>{
                 setTimeout(()=>{
                     that.remove();
                     // 重新排序
-                    zui.message_sequence();
+                    message_sequence();
                 },300);
             };
         });
@@ -200,31 +212,23 @@ Zui.prototype.message=data=>{
                 setTimeout(()=>{
                     that.remove();
                     // 重新排序
-                    zui.message_sequence();
+                    message_sequence();
                 },200);
             }
         },5000);
     }else{
-        that.find('.zui-layer-message-close').click(()=>{
+        that.find('.zui-tags-message-close').click(()=>{
             // 手动关闭
             setTimeout(()=>{
                 that.removeClass('on');
                 setTimeout(()=>{
                     that.remove();
                     // 重新排序
-                    zui.message_sequence();
+                    message_sequence();
                 },200);
             },100);
         })
     }
-    return false;
-};
-
-// message窗口排序
-Zui.prototype.message_sequence=()=>{
-    $('.zui-layer-message').each((i,n)=>{
-        $(n).css('top',(i)*100+10);
-    });
     return false;
 };
 
@@ -444,24 +448,161 @@ Zui.prototype.precode=el=>{
 
 // uploadimg图片上传
 Zui.prototype.uploadimg=el=>{
+    // 图片转base64、压缩
+    const uploadfile=(el,dt)=>{
+        // dt.m是max上传图片张数上限, dt.s是size, dt,c是compress压缩系数
+        const $n=$(el);
+        // 获取父标签
+        const $p=$n.parents('.zui-upload');
+
+        // 校验一下文件格式
+        const v=$n.val();
+        if(!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG|JPEG)$/.test(v)){
+            $n.val('');
+            zui.prompts('图片类型必须是jpg,png,gif,jpeg中的一种!');
+            return false;
+        };
+    
+        // 校验一下文件大小
+        const sz=dt.s*1024*1024;
+        // 这里要用原生对象 el，不然files[0]报错！！！
+        const f=el.files[0];
+        if(f.size>sz){
+            zui.prompts('图片大小必须小于'+dt.s+'M');
+            return false;
+        };
+    
+        // 获取图片blob数据
+        const g=f=>{
+            let u;
+            if(window.createObjectURL!=undefined){ // basic
+                u=window.createObjectURL(f);
+            }else if(window.URL!=undefined){ // mozilla(firefox)
+                u=window.URL.createObjectURL(f);
+            }else if(window.webkitURL!=undefined){ // webkit or chrome
+                u=window.webkitURL.createObjectURL(f);
+            }
+            return u;
+        };
+    
+        const blob=g(f);
+        let dom;
+        // canvas绘制、转base64、图片压缩
+        const base64Img=(b,ig)=>{
+            // 生成一个img
+            const img=new Image();
+            img.src=b;
+            img.onload=function(){
+                //宽高比例
+                const w=img.width;
+                const h=img.height;
+                const scale=w/h;
+                // 默认图片质量为100%
+                const quality=dt.c/10;
+                //生成canvas
+                const canvas=document.createElement('canvas');
+                const ctx=canvas.getContext('2d');
+                // 创建属性节点
+                const anw=document.createAttribute("width");
+                anw.nodeValue=w;
+                const anh=document.createAttribute("height");
+                anh.nodeValue=h;
+                canvas.setAttributeNode(anw);
+                canvas.setAttributeNode(anh);
+                ctx.drawImage(this, 0, 0, w, h);
+                // quality值越小，所绘制出的图像越模糊
+                const bs64=canvas.toDataURL('image/jpeg',quality);
+                let ldimg={}; //传给回调函数到父元素
+                if(tp($n.parents('.zui-upload-item-main'))=='a'){
+                    ldimg.item=$p.find('.zui-upload-img').last();
+                    ldimg.img=ldimg.item.find('img');
+                    ldimg.type='add';
+                }else{
+                    ldimg.item=$n.parents('.zui-upload-img');
+                    ldimg.img=ig;
+                    ldimg.type='update';
+                };
+                // 显示图片
+                ldimg.img.attr('src',bs64);
+                // 加载完图片，触发回调
+                if(zui.uploadcall) zui.uploadcall(ldimg);
+                // 重新绑定一下这组upload
+                zui.uploadimg($p);
+                // 退出loading
+                return zui.loading($p,false);
+            };
+        };
+        // 判断是添加图片还是修改
+        const tp=p=>{
+            if(p.hasClass('zui-upload-img')){
+                // 标记-修改
+                return 'm';
+            }else{
+                // 标记-添加
+                return 'a';
+            };
+        };
+        if(tp($n.parents('.zui-upload-item-main'))=='a'){
+            // 添加
+            dom='<div class="zui-upload-item">'+
+                    '<i class="zui-icon-guanbi zui-upload-delete" zui="danger"></i>'+
+                    '<div class="zui-upload-item-main zui-upload-img">'+
+                        '<label>'+
+                            '<i class="zui-icon-search zui-img-see"></i>'+
+                            '<span>修改图片</span>'+
+                            '<input class="zui-upload-file" type="file">'+
+                        '</label>'+
+                        '<img src="'+zui.path+'../images/transparency.png">'+
+                    '</div>'+
+                '</div>';
+            const that=$(dom);
+            // 判断数量max了没，到max了删除添加
+            if($p.find('.zui-upload-img').length==dt.m-1){
+                $n.parents('.zui-upload-add').parent().remove();
+                $p.append(that);
+            }else{
+                $n.val('');
+                $n.parents('.zui-upload-item').before(that);
+            };
+            // 加入loading
+            zui.loading(that.find('.zui-upload-item-main'),true);
+            // base64处理
+            base64Img(blob);
+        }else{
+            // 加入loading
+            zui.loading($n.parents('.zui-upload-item-main'),true);
+            // 修改
+            const ig=$n.parent().siblings('img');
+            ig.attr('src',zui.path+"../images/transparency.png");
+            // base64处理
+            base64Img(blob,ig);
+        };
+    };
     el.each((i,n)=>{
-        // max值
         const $n=$(n);
-        const z=$n.attr('zui').split(','); //把属性值分开
+        //获取zui配置参数
+        let z=[];
+        if($n.attr('zui')) z=$n.attr('zui').split(',');
         const dt=z=>{
-            let d={};
+            let dt={};
             z.forEach(n=>{
                 if(n.indexOf('max:')>=0){
-                    d.m=n.substring(4,n.length);
+                    dt.m=n.substring(4,n.length);
                 }else if(n.indexOf('size:')>=0){
-                    d.s=n.substring(5,n.length);
+                    dt.s=n.substring(5,n.length);
                 }else if(n.indexOf('compress:')>=0){
-                    d.c=n.substring(9,n.length);
+                    dt.c=n.substring(9,n.length);
                 };
             });
+            if(dt.m==undefined) dt.m=10; // 默认max:10
+            if(dt.s==undefined) dt.s=2;  // 默认size:10
+            if(dt.c==undefined) dt.c=10; // 默认compress:10
             // 返回zui-upload的zui参数
-            return d;
+            return dt;
         };
+        // zui配置参数
+        const v=dt(z);
+
         const add=
         '<div class="zui-upload-item">'+
             '<div class="zui-upload-item-main zui-upload-add">'+
@@ -475,16 +616,44 @@ Zui.prototype.uploadimg=el=>{
         const c=$n.find('.zui-upload-item');
         c.each((ii,nn)=>{
             const $nn=$(nn);
-            if(!$nn.find('.zui-upload-item-main')){
-                // 把简化版的html完成
+            if(!$nn.find('.zui-upload-item-main').length){
+                let ch='';
+                const leng=$nn.find('img').length;
+                if(leng){
+                    for(let i=0;i<leng;i++){
+                        ch+=
+                        '<i class="zui-icon-guanbi zui-upload-delete" zui="danger"></i>'+
+                        '<div class="zui-upload-item-main zui-upload-img">'+
+                            '<label>'+
+                                '<i class="zui-icon-search zui-img-see"></i>'+
+                                '<span>修改图片</span>'+
+                                '<input class="zui-upload-file" type="file">'+
+                            '</label>'+
+                            '<img src="'+$nn.find('img').eq(i).attr('src')+'">'+
+                        '</div>';
+                    };
+                }else{
+                    ch=
+                    '<div class="zui-upload-item-main zui-upload-add">'+
+                        '<label>'+
+                            '<i class="zui-icon-upload"></i>'+
+                            '<span>上传图片</span><input class="zui-upload-file" type="file">'+
+                        '</label>'+
+                    '</div>';
+                };
+                // 渲染 
+                $nn.html(ch);
             };
         });
+        // 没有上传格并且没到max，自动添加 上传图片格
+        if($n.find('.zui-upload-add').length==0 && v.m>c.length) $n.append(add);
+
         // 查看图片
         $n.find('.zui-img-see').off().click(function(){
             const list=el.find('img');
             const index=list.index($(this).parents('.zui-upload-item').find('img'));
             // 开启图片查看
-            zui.imglayer({list,index});
+            zui.imgpopover({list,index});
             return false; // 阻止冒泡
         });
         // 删除图片
@@ -500,133 +669,13 @@ Zui.prototype.uploadimg=el=>{
         const file=$n.find('.zui-upload-file');
         file.off().change(ev=>{
             // file发生改变执行uploadfile方法,传递当前file和父标签配置参数;
-            zui.uploadfile(ev.target,dt(z));
+            uploadfile(ev.target,v);
         });
     });
 };
 
-// 图片转base64、压缩
-Zui.prototype.uploadfile=(el,dt)=>{
-    // dt.m是max上传图片张数上限, dt.s是size, dt,c是compress压缩系数
-    const $n=$(el);
-    // 校验一下文件格式
-    const v=$n.val();
-	if(!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG|JPEG)$/.test(v)){
-		$n.val('');
-        zui.prompts('图片类型必须是jpg,png,gif,jpeg中的一种!');
-        return false;
-    };
-
-    // 校验一下文件大小
-    const s=dt.s||2; // 获取配置，默认为2M
-    const sz=s*1024*1024;
-    // 这里要用原生对象 el，不然files[0]报错！！！
-    const f=el.files[0];
-    if(f.size>sz){
-        zui.prompts('图片大小必须小于'+s+'M');
-        return false;
-    };
-
-    // 获取图片blob数据
-    const g=f=>{
-        let u;
-        if(window.createObjectURL!=undefined){ // basic
-            u=window.createObjectURL(f);
-        }else if(window.URL!=undefined){ // mozilla(firefox)
-            u=window.URL.createObjectURL(f);
-        }else if(window.webkitURL!=undefined){ // webkit or chrome
-            u=window.webkitURL.createObjectURL(f);
-        }
-        return u;
-    };
-
-    const blob=g(f);
-    let dom;
-
-    // canvas绘制、转base64、图片压缩
-    const base64Img=(b,ig)=>{
-        // 生成一个img
-        const img=new Image();
-        img.src=b;
-        img.onload=function(){
-            //宽高比例
-            const w=img.width;
-            const h=img.height;
-            const scale=w/h;
-            // 默认图片质量为100%
-            const quality=dt.c/10||1;
-            //生成canvas
-            const canvas=document.createElement('canvas');
-            const ctx=canvas.getContext('2d');
-            // 创建属性节点
-            const anw=document.createAttribute("width");
-            anw.nodeValue=w;
-            const anh=document.createAttribute("height");
-            anh.nodeValue=h;
-            canvas.setAttributeNode(anw);
-            canvas.setAttributeNode(anh);
-            ctx.drawImage(this, 0, 0, w, h);
-            // 到这里就完成了图片的生成，插入页面并且取消loading
-            // quality值越小，所绘制出的图像越模糊
-            const bs64=canvas.toDataURL('image/jpeg',quality);
-            if(tp($n.parents('.zui-upload-item-main'))=='a'){
-                $p.find('.zui-upload-img').last().find('img').attr('src',bs64).removeAttr('zui-load');
-            }else{
-                ig.attr('src',bs64).removeAttr('zui-load');
-            };
-            return;
-        };
-    };
-    // 在这里添加一个框到页面，并且loading状态
-    // 获取父标签
-    const $p=$n.parents('.zui-upload');
-    // 判断是添加图片还是修改
-    const tp=p=>{
-        if(p.hasClass('zui-upload-img')){
-            // 标记-修改
-            return 'm';
-        }else{
-            // 标记-添加
-            return 'a';
-        };
-    };
-    if(tp($n.parents('.zui-upload-item-main'))=='a'){
-        // 添加
-        dom='<div class="zui-upload-item">'+
-                '<i class="zui-icon-guanbi zui-upload-delete" zui="danger"></i>'+
-                '<div class="zui-upload-item-main zui-upload-img">'+
-                    '<label>'+
-                        '<i class="zui-icon-search zui-img-see"></i>'+
-                        '<span>修改图片</span>'+
-                        '<input class="zui-upload-file" type="file">'+
-                    '</label>'+
-                    '<img zui-load="loading" src="">'+
-                '</div>'+
-            '</div>';
-            const leng=dt.m-1||99;
-        // 判断数量max了没，到max了删除添加
-        if($p.find('.zui-upload-img').length==leng){
-            $n.parents('.zui-upload-add').parent().remove();
-            $p.append(dom);
-        }else{
-            $n.val('');
-            $n.parents('.zui-upload-item').before(dom);
-        };
-        // base64处理
-        base64Img(blob);
-    }else{
-        // 修改
-        const ig=$n.parent().siblings('img');
-        ig.attr({'zui-load':'loading','src':''});
-        // base64处理
-        base64Img(blob,ig);
-    };
-    // 重新绑定一下这组upload
-    zui.uploadimg($p);
-};
-
 // 图片列表弹出层、调用轮播
-Zui.prototype.imglayer=dt=>{
+Zui.prototype.imgpopover=dt=>{
     let li='';
     // 循环出图片
     dt.list.each((i,n)=>{
@@ -634,12 +683,12 @@ Zui.prototype.imglayer=dt=>{
         if(dt.index==i) c='active';
         li+='<li class="'+c+'"><img src="'+$(n).attr('src')+'"></li>';
     });
-    const dom='<div class="zui-layer zui-layer-shade"></div>'+
-            '<div class="zui-imglayer">'+
-                '<a class="zui-imglayer-close zui-icon-guanbi zui-btn" zui="danger"></a>'+
-                '<a class="zui-imglayer-prev prev zui-icon-left"></a>'+
-                '<a class="zui-imglayer-next next zui-icon-left"></a>'+
-                '<ul class="zui-imglayer-main">'+
+    const dom='<div class="zui-popover zui-popover-shade"></div>'+
+            '<div class="zui-imgpopover">'+
+                '<a class="zui-imgpopover-close zui-icon-guanbi zui-btn" zui="danger"></a>'+
+                '<a class="zui-imgpopover-prev prev zui-icon-left"></a>'+
+                '<a class="zui-imgpopover-next next zui-icon-left"></a>'+
+                '<ul class="zui-imgpopover-main">'+
                     li+
                 '</ul>'+
             '</div>';
@@ -648,13 +697,12 @@ Zui.prototype.imglayer=dt=>{
     $('body').append(that);
     // 绑定轮播
     zui.imgfocus({
-        main:'.zui-imglayer', //父标签
-        item:'.zui-imglayer-main li', //轮播体
-        index:dt.index,  //默认焦点，可选，不填为0
-        autoplay:true //是否自动播放，可选，不填为false
+        main:'.zui-imgpopover', //父标签
+        item:'.zui-imgpopover-main li', //轮播体
+        index:dt.index  //默认焦点，可选，不填为0
     });
     // 关闭
-    that.find('.zui-imglayer-close').click(()=>{
+    that.find('.zui-imgpopover-close').click(()=>{
         that.eq(0).removeClass('on');
         that.eq(1).removeClass('on');
         setTimeout(()=>{
@@ -732,542 +780,540 @@ Zui.prototype.imgfocus=da=>{
         };
     });
     // 关闭停止自动轮播
-    $wp.find('.zui-imglayer-close').click(()=>{
+    $wp.find('.zui-imgpopover-close').click(()=>{
         clearInterval(play);
     });
 };
 
-// 日历模块
-Zui.prototype.calendar=c=>{
-    let $n = c;
-    // zui-date绑定
-    $n.on("click",function(){
-        $('.zui-calendar').remove();
-        let ts,up,lw,z;
-        z=$n.attr('zui');
-        if(!z) z=''; // 防止没设置zui属性时报错
-        z.split(',').forEach(n=>{
-            if(n.indexOf(':')){
-                let c=n.split(':');
-                switch(c[0]){
-                    case 'times': ts=c[1];
-                        break;
-                    case 'upper': up=c[1];
-                        break;
-                    case 'lower': lw=c[1];
+// 日历控件
+Zui.prototype.optiondate=el=>{
+    const calendar=c=>{
+        let $n = c;
+        // zui-date绑定
+        $n.on("click",function(){
+            $('.zui-calendar').remove();
+            let ts,up,lw,z;
+            z=$n.attr('zui');
+            if(!z) z=''; // 防止没设置zui属性时报错
+            z.split(',').forEach(n=>{
+                if(n.indexOf(':')){
+                    let c=n.split(':');
+                    switch(c[0]){
+                        case 'times': ts=c[1];
+                            break;
+                        case 'upper': up=c[1];
+                            break;
+                        case 'lower': lw=c[1];
+                    };
+                };
+            });
+            // 参数初始化
+            c.upper=up||NaN;
+            c.lower=lw||NaN;
+            c.times=ts||'false';
+            // 上限参数
+            if(c.upper){
+                if(c.upper=='today'){
+                    // 上限今天
+                    c.upper=new Date();
+                }else if(c.upper.indexOf('.')>=0||c.upper.indexOf('#')>=0){
+                    let b=$(c.upper).val();
+                    if(b){
+                        c.upper=new Date(b);
+                    };
+                }else{
+                    c.upper=new Date(c.upper);
                 };
             };
-        });
-        // 参数初始化
-        c.upper=up||NaN;
-        c.lower=lw||NaN;
-        c.times=ts||'false';
-        // 上限参数
-        if(c.upper){
-            if(c.upper=='today'){
-                // 上限今天
-                c.upper=new Date();
-            }else if(c.upper.indexOf('.')>=0||c.upper.indexOf('#')>=0){
-                let b=$(c.upper).val();
-                if(b){
-                    c.upper=new Date(b);
+            // 下限参数
+            if(c.lower){
+                c.lower.toString();
+                if(c.lower=='today'){
+                    // 如果下限是今天，今天也要可选
+                    const d=new Date();
+                    // 计算昨天
+                    const y=d=>{
+    
+                    };
+                    c.lower=new Date(y(d));
+                }else if(c.lower.indexOf('.')>=0||c.lower.indexOf('#')>=0){
+                    let b=$(c.lower).val();
+                    if(b){
+                        c.lower=new Date(b);
+                    };
+                }else{
+                    c.lower=new Date(c.lower);
                 };
-            }else{
-                c.upper=new Date(c.upper);
             };
-        };
-        // 下限参数
-        if(c.lower){
-            c.lower.toString();
-            if(c.lower=='today'){
-                // 如果下限是今天，今天也要可选
-                const d=new Date();
-                // 计算昨天
-                const y=d=>{
-
+            cd($n);
+            // 点击外部隐藏
+            $(document).mouseup(e=>{
+                if($(e.target).attr("class") != $n.attr("class") && $(e.target).parents('.zui-calendar').length==0&&$(e.target).parents('.zui-caltab-year,.zui-caltab-month').length==0){
+                    that.remove();
                 };
-                c.lower=new Date(y(d));
-            }else if(c.lower.indexOf('.')>=0||c.lower.indexOf('#')>=0){
-                let b=$(c.lower).val();
-                if(b){
-                    c.lower=new Date(b);
-                };
-            }else{
-                c.lower=new Date(c.lower);
-            };
-        };
-        cd($n);
-        // 点击外部隐藏
-        $(document).mouseup(e=>{
-            if($(e.target).attr("class") != $n.attr("class") && $(e.target).parents('.zui-calendar').length==0&&$(e.target).parents('.zui-caltab-year,.zui-caltab-month').length==0){
+            });
+            // 关闭
+            $(document).on('click','.zui-calendar .close',()=>{
                 that.remove();
+            });
+            // 现在时间
+            $(document).on('click','.zui-calendar .now',()=>{
+                vto(c.times);
+                that.remove();
+            });
+        });
+    
+        // 输出现在时间
+        let vto=zt=>{
+            let tod=new Date();
+            let m=tod.getMonth()+1;
+            if(m<10) m='0'+m;
+            let d=tod.getDate();
+            if(d<10) d='0'+d;
+            let h,n,s,v;
+            v=tod.getFullYear()+'-'+m+'-'+d;
+            if(zt){
+                h=tod.getHours();
+                if(h<10) h='0'+h;
+                n=tod.getMinutes();
+                if(n<10) n='0'+n;
+                s=tod.getSeconds();
+                if(s<10) s='0'+s;
+                v+=' '+h+':'+n+':'+s;
             };
-        });
-        // 关闭
-        $(document).on('click','.zui-calendar .close',()=>{
-            that.remove();
-        });
-        // 现在时间
-        $(document).on('click','.zui-calendar .now',()=>{
-            vto(c.times);
-            that.remove();
-        });
-    });
-
-    // 输出现在时间
-    let vto=zt=>{
-        let tod=new Date();
-        let m=tod.getMonth()+1;
-        if(m<10) m='0'+m;
-        let d=tod.getDate();
-        if(d<10) d='0'+d;
-        let h,n,s,v;
-        v=tod.getFullYear()+'-'+m+'-'+d;
-        if(zt){
-            h=tod.getHours();
-            if(h<10) h='0'+h;
-            n=tod.getMinutes();
-            if(n<10) n='0'+n;
-            s=tod.getSeconds();
-            if(s<10) s='0'+s;
-            v+=' '+h+':'+n+':'+s;
+            ttt=v;
+            $n.val(v);
         };
-        ttt=v;
-        $n.val(v);
-    };
-
-    // 初始化
-    let today,e,f,q,that;
-    const cd=n=>{
-        let nv=$n.val();
-        if(nv!=''){
-            if(c.times=='true'){
-                const av=nv.split(' ');
-                nv=av[0];
-                hhh=' '+av[1];
+    
+        // 初始化
+        let today,e,f,q,that;
+        const cd=n=>{
+            let nv=$n.val();
+            if(nv!=''){
+                if(c.times=='true'){
+                    const av=nv.split(' ');
+                    nv=av[0];
+                    hhh=' '+av[1];
+                };
+                today = new Date(nv);
+            }else{
+                today = new Date();
             };
-            today = new Date(nv);
-        }else{
-            today = new Date();
-        };
-        e = today.getFullYear();
-        f = today.getMonth();
-        q = today.getDate();
-        let k = "";
-        k += "<div class='zui-calendar'>";
-        k += "  <div class='zui-calendar-main'>";
-        k += "    <div class='zui-calendar-main-title'>";
-        k += "      <a class='zui-prev-month zui-icon-zuo'></a><span class='zui-calendar-main-title-tit'><span class='zui-year-txt'><a class='currentYear'>" + e + "</a>\u5e74</span><span class='zui-month-txt'><a class='currentMonth'>" + (f + 1) + "</a>\u6708</span></span><a class='zui-next-month zui-icon-you'></a>";
-        k += "    </div>";
-        k += "    <div class='zui-calendar-main-con'>";
-        k += "      <div class='zui-calendar-reserve'>";
-        k += "      </div>";
-        k += "      <div class='zui-calendar-enabled'>";
-        k += setD(e, f);
-        k += "      </div>";
-        k += "    </div>";
-        k += "  </div>";
-        k += "</div>";
-        that=$(k);
-        
-        $n.parent('.zui-date-wrap').append(that);
-
-        // 计算出现位置，是否超出可视范围
-        const t=()=>{
-            return n.innerHeight()+5;
-        };
-
-        // 出现位置
-        that.css({
-            'top': t(),
-            'left':0
-        });
-        // 加载时分秒选择功能
-        hns(c.times);
-
-        // 绑定选择日期
-        bindDay();
-        // 绑定操作
-        mp();
-    };
-
-    // 最终输出的时间
-    let ttt='';
-    let hhh=' 00:00:00';
-
-    // 时分秒
-    const hns=d=>{
-        if(d!='true') return;
-        let sp=$n.val().split(' ');
-        if(sp.length>1){
-            sp=sp[1].split(':');
-        }else{
-            sp=['00','00','00'];
-        };
-
-        let t='';
-        t+='<div class="zui-calendar-times" zui="txt-left">';
-        t+=    '<div class="zui-calendar-times-item zui-calendar-times-show">';
-        t+=        '<span class="zui-calendar-times-title">时间</span>';
-        t+=        '<span class="zui-calendar-times-con" zui="txt-right"><i id="zui-calendar-times-show-hh">'+sp[0]+'</i>:<i id="zui-calendar-times-show-nn">'+sp[1]+'</i>:<i id="zui-calendar-times-show-ss">'+sp[2]+'</i></span>';            
-        t+=    '</div>';
-        t+=    '<div class="zui-calendar-times-item">';
-        t+=        '<span class="zui-calendar-times-title">小时</span>';
-        t+=        '<span class="zui-calendar-times-con"><b class="zui-calendar-times-minus">&minus;</b><b class="zui-calendar-times-plus">&plus;</b><input id="zui-range-hh" type="range" min="00" max="24" step="1" value="'+sp[0]+'"></span>';
-        t+=    '</div>';
-        t+=    '<div class="zui-calendar-times-item">';
-        t+=        '<span class="zui-calendar-times-title">分钟</span>';
-        t+=        '<span class="zui-calendar-times-con"><b class="zui-calendar-times-minus">&minus;</b><b class="zui-calendar-times-plus">&plus;</b><input id="zui-range-nn" type="range" min="00" max="60" step="1" value="'+sp[1]+'"></span>';
-        t+=    '</div>';
-        t+=    '<div class="zui-calendar-times-item">';
-        t+=        '<span class="zui-calendar-times-title">秒钟</span>';
-        t+=        '<span class="zui-calendar-times-con"><b class="zui-calendar-times-minus">&minus;</b><b class="zui-calendar-times-plus">&plus;</b><input id="zui-range-ss" type="range" min="00" max="60" step="1" value="'+sp[2]+'"></span>';
-        t+=    '</div>';
-        t+=    '<div class="zui-calendar-times-item zui-calendar-times-now">';
-        t+=        '<button class="zui-btn now" zui="sm,primary,pull-left">当前时间</button>';
-        t+=        '<button class="zui-btn close" zui="sm,pull-right">关闭</button>';
-        t+=    '</div>';
-        t+='</div>';
-
-        const $dom=$(t);
-        that.find('.zui-calendar-main-con').append($dom);
-
-        that.find('.zui-calendar-times-con b').click(function(){
-            const ipt=$(this).siblings('input');
-            let v=Number(ipt.val());
-            if($(this).hasClass('zui-calendar-times-minus')&&v>ipt.attr('min')){
-                v-=1;
-            }else if($(this).hasClass('zui-calendar-times-plus')&&v<ipt.attr('max')){
-                v+=1;
+            e = today.getFullYear();
+            f = today.getMonth();
+            q = today.getDate();
+            let k = "";
+            k += "<div class='zui-calendar'>";
+            k += "  <div class='zui-calendar-main'>";
+            k += "    <div class='zui-calendar-main-title'>";
+            k += "      <a class='zui-prev-month zui-icon-zuo'></a><span class='zui-calendar-main-title-tit'><span class='zui-year-txt'><a class='currentYear'>" + e + "</a>\u5e74</span><span class='zui-month-txt'><a class='currentMonth'>" + (f + 1) + "</a>\u6708</span></span><a class='zui-next-month zui-icon-you'></a>";
+            k += "    </div>";
+            k += "    <div class='zui-calendar-main-con'>";
+            k += "      <div class='zui-calendar-reserve'>";
+            k += "      </div>";
+            k += "      <div class='zui-calendar-enabled'>";
+            k += setD(e, f);
+            k += "      </div>";
+            k += "    </div>";
+            k += "  </div>";
+            k += "</div>";
+            that=$(k);
+            
+            $n.parent('.zui-date-wrap').append(that);
+    
+            // 计算出现位置，是否超出可视范围
+            const t=()=>{
+                return n.innerHeight()+5;
             };
-            ipt.val(v);
-            if(v.toString().length==1) v='0'+v;
-            let m=gId(ipt.attr('id'));
-            cg(v,m);
-            f();
-        });
-
-        let gId=id=>{
-            let m;
-            switch(id){
-                case 'zui-range-hh': m='#zui-calendar-times-show-hh';
-                    break;
-                case 'zui-range-nn': m='#zui-calendar-times-show-nn';
-                    break;
-                default: m='#zui-calendar-times-show-ss';
-            };
-            return m;
+    
+            // 出现位置
+            that.css({
+                'top': t(),
+                'left':0
+            });
+            // 加载时分秒选择功能
+            hns(c.times);
+    
+            // 绑定选择日期
+            bindDay();
+            // 绑定操作
+            mp();
         };
-
-        // 获取时分秒显示值
-        const h=$dom.find('#zui-range-hh');
-        const n=$dom.find('#zui-range-nn');
-        const s=$dom.find('#zui-range-ss');
-
-        // 鼠标拖动滑块
-        $dom.find('input[type="range"]').mousedown(function(){
-            $(this).on('mousemove change',function(e){
-                let v=$(this).val();
-                if(v.length==1) v='0'+v;
-                let m=gId($(this).attr('id'));
+    
+        // 最终输出的时间
+        let ttt='';
+        let hhh=' 00:00:00';
+    
+        // 时分秒
+        const hns=d=>{
+            if(d!='true') return;
+            let sp=$n.val().split(' ');
+            if(sp.length>1){
+                sp=sp[1].split(':');
+            }else{
+                sp=['00','00','00'];
+            };
+    
+            let t='';
+            t+='<div class="zui-calendar-times" zui="txt-left">';
+            t+=    '<div class="zui-calendar-times-item zui-calendar-times-show">';
+            t+=        '<span class="zui-calendar-times-title">时间</span>';
+            t+=        '<span class="zui-calendar-times-con" zui="txt-right"><i id="zui-calendar-times-show-hh">'+sp[0]+'</i>:<i id="zui-calendar-times-show-nn">'+sp[1]+'</i>:<i id="zui-calendar-times-show-ss">'+sp[2]+'</i></span>';            
+            t+=    '</div>';
+            t+=    '<div class="zui-calendar-times-item">';
+            t+=        '<span class="zui-calendar-times-title">小时</span>';
+            t+=        '<span class="zui-calendar-times-con"><b class="zui-calendar-times-minus">&minus;</b><b class="zui-calendar-times-plus">&plus;</b><input id="zui-range-hh" type="range" min="00" max="24" step="1" value="'+sp[0]+'"></span>';
+            t+=    '</div>';
+            t+=    '<div class="zui-calendar-times-item">';
+            t+=        '<span class="zui-calendar-times-title">分钟</span>';
+            t+=        '<span class="zui-calendar-times-con"><b class="zui-calendar-times-minus">&minus;</b><b class="zui-calendar-times-plus">&plus;</b><input id="zui-range-nn" type="range" min="00" max="60" step="1" value="'+sp[1]+'"></span>';
+            t+=    '</div>';
+            t+=    '<div class="zui-calendar-times-item">';
+            t+=        '<span class="zui-calendar-times-title">秒钟</span>';
+            t+=        '<span class="zui-calendar-times-con"><b class="zui-calendar-times-minus">&minus;</b><b class="zui-calendar-times-plus">&plus;</b><input id="zui-range-ss" type="range" min="00" max="60" step="1" value="'+sp[2]+'"></span>';
+            t+=    '</div>';
+            t+=    '<div class="zui-calendar-times-item zui-calendar-times-now">';
+            t+=        '<button class="zui-btn now" zui="sm,primary,pull-left">当前时间</button>';
+            t+=        '<button class="zui-btn close" zui="sm,pull-right">关闭</button>';
+            t+=    '</div>';
+            t+='</div>';
+    
+            const $dom=$(t);
+            that.find('.zui-calendar-main-con').append($dom);
+    
+            that.find('.zui-calendar-times-con b').click(function(){
+                const ipt=$(this).siblings('input');
+                let v=Number(ipt.val());
+                if($(this).hasClass('zui-calendar-times-minus')&&v>ipt.attr('min')){
+                    v-=1;
+                }else if($(this).hasClass('zui-calendar-times-plus')&&v<ipt.attr('max')){
+                    v+=1;
+                };
+                ipt.val(v);
+                if(v.toString().length==1) v='0'+v;
+                let m=gId(ipt.attr('id'));
                 cg(v,m);
+                f();
+            });
+    
+            let gId=id=>{
+                let m;
+                switch(id){
+                    case 'zui-range-hh': m='#zui-calendar-times-show-hh';
+                        break;
+                    case 'zui-range-nn': m='#zui-calendar-times-show-nn';
+                        break;
+                    default: m='#zui-calendar-times-show-ss';
+                };
+                return m;
+            };
+    
+            // 获取时分秒显示值
+            const h=$dom.find('#zui-range-hh');
+            const n=$dom.find('#zui-range-nn');
+            const s=$dom.find('#zui-range-ss');
+    
+            // 鼠标拖动滑块
+            $dom.find('input[type="range"]').mousedown(function(){
+                $(this).on('mousemove change',function(e){
+                    let v=$(this).val();
+                    if(v.length==1) v='0'+v;
+                    let m=gId($(this).attr('id'));
+                    cg(v,m);
+                    // 输出
+                    if(e.type=='change') f();
+                });
+            });
+            // 改变数值
+            let cg=(v,m)=>{
+                m=$dom.find(m);
+                m=$dom.find(m);
+                // 动态显示值
+                m.addClass('on').text(v);
+            };
+            // 鼠标放开滑块
+            $dom.find('input[type="range"]').on('mouseup',function(){
+                $(this).off('mousemove');
                 // 输出
-                if(e.type=='change') f();
+                f();
             });
-        });
-        // 改变数值
-        let cg=(v,m)=>{
-            m=$dom.find(m);
-            m=$dom.find(m);
-            // 动态显示值
-            m.addClass('on').text(v);
-        };
-        // 鼠标放开滑块
-        $dom.find('input[type="range"]').on('mouseup',function(){
-            $(this).off('mousemove');
-            // 输出
-            f();
-        });
-        // 输出hhh数据
-        const f=()=>{
-            // 添加时分秒数据
-            hhh=' ';
-            $dom.find('.zui-calendar-times-show i').each((i,n)=>{
-                hhh+=$(n).text();
-                if($dom.find('.zui-calendar-times-show i').length!=i+1) hhh+=':';
-            });
-            $dom.find('.on').removeClass('on');
-            // 如果还没选ttt，输出当天
-            if(!ttt){
-                vto();
-            };
-            $n.val(ttt+hhh);
-        };
-    };
-    // 绑定日期选择
-    const bindDay=()=>{
-        that.find(".zui-caltab-day a").mousedown(function(){
-            let a = new Date(that.find(".currentYear").text() + "/" + that.find(".currentMonth").text() + "/1");
-            let d = $(this).text();
-            if($(this).hasClass("prevD")) {
-                // 如果选择上个月的天数
-                a.setMonth(a.getMonth() - 1);
-                a.setDate(d);
-                that.find(".zui-prev-month").triggerHandler("mousedown");
-            }else if($(this).hasClass("nextD")) {
-                // 如果选择下个月的天数
-                a.setMonth(a.getMonth() + 1);
-                a.setDate(d);
-                that.find(".zui-next-month").triggerHandler("mousedown");
-            };
-            // 输出日期
-            ttt = a.getFullYear() + "-" + (Number(a.getMonth() + 1) < 10 ? "0" + Number(a.getMonth() + 1) : Number(a.getMonth() + 1)) + "-" + (Number(d) < 10 ? "0" + d: d);
-
-            $(".zui-calendar table a").removeClass("select");
-            // 给已选日期加标记
-            $(".zui-caltab-day a:contains('" + d + "')").each(function() {
-                d == $(this).text() && !$(this).hasClass("prevD") && !$(this).hasClass("nextD") && $(this).addClass("select");
-            });
-
-            if(c.times!='true'){
-                $n.val(ttt);
-                that.remove();
-            }else{
+            // 输出hhh数据
+            const f=()=>{
+                // 添加时分秒数据
+                hhh=' ';
+                $dom.find('.zui-calendar-times-show i').each((i,n)=>{
+                    hhh+=$(n).text();
+                    if($dom.find('.zui-calendar-times-show i').length!=i+1) hhh+=':';
+                });
+                $dom.find('.on').removeClass('on');
+                // 如果还没选ttt，输出当天
+                if(!ttt){
+                    vto();
+                };
                 $n.val(ttt+hhh);
             };
-            return false;
-        });
-    };
-    // 绑定月份选择
-    const bindMonth=()=>{
-        that.find(".zui-caltab-month a").mousedown(function() {
-            const a = setD(Number(that.find(".currentYear").text()), Number($(this).attr("val")));
-            that.find(".currentMonth").text(Number($(this).attr("val")) + 1);
-            update('close',a);
-            bindDay();
-        });
-    };
-    // 选择年份选择
-    const bindYear=()=>{
-        that.find(".zui-caltab-year a").mousedown(function() {
-            const a = setD(Number($(this).text()), Number(that.find(".currentMonth").text()) - 1);
-            that.find(".currentYear").text(Number($(this).text()));
-            update('close',a);
-            bindDay();
-        });
-    };
-    // 生成日期天数
-    const setD=(a, b)=>{
-        const newDate = new Date(a, b, 1);
-        newDate.setDate(0);
-        let d = 1;
-        let h = newDate.getDate();
-        newDate.setDate(1);
-        newDate.setMonth(newDate.getMonth() + 1);
-        let m = newDate.getDay();
-        h = h - m + 1;
-        newDate.setMonth(newDate.getMonth() + 1);
-        newDate.setDate(0);
-        let o = newDate.getDate(),
-        g = "<table class='zui-caltab-day'><tr><th>\u65e5</th><th>\u4e00</th><th>\u4e8c</th><th>\u4e09</th><th>\u56db</th><th>\u4e94</th><th>\u516d</th></tr>",
-        i = w(),
-        l = "",
-        p = "",
-        t = "";
-        let xx=5;
-        if(m>4&&o>30) xx=6;
-        for(let x = 0; x < xx; x++){
-            g += "<tr>";
-            for(let y = 0; y < 7; y++){
-                let j = x * 7 + y + 1 - m;
-                p = l = "";
-                if(c.lower != NaN && c.lower > new Date(newDate.getFullYear(), newDate.getMonth(), j) || c.upper != NaN && new Date(newDate.getFullYear(), newDate.getMonth(), j) > c.upper) if(0 < j && j <= o) {
-                    if(newDate.getFullYear() == e && newDate.getMonth() == f && j == q) l = "current";
-                    g += "<td><span class='" + l + "'>" + j + "</span></td>";
-                }else if(j <= 0) {
-                    if(newDate.getFullYear() == e && newDate.getMonth() - 1 == f && h == q) l = "current";
-                    g += "<td><span class='" + l + "' " + t + ">" + h + "</span></td>";
-                    h++;
+        };
+        // 绑定日期选择
+        const bindDay=()=>{
+            that.find(".zui-caltab-day a").mousedown(function(){
+                let a = new Date(that.find(".currentYear").text() + "/" + that.find(".currentMonth").text() + "/1");
+                let d = $(this).text();
+                if($(this).hasClass("prevD")) {
+                    // 如果选择上个月的天数
+                    a.setMonth(a.getMonth() - 1);
+                    a.setDate(d);
+                    that.find(".zui-prev-month").triggerHandler("mousedown");
+                }else if($(this).hasClass("nextD")) {
+                    // 如果选择下个月的天数
+                    a.setMonth(a.getMonth() + 1);
+                    a.setDate(d);
+                    that.find(".zui-next-month").triggerHandler("mousedown");
+                };
+                // 输出日期
+                ttt = a.getFullYear() + "-" + (Number(a.getMonth() + 1) < 10 ? "0" + Number(a.getMonth() + 1) : Number(a.getMonth() + 1)) + "-" + (Number(d) < 10 ? "0" + d: d);
+    
+                $(".zui-calendar table a").removeClass("select");
+                // 给已选日期加标记
+                $(".zui-caltab-day a:contains('" + d + "')").each(function() {
+                    d == $(this).text() && !$(this).hasClass("prevD") && !$(this).hasClass("nextD") && $(this).addClass("select");
+                });
+    
+                if(c.times!='true'){
+                    $n.val(ttt);
+                    that.remove();
                 }else{
-                    if(j > o) {
+                    $n.val(ttt+hhh);
+                };
+                return false;
+            });
+        };
+        // 绑定月份选择
+        const bindMonth=()=>{
+            that.find(".zui-caltab-month a").mousedown(function() {
+                const a = setD(Number(that.find(".currentYear").text()), Number($(this).attr("val")));
+                that.find(".currentMonth").text(Number($(this).attr("val")) + 1);
+                update('close',a);
+                bindDay();
+            });
+        };
+        // 选择年份选择
+        const bindYear=()=>{
+            that.find(".zui-caltab-year a").mousedown(function() {
+                const a = setD(Number($(this).text()), Number(that.find(".currentMonth").text()) - 1);
+                that.find(".currentYear").text(Number($(this).text()));
+                update('close',a);
+                bindDay();
+            });
+        };
+        // 生成日期天数
+        const setD=(a, b)=>{
+            const newDate = new Date(a, b, 1);
+            newDate.setDate(0);
+            let d = 1;
+            let h = newDate.getDate();
+            newDate.setDate(1);
+            newDate.setMonth(newDate.getMonth() + 1);
+            let m = newDate.getDay();
+            h = h - m + 1;
+            newDate.setMonth(newDate.getMonth() + 1);
+            newDate.setDate(0);
+            let o = newDate.getDate(),
+            g = "<table class='zui-caltab-day'><tr><th>\u65e5</th><th>\u4e00</th><th>\u4e8c</th><th>\u4e09</th><th>\u56db</th><th>\u4e94</th><th>\u516d</th></tr>",
+            i = w(),
+            l = "",
+            p = "",
+            t = "";
+            let xx=5;
+            if(m>4&&o>30) xx=6;
+            for(let x = 0; x < xx; x++){
+                g += "<tr>";
+                for(let y = 0; y < 7; y++){
+                    let j = x * 7 + y + 1 - m;
+                    p = l = "";
+                    if(c.lower != NaN && c.lower > new Date(newDate.getFullYear(), newDate.getMonth(), j) || c.upper != NaN && new Date(newDate.getFullYear(), newDate.getMonth(), j) > c.upper) if(0 < j && j <= o) {
+                        if(newDate.getFullYear() == e && newDate.getMonth() == f && j == q) l = "current";
+                        g += "<td><span class='" + l + "'>" + j + "</span></td>";
+                    }else if(j <= 0) {
+                        if(newDate.getFullYear() == e && newDate.getMonth() - 1 == f && h == q) l = "current";
+                        g += "<td><span class='" + l + "' " + t + ">" + h + "</span></td>";
+                        h++;
+                    }else{
+                        if(j > o) {
+                            if(newDate.getFullYear() == e && newDate.getMonth() + 1 == f && d == q) l = "current";
+                            g += "<td><span class='" + l + "' " + t + ">" + d + "</span></td>";
+                            d++;
+                        };
+                    }else if(0 < j && j <= o) {
+                        if(newDate.getFullYear() == e && newDate.getMonth() == f && j == q) l = "current";
+                        if(newDate.getFullYear() == i.getFullYear() && newDate.getMonth() == i.getMonth() && j == i.getDate()) p = "select";
+                        g += "<td><a class='" + p + " " + l + "'>" + j + "</a></td>";
+                    }else if(j <= 0) {
+                        if(newDate.getFullYear() == e && newDate.getMonth() - 1 == f && h == q) l = "current";
+                        if(newDate.getFullYear() == i.getFullYear() && newDate.getMonth() - 1 == i.getMonth() && h == i.getDate()) p = "select";
+                        g += "<td><a class='prevD " + p + " " + l + "' " + t + ">" + h + "</a></td>";
+                        h++;
+                    }else if(j > o) {
                         if(newDate.getFullYear() == e && newDate.getMonth() + 1 == f && d == q) l = "current";
-                        g += "<td><span class='" + l + "' " + t + ">" + d + "</span></td>";
+                        if(newDate.getFullYear() == i.getFullYear() && newDate.getMonth() + 1 == i.getMonth() && d == i.getDate()) p = "select";
+                        g += "<td><a class='nextD " + p + " " + l + "' " + t + ">" + d + "</a></td>";
                         d++;
                     };
-                }else if(0 < j && j <= o) {
-                    if(newDate.getFullYear() == e && newDate.getMonth() == f && j == q) l = "current";
-                    if(newDate.getFullYear() == i.getFullYear() && newDate.getMonth() == i.getMonth() && j == i.getDate()) p = "select";
-                    g += "<td><a class='" + p + " " + l + "'>" + j + "</a></td>";
-                }else if(j <= 0) {
-                    if(newDate.getFullYear() == e && newDate.getMonth() - 1 == f && h == q) l = "current";
-                    if(newDate.getFullYear() == i.getFullYear() && newDate.getMonth() - 1 == i.getMonth() && h == i.getDate()) p = "select";
-                    g += "<td><a class='prevD " + p + " " + l + "' " + t + ">" + h + "</a></td>";
-                    h++;
-                }else if(j > o) {
-                    if(newDate.getFullYear() == e && newDate.getMonth() + 1 == f && d == q) l = "current";
-                    if(newDate.getFullYear() == i.getFullYear() && newDate.getMonth() + 1 == i.getMonth() && d == i.getDate()) p = "select";
-                    g += "<td><a class='nextD " + p + " " + l + "' " + t + ">" + d + "</a></td>";
-                    d++;
+                    g = g.replace("class=' '", "");
                 };
-                g = g.replace("class=' '", "");
+                g += "</tr>";
             };
-            g += "</tr>";
+            g += "</table>";
+            return g;
         };
-        g += "</table>";
-        return g;
-    };
-    // 生成月份
-    const setM=a=>{
-        let b = w(),
-        d = "<table class='zui-caltab-month'>";
-        d += "<tr>";
-        d += "<td><a val='0' " + (a == b.getFullYear() && 0 == b.getMonth() ? "class='select'": "") + " " + (a == e && 0 == f ? "class='current'": "") + ">\u4e00\u6708</a></td>";
-        d += "<td><a val='1' " + (a == b.getFullYear() && 1 == b.getMonth() ? "class='select'": "") + " " + (a == e && 1 == f ? "class='current'": "") + ">\u4e8c\u6708</a></td>";
-        d += "<td><a val='2' " + (a == b.getFullYear() && 2 == b.getMonth() ? "class='select'": "") + " " + (a == e && 2 == f ? "class='current'": "") + ">\u4e09\u6708</a></td>";
-        d += "<td><a val='3' " + (a == b.getFullYear() && 3 == b.getMonth() ? "class='select'": "") + " " + (a == e && 3 == f ? "class='current'": "") + ">\u56db\u6708</a></td>";
-        d += "</tr>";
-        d += "<tr>";
-        d += "<td><a val='4' " + (a == b.getFullYear() && 4 == b.getMonth() ? "class='select'": "") + " " + (a == e && 4 == f ? "class='current'": "") + ">\u4e94\u6708</a></td>";
-        d += "<td><a val='5' " + (a == b.getFullYear() && 5 == b.getMonth() ? "class='select'": "") + " " + (a == e && 5 == f ? "class='current'": "") + ">\u516d\u6708</a></td>";
-        d += "<td><a val='6' " + (a == b.getFullYear() && 6 == b.getMonth() ? "class='select'": "") + " " + (a == e && 6 == f ? "class='current'": "") + ">\u4e03\u6708</a></td>";
-        d += "<td><a val='7' " + (a == b.getFullYear() && 7 == b.getMonth() ? "class='select'": "") + " " + (a == e && 7 == f ? "class='current'": "") + ">\u516b\u6708</a></td>";
-        d += "</tr>";
-        d += "<tr>";
-        d += "<td><a val='8' " + (a == b.getFullYear() && 8 == b.getMonth() ? "class='select'": "") + " " + (a == e && 8 == f ? "class='current'": "") + ">\u4e5d\u6708</a></td>";
-        d += "<td><a val='9' " + (a == b.getFullYear() && 9 == b.getMonth() ? "class='select'": "") + " " + (a == e && 9 == f ? "class='current'": "") + ">\u5341\u6708</a></td>";
-        d += "<td><a val='10' " + (a == b.getFullYear() && 10 == b.getMonth() ? "class='select'": "") + " " + (a == e && 10 == f ? "class='current'": "") + ">\u5341\u4e00\u6708</a></td>";
-        d += "<td><a val='11' " + (a == b.getFullYear() && 11 == b.getMonth() ? "class='select'": "") + " " + (a == e && 11 == f ? "class='current'": "") + ">\u5341\u4e8c\u6708</a></td>";
-        d += "</tr>";
-        d += "</table>";
-        return d;
-    };
-    // 生成年份
-    const setY=a=>{
-        a = Math.floor(a / 10) * 10;
-        let b = "<table class='zui-caltab-year'>",
-        d = w(),
-        h = "",
-        m = "",
-        o = "";
-        for(let g = 0; g < 3; g++) {
-            b += "<tr>";
-            for(let i = 0; i < 4; i++) {
-                m = h = "";
-                if(g + 1 * i + 1 != 1 && (g + 1) * (i + 1) != 12) {
-                    if(a == d.getFullYear()) h = "select";
-                    if(a == e) m = "current";
-                    b += "<td><a class='" + h + " " + m + "' >" + a + "</a></td>";
-                    a++
-                }else if(g + 1 * i + 1 == 1) {
-                    if(a - 1 == d.getFullYear()) h = "select";
-                    if(a - 1 == e) m = "current";
-                    b += "<td><a class='prevY " + h + " " + m + "' " + o + ">" + (a - 1) + "</a></td>";
-                }else{
-                    if(a == d.getFullYear()) h = "select";
-                    if(a == e) m = "current";
-                    b += "<td><a class='nextY " + h + " " + m + "' " + o + ">" + a + "</a></td>";
+        // 生成月份
+        const setM=a=>{
+            let b = w(),
+            d = "<table class='zui-caltab-month'>";
+            d += "<tr>";
+            d += "<td><a val='0' " + (a == b.getFullYear() && 0 == b.getMonth() ? "class='select'": "") + " " + (a == e && 0 == f ? "class='current'": "") + ">\u4e00\u6708</a></td>";
+            d += "<td><a val='1' " + (a == b.getFullYear() && 1 == b.getMonth() ? "class='select'": "") + " " + (a == e && 1 == f ? "class='current'": "") + ">\u4e8c\u6708</a></td>";
+            d += "<td><a val='2' " + (a == b.getFullYear() && 2 == b.getMonth() ? "class='select'": "") + " " + (a == e && 2 == f ? "class='current'": "") + ">\u4e09\u6708</a></td>";
+            d += "<td><a val='3' " + (a == b.getFullYear() && 3 == b.getMonth() ? "class='select'": "") + " " + (a == e && 3 == f ? "class='current'": "") + ">\u56db\u6708</a></td>";
+            d += "</tr>";
+            d += "<tr>";
+            d += "<td><a val='4' " + (a == b.getFullYear() && 4 == b.getMonth() ? "class='select'": "") + " " + (a == e && 4 == f ? "class='current'": "") + ">\u4e94\u6708</a></td>";
+            d += "<td><a val='5' " + (a == b.getFullYear() && 5 == b.getMonth() ? "class='select'": "") + " " + (a == e && 5 == f ? "class='current'": "") + ">\u516d\u6708</a></td>";
+            d += "<td><a val='6' " + (a == b.getFullYear() && 6 == b.getMonth() ? "class='select'": "") + " " + (a == e && 6 == f ? "class='current'": "") + ">\u4e03\u6708</a></td>";
+            d += "<td><a val='7' " + (a == b.getFullYear() && 7 == b.getMonth() ? "class='select'": "") + " " + (a == e && 7 == f ? "class='current'": "") + ">\u516b\u6708</a></td>";
+            d += "</tr>";
+            d += "<tr>";
+            d += "<td><a val='8' " + (a == b.getFullYear() && 8 == b.getMonth() ? "class='select'": "") + " " + (a == e && 8 == f ? "class='current'": "") + ">\u4e5d\u6708</a></td>";
+            d += "<td><a val='9' " + (a == b.getFullYear() && 9 == b.getMonth() ? "class='select'": "") + " " + (a == e && 9 == f ? "class='current'": "") + ">\u5341\u6708</a></td>";
+            d += "<td><a val='10' " + (a == b.getFullYear() && 10 == b.getMonth() ? "class='select'": "") + " " + (a == e && 10 == f ? "class='current'": "") + ">\u5341\u4e00\u6708</a></td>";
+            d += "<td><a val='11' " + (a == b.getFullYear() && 11 == b.getMonth() ? "class='select'": "") + " " + (a == e && 11 == f ? "class='current'": "") + ">\u5341\u4e8c\u6708</a></td>";
+            d += "</tr>";
+            d += "</table>";
+            return d;
+        };
+        // 生成年份
+        const setY=a=>{
+            a = Math.floor(a / 10) * 10;
+            let b = "<table class='zui-caltab-year'>",
+            d = w(),
+            h = "",
+            m = "",
+            o = "";
+            for(let g = 0; g < 3; g++) {
+                b += "<tr>";
+                for(let i = 0; i < 4; i++) {
+                    m = h = "";
+                    if(g + 1 * i + 1 != 1 && (g + 1) * (i + 1) != 12) {
+                        if(a == d.getFullYear()) h = "select";
+                        if(a == e) m = "current";
+                        b += "<td><a class='" + h + " " + m + "' >" + a + "</a></td>";
+                        a++
+                    }else if(g + 1 * i + 1 == 1) {
+                        if(a - 1 == d.getFullYear()) h = "select";
+                        if(a - 1 == e) m = "current";
+                        b += "<td><a class='prevY " + h + " " + m + "' " + o + ">" + (a - 1) + "</a></td>";
+                    }else{
+                        if(a == d.getFullYear()) h = "select";
+                        if(a == e) m = "current";
+                        b += "<td><a class='nextY " + h + " " + m + "' " + o + ">" + a + "</a></td>";
+                    };
                 };
+                b += "</tr>";
             };
-            b += "</tr>";
+            b += "</table>";
+            return b;
         };
-        b += "</table>";
-        return b;
-    };
-    // 切换
-    const update=(s,d,m)=>{
-        const reserve=that.find(".zui-calendar-reserve");
-        const enabled=that.find(".zui-calendar-enabled");
-        if(s=='open'){
-            reserve.html(d);
-            reserve.css('top',36);
-        }else if(s=='close'){
-            reserve.empty();
-            reserve.css('top','-100%');
-            enabled.html(d);
-        }else{
-            if(m){
+        // 切换
+        const update=(s,d,m)=>{
+            const reserve=that.find(".zui-calendar-reserve");
+            const enabled=that.find(".zui-calendar-enabled");
+            if(s=='open'){
                 reserve.html(d);
-            }else{
+                reserve.css('top',36);
+            }else if(s=='close'){
+                reserve.empty();
+                reserve.css('top','-100%');
                 enabled.html(d);
+            }else{
+                if(m){
+                    reserve.html(d);
+                }else{
+                    enabled.html(d);
+                };
             };
         };
-    };
-    // 格式化日期
-    const w=()=>{
-        const reg = /(\d\d\d\d)(\W)?(\d\d)(\W)?(\d\d)/g;
-        let a = $n.val();
-        a = a.replace(reg, "$1/$3/$5@").split("@")[0];
-        return new Date(a);
-    };
-    // 操作绑定
-    const mp=()=>{
-        that.find(".zui-prev-month").mousedown(()=>{
-            if($('.zui-calendar').find(".zui-calendar-reserve > .zui-caltab-month").length > 0) {
-                d = setM(Number($('.zui-calendar').find(".currentYear").text()) - 1);
-                update('prev',d,true);
+        // 格式化日期
+        const w=()=>{
+            const reg = /(\d\d\d\d)(\W)?(\d\d)(\W)?(\d\d)/g;
+            let a = $n.val();
+            a = a.replace(reg, "$1/$3/$5@").split("@")[0];
+            return new Date(a);
+        };
+        // 操作绑定
+        const mp=()=>{
+            that.find(".zui-prev-month").mousedown(()=>{
+                if($('.zui-calendar').find(".zui-calendar-reserve > .zui-caltab-month").length > 0) {
+                    d = setM(Number($('.zui-calendar').find(".currentYear").text()) - 1);
+                    update('prev',d,true);
+                    bindMonth();
+                    $('.zui-calendar').find(".currentYear").text(Number($('.zui-calendar').find(".currentYear").text()) - 1);
+                }else if($('.zui-calendar').find(".zui-calendar-reserve > .zui-caltab-year").length > 0) {
+                    d = setY(Number($('.zui-calendar').find(".currentYear").text()) - 10);
+                    update('prev',d,true);
+                    bindYear();
+                    $('.zui-calendar').find(".currentYear").text(Number($('.zui-calendar').find(".currentYear").text()) - 10);
+                }else if($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-day").length > 0) {
+                    const a = $('.zui-calendar').find(".currentYear"),
+                    b = $('.zui-calendar').find(".currentMonth"),
+                    d = setD(Number(a.text()), Number(b.text()) - 2);
+                    update('prev',d);
+                    if(Number(b.text()) != 1) b.text(Number(b.text()) - 1);
+                    else{
+                        a.text(Number(a.text()) - 1);
+                        b.text("12");
+                    }
+                    bindDay();
+                };
+                return false;
+            });
+            that.find(".zui-next-month").mousedown(()=>{
+                if(that.find(".zui-calendar-reserve > .zui-caltab-month").length > 0) {
+                    d = setM(Number(that.find(".currentYear").text()) + 1);
+                    update('next',d,true);
+                    bindMonth();
+                    that.find(".currentYear").text(Number(that.find(".currentYear").text()) + 1)
+                }else if(that.find(".zui-calendar-reserve > .zui-caltab-year").length > 0) {
+                    d = setY(Number(that.find(".currentYear").text()) + 10);
+                    update('next',d,true);
+                    bindYear();
+                    that.find(".currentYear").text(Number(that.find(".currentYear").text()) + 10)
+                }else if(that.find(".zui-calendar-enabled > .zui-caltab-day").length > 0) {
+                    const a = that.find(".currentYear"),
+                    b = that.find(".currentMonth"),
+                    d = setD(Number(a.text()), Number(b.text()));
+                    update('next',d);
+                    if(Number(b.text()) != 12) b.text(Number(b.text()) + 1);
+                    else{
+                        a.text(Number(a.text()) + 1);
+                        b.text("1");
+                    }
+                    bindDay();
+                };
+                return false;
+            });
+            that.find(".zui-month-txt").mousedown(()=>{
+                const a = setM(Number(that.find(".currentYear").text()));
+                update('open',a);
                 bindMonth();
-                $('.zui-calendar').find(".currentYear").text(Number($('.zui-calendar').find(".currentYear").text()) - 1);
-            }else if($('.zui-calendar').find(".zui-calendar-reserve > .zui-caltab-year").length > 0) {
-                d = setY(Number($('.zui-calendar').find(".currentYear").text()) - 10);
-                update('prev',d,true);
+                return false;
+            });
+            that.find(".zui-year-txt").mousedown(()=>{
+                const a = setY(Number(that.find(".currentYear").text()));
+                update('open',a);
                 bindYear();
-                $('.zui-calendar').find(".currentYear").text(Number($('.zui-calendar').find(".currentYear").text()) - 10);
-            }else if($('.zui-calendar').find(".zui-calendar-enabled > .zui-caltab-day").length > 0) {
-                const a = $('.zui-calendar').find(".currentYear"),
-                b = $('.zui-calendar').find(".currentMonth"),
-                d = setD(Number(a.text()), Number(b.text()) - 2);
-                update('prev',d);
-                if(Number(b.text()) != 1) b.text(Number(b.text()) - 1);
-                else{
-                    a.text(Number(a.text()) - 1);
-                    b.text("12");
-                }
-                bindDay();
-            };
-            return false;
-        });
-        that.find(".zui-next-month").mousedown(()=>{
-            if(that.find(".zui-calendar-reserve > .zui-caltab-month").length > 0) {
-                d = setM(Number(that.find(".currentYear").text()) + 1);
-                update('next',d,true);
-                bindMonth();
-                that.find(".currentYear").text(Number(that.find(".currentYear").text()) + 1)
-            }else if(that.find(".zui-calendar-reserve > .zui-caltab-year").length > 0) {
-                d = setY(Number(that.find(".currentYear").text()) + 10);
-                update('next',d,true);
-                bindYear();
-                that.find(".currentYear").text(Number(that.find(".currentYear").text()) + 10)
-            }else if(that.find(".zui-calendar-enabled > .zui-caltab-day").length > 0) {
-                const a = that.find(".currentYear"),
-                b = that.find(".currentMonth"),
-                d = setD(Number(a.text()), Number(b.text()));
-                update('next',d);
-                if(Number(b.text()) != 12) b.text(Number(b.text()) + 1);
-                else{
-                    a.text(Number(a.text()) + 1);
-                    b.text("1");
-                }
-                bindDay();
-            };
-            return false;
-        });
-        that.find(".zui-month-txt").mousedown(()=>{
-            const a = setM(Number(that.find(".currentYear").text()));
-            update('open',a);
-            bindMonth();
-            return false;
-        });
-        that.find(".zui-year-txt").mousedown(()=>{
-            const a = setY(Number(that.find(".currentYear").text()));
-            update('open',a);
-            bindYear();
-            return false;
-        });
+                return false;
+            });
+        };
     };
-};
-
-// zui-date绑定
-Zui.prototype.optiondate=el=>{
     el.each((i,n)=>{
         // 获取自定义属性
         const o_ab=n.attributes;
@@ -1285,7 +1331,7 @@ Zui.prototype.optiondate=el=>{
         $n.replaceWith(that);
         
         // 绑定插件
-        zui.calendar(that.find('.zui-date'));
+        calendar(that.find('.zui-date'));
     });
 };
 
@@ -1296,11 +1342,13 @@ Zui.prototype.nav=el=>{
         // 添加下划线元素
         $n.append('<div class="zui-nav-sliding"></div>');
         const $s=$n.find('.zui-nav-sliding');
-
         const $li=$n.find('li');
         // ul左距
-        const uw=$n.offset().left;
-
+        let uw=$n.offset().left;
+        // 更新ul左距，避免浏览器调整后下划线位置不准
+        $(window).resize(()=>{
+            uw=$n.offset().left;
+        });
         // 初始化下划线位置和长度
         $s.css({
             width:$n.find('.active').innerWidth(),
@@ -1479,6 +1527,23 @@ Zui.prototype.paging=dt=>{
     });
 };
 
+// loading
+Zui.prototype.loading=(n,b)=>{
+    if(b){
+        const ld='<div class="zui-loading open"><i class="zui-icon-loading"></i></div>';
+        if(n.css('position')=='static') n.css('position','relative');
+        n.append(ld);
+    }else{
+        const ld=n.find('.zui-loading');
+        if(ld.length){
+            ld.removeClass('open');
+            setTimeout(()=>{
+                ld.remove();
+            },500);
+        };
+    };
+};
+
 /*
 2017-09-03
 name：zui框架-表单校验模块
@@ -1489,7 +1554,7 @@ qq：269144551
 
 Zui.prototype.validate=dt=>{
 	// 非法名字
-	const ne = ["妈", "爸", "爹", "爷", "姐", "哥", "瞧瞧", "你猜", "高富帅", "白富美", "屌丝", "先生", "女士", "小姐", "帅哥", "美女", "啊啊", "习近平", "习大大", "奥巴马", "马化腾", "毛泽东", "尼玛", "你", "我", "草", "泥", "痴", "狗", "猫", "喵", "蛋", "主任", "老师", "师傅", "医生", "教授", "老", "猪", "呵呵", "贱", "二", "三", "四", "五", "六", "七", "八", "九", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖", "拾", "佰", "仟", "傻"];
+	const ne = ["妈", "爸", "爹", "爷", "姐", "哥", "瞧瞧", "你猜", "高富帅", "白富美", "王者荣耀", "武则天", "秦始皇", '英雄联盟', "屌丝", "先生", "女士", "小姐", "帅哥", "美女", "啊啊", "奥巴马", "毛泽东", "尼玛", "你", "我", "草", "泥", "痴", "狗", "猫", "喵", "蛋", "主任", "老师", "师傅", "医生", "教授", "老", "猪", "呵呵", "贱", "二", "三", "四", "五", "六", "七", "八", "九", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖", "拾", "佰", "仟", "傻"];
 	// 百家姓数组
 	const bjx = ["赵","钱","孙","李","周","吴","郑","王","冯","陈","褚","卫","蒋","沈","韩","杨","朱","秦","尤","许","何","吕","施","张","孔","曹","严","华","金","魏","陶","姜","戚","谢","邹","喻","柏","水","窦","章","云","苏","潘","葛","奚","范","彭","郎","鲁","韦","昌","马","苗","凤","花","方","俞","任","袁","柳","酆","鲍","史","唐","费","廉","岑","薛","雷","贺","倪","汤","滕","殷","罗","毕","郝","邬","安","常","乐","于","时","傅","皮","卞","齐","康","伍","余","元","卜","顾","孟","平","黄","和","穆","萧","尹","姚","邵","湛","汪","祁","毛","禹","狄","米","贝","明","臧","计","伏","成","戴","谈","宋","茅","庞","熊","纪","舒","屈","项","祝","董","梁","杜","阮","蓝","闵","席","季","麻","强","贾","路","娄","危","江","童","颜","郭","梅","盛","林","刁","锺","徐","邱","骆","高","夏","蔡","田","樊","胡","凌","霍","虞","万","支","柯","昝","管","卢","莫","经","房","裘","缪","干","解","应","宗","丁","宣","贲","邓","郁","单","杭","洪","包","诸","左","石","崔","吉","钮","龚","程","嵇","邢","滑","裴","陆","荣","翁","荀","羊","於","惠","甄","麴","家","封","芮","羿","储","靳","汲","邴","糜","松","井","段","富","巫","乌","焦","巴","弓","牧","隗","山","谷","车","侯","宓","蓬","全","郗","班","仰","秋","仲","伊","宫","宁","仇","栾","暴","甘","钭","历","戎","祖","武","符","刘","景","詹","束","龙","叶","幸","司","韶","郜","黎","蓟","溥","印","宿","白","怀","蒲","邰","从","鄂","索","咸","籍","赖","卓","蔺","屠","蒙","池","乔","阳","郁","胥","能","苍","双","闻","莘","党","翟","谭","贡","劳","逄","姬","申","扶","堵","冉","宰","郦","雍","却","璩","桑","桂","濮","牛","寿","通","边","扈","燕","冀","僪","浦","尚","农","温","别","庄","晏","柴","瞿","阎","充","慕","连","茹","习","宦","艾","鱼","容","向","古","易","慎","戈","廖","庾","终","暨","居","衡","步","都","耿","满","弘","匡","国","文","寇","广","禄","阙","东","欧","殳","沃","利","蔚","越","夔","隆","师","巩","厍","聂","晁","勾","敖","融","冷","訾","辛","阚","那","简","饶","空","曾","毋","沙","乜","养","鞠","须","丰","巢","关","蒯","相","查","后","荆","红","游","竺","权","逮","盍","益","桓","公","万俟","司马","上官","欧阳","夏侯","诸葛","闻人","东方","赫连","皇甫","尉迟","公羊","澹台","公冶","宗政","濮阳","淳于","单于","太叔","申屠","公孙","仲孙","轩辕","令狐","钟离","宇文","长孙","慕容","司徒","司空","召","有","舜","丛","岳","寸","贰","皇","侨","彤","竭","端","赫","实","甫","集","象","翠","狂","辟","典","良","函","芒","苦","其","京","中","夕","之","章佳","那拉","冠","宾","香","果","纳喇","乌雅","范姜","碧鲁","张廖","张简","图门","太史","公叔","乌孙","完颜","马佳","佟佳","富察","费莫","蹇","称","诺","来","多","繁","戊","朴","回","毓","税","荤","靖","绪","愈","硕","牢","买","但","巧","枚","撒","泰","秘","亥","绍","以","壬","森","斋","释","奕","姒","朋","求","羽","用","占","真","穰","翦","闾","漆","贵","代","贯","旁","崇","栋","告","休","褒","谏","锐","皋","闳","在","歧","禾","示","是","委","钊","频","嬴","呼","大","威","昂","律","冒","保","系","抄","定","化","莱","校","么","抗","祢","綦","悟","宏","功","庚","务","敏","捷","拱","兆","丑","丙","畅","苟","随","类","卯","俟","友","答","乙","允","甲","留","尾","佼","玄","乘","裔","延","植","环","矫","赛","昔","侍","度","旷","遇","偶","前","由","咎","塞","敛","受","泷","袭","衅","叔","圣","御","夫","仆","镇","藩","邸","府","掌","首","员","焉","戏","可","智","尔","凭","悉","进","笃","厚","仁","业","肇","资","合","仍","九","衷","哀","刑","俎","仵","圭","夷","徭","蛮","汗","孛","乾","帖","罕","洛","淦","洋","邶","郸","郯","邗","邛","剑","虢","隋","蒿","茆","菅","苌","树","桐","锁","钟","机","盘","铎","斛","玉","线","针","箕","庹","绳","磨","蒉","瓮","弭","刀","疏","牵","浑","恽","势","世","仝","同","蚁","止","戢","睢","冼","种","涂","肖","己","泣","潜","卷","脱","谬","蹉","赧","浮","顿","说","次","错","念","夙","斯","完","丹","表","聊","源","姓","吾","寻","展","出","不","户","闭","才","无","书","学","愚","本","性","雪","霜","烟","寒","少","字","桥","板","斐","独","千","诗","嘉","扬","善","揭","祈","析","赤","紫","青","柔","刚","奇","拜","佛","陀","弥","阿","素","长","僧","隐","仙","隽","宇","祭","酒","淡","塔","琦","闪","始","星","南","天","接","波","碧","速","禚","腾","潮","镜","似","澄","潭","謇","纵","渠","奈","风","春","濯","沐","茂","英","兰","檀","藤","枝","检","生","折","登","驹","骑","貊","虎","肥","鹿","雀","野","禽","飞","节","宜","鲜","粟","栗","豆","帛","官","布","衣","藏","宝","钞","银","门","盈","庆","喜","及","普","建","营","巨","望","希","道","载","声","漫","犁","力","贸","勤","革","改","兴","亓","睦","修","信","闽","北","守","坚","勇","汉","练","尉","士","旅","五","令","将","旗","军","行","奉","敬","恭","仪","母","堂","丘","义","礼","慈","孝","理","伦","卿","问","永","辉","位","让","尧","依","犹","介","承","市","所","苑","杞","剧","第","零","谌","招","续","达","忻","六","鄞","战","迟","候","宛","励","粘","萨","邝","覃","辜","初","楼","城","区","局","台","原","考","妫","纳","泉","老","清","德","卑","过","麦","曲","竹","百","福","言","第五","佟","爱","年","笪","谯","哈","墨","南宫","赏","伯","佴","佘","牟","商","西门","东门","左丘","梁丘","琴","后","况","亢","缑","帅","微生","羊舌","海","归","呼延","南门","东郭","百里","钦","鄢","汝","法","闫","楚","晋","谷梁","宰父","夹谷","拓跋","壤驷","乐正","漆雕","公西","巫马","端木","颛孙","子车","督","仉","司寇","亓官","鲜于","锺离","盖","逯","库","郏","逢","阴","薄","厉","稽","闾丘","公良","段干","开","光","操","瑞","眭","泥","运","摩","伟","铁","迮","付"];
     // 所有zui-rule元素
@@ -1525,19 +1590,19 @@ Zui.prototype.validate=dt=>{
                     case 'length':
                         if(r[1].indexOf('~')!=-1){
                             const t=r[1].split('~');
-                            ru.min=t[0];
-                            ru.max=t[1];
+                            ru.min=Number(t[0]);
+                            ru.max=Number(t[1]);
                         }else{
-                            ru.leng=r[1];
+                            ru.leng=Number(r[1]);
                         };
                         break;
                     case 'interval':
                         if(r[1].indexOf('~')!=-1){
                             const t=r[1].split('~');
-                            ru.minval=t[0];
-                            ru.maxval=t[1];
+                            ru.minval=Number(t[0]);
+                            ru.maxval=Number(t[1]);
                         }else{
-                            ru.interval=r[1];
+                            ru.interval=Number(r[1]);
                         };
                         break;
                     case 'title': ru.title=r[1];
@@ -1545,10 +1610,10 @@ Zui.prototype.validate=dt=>{
                     case 'point':
                         if(r[1].indexOf('~')!=-1){
                             const t=r[1].split('~');
-                            ru.minpit=t[0];
-                            ru.maxpit=t[1];
+                            ru.minpit=Number(t[0]);
+                            ru.maxpit=Number(t[1]);
                         }else{
-                            ru.point=r[1];
+                            ru.point=Number(r[1]);
                         };
                         break;
                     case 'tip': ru.tip=r[1];
@@ -1742,7 +1807,7 @@ Zui.prototype.validate=dt=>{
 			return verify.pass++;
 		},
 		idcard:(n,ru)=>{
-			const v=n.val();
+			let v=n.val();
 			// 小写x转大写
 			if(v.substring(17)=='x') v=v.substring(0,17)+'X';
 
@@ -1909,15 +1974,14 @@ Zui.prototype.validate=dt=>{
 	});
 };
 
-
 // 实例化Zui
 const zui=new Zui();
 
 
 // 轮播方法
 //     zui.imgfocus({
-//         main:'.zui-imglayer', //父标签
-//         item:'.zui-imglayer-main li', //轮播体
+//         main:'.zui-imgpopover', //父标签
+//         item:'.zui-imgpopover-main li', //轮播体
 //         index:dt.index,  //默认焦点，可选，不填为0
 //         autoplay:true, //是否自动播放，可选，不填为false
 //         palytime:3000,  //播放间隔时间，默认为3000
