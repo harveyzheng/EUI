@@ -526,7 +526,10 @@ Zui.prototype.uploadimg=el=>{
                 // 重新绑定一下这组upload
                 zui.uploadimg($p);
                 // 退出loading
-                return zui.loading($p,false);
+                setTimeout(()=>{
+                    zui.loading($p,false);
+                },100);
+                return;
             };
         };
         // 判断是添加图片还是修改
@@ -649,8 +652,14 @@ Zui.prototype.uploadimg=el=>{
         $n.find('.zui-img-see').off().click(function(){
             const list=el.find('img');
             const index=list.index($(this).parents('.zui-upload-item').find('img'));
-            // 开启图片查看
-            zui.imgpopover({list,index});
+            zui.loading($('body'),true);
+            setTimeout(()=>{
+                // 开启图片查看
+                zui.imgpopover({list,index});
+                setTimeout(()=>{
+                    zui.loading($('body'),false);
+                },100);
+            },100);
             return false; // 阻止冒泡
         });
         // 删除图片
@@ -710,27 +719,27 @@ Zui.prototype.imgpopover=dt=>{
     setTimeout(()=>{
         that.eq(0).addClass('on');
         that.eq(1).addClass('on');
-    },100);
+    },300);
 };
 
 // 图片查看、轮播
-Zui.prototype.imgfocus=da=>{
+Zui.prototype.imgfocus=dt=>{
     // 切换上限、下限和li集合;
-    const $wp=$('body').find(da.main);
+    const $wp=$('body').find(dt.main);
     if($wp.length>1) return console.error('imgfocus方法中绑定的main类不是唯一！');
-    const $ag=$wp.find(da.item);
+    const $ag=$wp.find(dt.item);
     const min=0;
     const max=$ag.length-1;
-    let index=da.index;
+    let index=dt.index;
     // 只有一张图就隐藏切换按钮
     if(!max) $wp.find('.prev,.next').hide();
     let play;
     // 自动播放
     const auto=()=>{
-        if(da.autoplay){
+        if(dt.autoplay){
             play=setInterval(()=>{
                 next();
-            },da.palytime||3000);
+            },dt.palytime||3000);
         };
     };
     auto();
@@ -741,7 +750,7 @@ Zui.prototype.imgfocus=da=>{
         auto();
         if(index==max){
             // 是否循环
-            if(da.loop!==false){
+            if(dt.loop!==false){
                 index=min-1;
             }else{
                 return;
@@ -756,7 +765,7 @@ Zui.prototype.imgfocus=da=>{
         auto();
         if(index==min){
             // 是否循环
-            if(da.loop!==false){
+            if(dt.loop!==false){
                 index=max+1;
             }else{
                 return;
@@ -1524,20 +1533,111 @@ Zui.prototype.paging=dt=>{
     });
 };
 
-// loading
+// loading加载
 Zui.prototype.loading=(n,b)=>{
-    if(b){
-        const ld='<div class="zui-loading open"><i class="zui-icon-loading"></i></div>';
-        if(n.css('position')=='static') n.css('position','relative');
-        n.append(ld);
+    let $n;
+    if(typeof n!='string'){
+        $n=n;
     }else{
-        const ld=n.find('.zui-loading');
+        $n=$(n);
+    };
+    if(b){
+        if($n.children().hasClass('zui-loading')) return; // 防止重复加载
+        const ld='<div class="zui-loading open"><i class="zui-icon-loading"></i></div>';
+        if($n.css('position')=='static') $n.css('position','relative');
+        const that=$(ld);
+        $n.append(that);
+    }else{
+        const ld=$n.find('.zui-loading');
         if(ld.length){
             ld.removeClass('open');
             setTimeout(()=>{
                 ld.remove();
-            },500);
+            },400);
         };
+    };
+    return;
+};
+
+// 进度条
+Zui.prototype.progress=dt=>{
+    const $n=$(dt.el);
+    if(!dt.max) dt.max=80;
+
+    // 随机增长加载值，1～5
+    const r_v=()=>Math.floor(Math.random()*5+1);
+    // 随机时间间隔，100～500
+    const r_t=()=>Math.floor(Math.random()*500+1);
+
+    // 进度增长
+    const rise=(bar,d)=>{
+        let p=Number(bar.find('.zui-progress-bar').attr('zui-progress'));
+        let time=r_t();
+        if(d==100){
+            time=30;
+            if(p==d) return;
+        }else{
+            if(p>d) return;
+        };
+
+        p+=r_v();
+        if(p>100) p=100;
+
+        bar.find('.zui-progress-bar').attr('zui-progress',p).css('width',p+'%');
+        if(dt.type!='head') bar.find('.zui-progress-info').html(p+'<i class="zui-progress-mark">%</i>');
+        if(p==100){
+            setTimeout(()=>{
+                bar.remove();
+            },500);
+        }else{
+            setTimeout(()=>{
+                rise(bar,d);
+            },time);
+        };
+        return;
+    };
+    // 是否创建进度条
+    if(!$n.children('.zui-progress-wrap').length){
+        let that;
+        if(dt.type!='head'){
+            const pgs=
+            '<div class="zui-progress-wrap">'+
+                '<div class="zui-progress">'+
+                    '<div class="zui-progress-bar" zui-progress="0"><span class="zui-progress-info">0<i class="zui-progress-mark">%</i></span></div>'+
+                '</div>'+
+            '</div>';
+            that=$(pgs);
+            $n.append(that);
+            // 进度条宽高和定位
+            const cc=()=>{
+                const c={};
+                c.w=$n.innerWidth();
+                c.h=$n.innerHeight();
+                c.l=$n.offset().left;
+                c.t=$n.offset().top;
+                that.css({
+                    width:c.w,
+                    height:c.h,
+                    left:c.l,
+                    top:c.t
+                });
+            };
+            cc();
+            $(window).resize(cc);
+        }else{
+            const pgs=
+            '<div class="zui-progress-wrap zui-progress-head">'+
+                '<div class="zui-progress">'+
+                    '<div class="zui-progress-bar" zui-progress="0"></span></div>'+
+                '</div>'+
+            '</div>';
+            that=$(pgs);
+            $n.append(that);
+        };
+        rise(that,dt.max);
+    }else{
+        const that=$n.children('.zui-progress-wrap');
+        rise(that,dt.max);
     };
 };
 

@@ -179,7 +179,7 @@ body::-webkit-scrollbar-track-piece {
 }
 .zui-clearfix:after,
 [zui*="clearfix"]:after {
-  content: ".";
+  content: '';
   display: block;
   height: 0;
   font-size: 0;
@@ -276,9 +276,8 @@ h6 {
 .zui-clearfix:after {
   display: block;
   height: 0;
-  font-size: 0;
   clear: both;
-  content: ".";
+  content: '';
   visibility: hidden;
 }
 .zui-btn {
@@ -1124,7 +1123,6 @@ h6 {
   margin-left: 35px;
   padding: 0 10px;
   color: #8995a1;
-  overflow-x: auto;
 }
 .zui-pre-ol li span {
   color: #434c56;
@@ -1243,7 +1241,7 @@ h6 {
   width: 100%;
   height: 100%;
   z-index: 1001;
-  transition: all 0.2s;
+  transition: all 0.4s;
 }
 .zui-imgpopover-close {
   transition: all 0.2s;
@@ -1734,7 +1732,7 @@ h6 {
   top: 0;
   width: 100%;
   height: 100%;
-  z-index: 1000;
+  z-index: 1111;
   background: rgba(255, 255, 255, 0.95);
 }
 .zui-loading i {
@@ -1751,4 +1749,83 @@ h6 {
 }
 .zui-loading.open {
   opacity: 1;
+}
+.zui-progress-wrap {
+  position: fixed;
+  z-index: 1112;
+  background: rgba(255, 255, 255, 0.95);
+}
+.zui-progress-wrap .zui-progress {
+  position: absolute;
+  top: 50%;
+  width: 90%;
+  left: 5%;
+  background: #dde3e9;
+  transform: translateY(-50%);
+  border-radius: 300px !important;
+}
+.zui-progress-wrap .zui-progress-bar {
+  position: relative;
+  min-width: 45px;
+  width: 0%;
+  height: 12px;
+  animation: reverse zui-progress 0.3s linear infinite;
+  background-color: #5be;
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.25) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0.25) 75%, transparent 75%, transparent);
+  background-size: 50px 50px;
+  border-radius: 300px !important;
+  transition: all 0.2s;
+}
+.zui-progress-wrap .zui-progress-info {
+  position: absolute;
+  right: 0;
+  bottom: 20px;
+  text-align: center;
+  width: 45px;
+  color: #fff;
+  font-size: 14px;
+  line-height: 14px;
+  padding: 5px;
+  border-radius: 4px;
+  background: #6cf;
+  white-space: nowrap;
+}
+.zui-progress-wrap .zui-progress-info:after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #6cf;
+}
+.zui-progress-wrap .zui-progress-mark {
+  display: inline-block;
+  font-style: normal;
+  transform: scale(0.8);
+}
+.zui-progress-head {
+  background: #fff;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+}
+.zui-progress-head .zui-progress {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateY(0%);
+}
+.zui-progress-head .zui-progress-bar {
+  height: 3px;
+}
+@keyframes zui-progress {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
 }

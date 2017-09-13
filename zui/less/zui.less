@@ -14,6 +14,8 @@ qq：269144551
 // 提示窗1102；
 // message组1200；
 // 日期插件1110；
+// loading 1111;
+// 进度条 1112;
 
 // 样式重置
 *{ box-sizing: border-box; padding: 0; margin: 0; font-family: 'Arial','Microsoft YaHei';}
@@ -108,7 +110,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-txt-center, [zui*="txt-center"]{ text-align: center !important;}
 .zui-txt-right, [zui*="txt-right"]{ text-align: right !important;}
 .zui-clearfix, [zui*="clearfix"]{ display:block; clear:both;}
-.zui-clearfix:after, [zui*="clearfix"]:after{ content:"."; display:block; height:0; font-size:0; clear:both; visibility:hidden;}
+.zui-clearfix:after, [zui*="clearfix"]:after{ content:''; display:block; height:0; font-size:0; clear:both; visibility:hidden;}
 
 // 动画延时
 .zui-anim-no, [zui*="anim-no"]{ transition: all 0s;}
@@ -167,9 +169,8 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-clearfix:after{
     display:block;
     height:0;
-    font-size:0;
     clear:both;
-    content:".";
+    content: '';
     visibility:hidden;
 }
 
@@ -1002,7 +1003,6 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
             margin-left: 35px;
             padding: 0 10px;
             color: @gray2;
-            overflow-x: auto;
             span{
                 color: @gray1;
                 font-family: Consolas,'Liberation Mono',Menlo,Courier,monospace;
@@ -1133,7 +1133,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     width: 100%;
     height: 100%;
     z-index: 1001;
-    .zui-anim-fast;
+    .zui-anim-normal;
     &-close{
         .zui-anim-fast;
         position: fixed;
@@ -1613,7 +1613,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-validate-succee.zui-validate-right:after{
     border-right-color: @done;
 }
-
+// loading
 .zui-loading{
     .zui-anim-normal;
     position: absolute;
@@ -1622,7 +1622,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     top: 0;
     width: 100%;
     height: 100%;
-    z-index: 1000;
+    z-index: 1111;
     background: rgba(255, 255, 255, 0.95);
     i{
         position: absolute !important;
@@ -1640,3 +1640,77 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-loading.open{
     opacity: 1;
 }
+// 进度条
+.zui-progress-wrap{
+    position: fixed;
+    z-index: 1112;
+    background: rgba(255, 255, 255, 0.95);
+    .zui-progress{
+        position: absolute;
+        top: 50%;
+        width: 90%;
+        left: 5%;
+        background: @gray4;
+        transform: translateY(-50%);
+        .zui-radius;
+        &-bar{
+            position: relative;
+            min-width: 45px;
+            width: 0%;
+            height: 12px;
+            animation: reverse zui-progress 0.3s linear infinite;
+            background-color: @primary-dark;
+            background-image: linear-gradient(45deg,rgba(255,255,255,0.25) 25%,transparent 25%,transparent 50%,rgba(255,255,255,0.25) 50%,rgba(255,255,255,0.25) 75%,transparent 75%,transparent);
+            background-size: 50px 50px;
+            .zui-radius;
+            .zui-anim-fast;
+        }
+        &-info{
+            position: absolute;
+            right: 0;
+            bottom: 20px;
+            text-align: center;
+            width: 45px;
+            color: @white;
+            font-size: 14px;
+            line-height: 14px;
+            padding: 5px;
+            border-radius: 4px;
+            background: @primary;
+            white-space: nowrap;
+        }
+        &-info:after{
+            content:'';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: @primary;
+        }
+        &-mark{
+            display: inline-block;
+            font-style: normal;
+            transform: scale(0.8);
+        }
+    }
+}
+.zui-progress-head{
+    background: @white;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    .zui-progress{
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform: translateY(0%);
+        &-bar{
+            height: 3px;
+        }
+    }
+}
+@keyframes zui-progress{from{background-position:40px 0}to{background-position:0 0}}
+    
