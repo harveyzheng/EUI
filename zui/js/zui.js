@@ -1,6 +1,7 @@
 /*
 2017-08-11
 name：zui框架-核心js
+edition：1.0.0
 by：harvey
 qq：269144551
 官网：http://www.zjw7.com/
@@ -8,7 +9,7 @@ qq：269144551
 
 // zui 采用es6语法
 "use strict";
-console.info('%c官方QQ交流群：523772110 查看开发文档请前往 http://www.zjw7.com', 'color:#5be');
+console.info('%cZUI开发文档 http://www.zjw7.com/doc.html', 'color:#5be');
 
 // Zui核心构造函数
 const Zui=function(){
@@ -319,7 +320,7 @@ Zui.prototype.select=el=>{
         const i_ab=n.attributes;
         let i_ar='';
         for(let j=0;j<i_ab.length;j++){
-            if(i_ab[j].name!='disabled') i_ar+=' '+i_ab[j].name+'="'+i_ab[j].value+'"';
+            if(i_ab[j].name!='disabled' && i_ab[j].name!='value') i_ar+=' '+i_ab[j].name+'="'+i_ab[j].value+'"';
         };
         let dom;
         const item=$n.children();
@@ -839,7 +840,7 @@ Zui.prototype.optiondate=el=>{
                     const d=new Date();
                     // 计算昨天
                     const y=d=>{
-    
+                        return d.setTime(d.getTime()-24*60*60*1000);
                     };
                     c.lower=new Date(y(d));
                 }else if(c.lower.indexOf('.')>=0||c.lower.indexOf('#')>=0){
@@ -851,6 +852,7 @@ Zui.prototype.optiondate=el=>{
                     c.lower=new Date(c.lower);
                 };
             };
+            
             cd($n);
             // 点击外部隐藏
             $(document).mouseup(e=>{
@@ -868,7 +870,6 @@ Zui.prototype.optiondate=el=>{
                 that.remove();
             });
         });
-    
         // 输出现在时间
         let vto=zt=>{
             let tod=new Date();
@@ -890,7 +891,6 @@ Zui.prototype.optiondate=el=>{
             ttt=v;
             $n.val(v);
         };
-    
         // 初始化
         let today,e,f,q,that;
         const cd=n=>{
@@ -945,11 +945,9 @@ Zui.prototype.optiondate=el=>{
             // 绑定操作
             mp();
         };
-    
         // 最终输出的时间
         let ttt='';
         let hhh=' 00:00:00';
-    
         // 时分秒
         const hns=d=>{
             if(d!='true') return;
@@ -1320,6 +1318,7 @@ Zui.prototype.optiondate=el=>{
             });
         };
     };
+    // input处理，添加icon以及绑定点击事件
     el.each((i,n)=>{
         // 获取自定义属性
         const o_ab=n.attributes;
@@ -1360,6 +1359,9 @@ Zui.prototype.nav=el=>{
             width:$n.find('.active').innerWidth(),
             left:$n.find('.active').offset().left-uw
         });
+        setTimeout(()=>{
+            $s.attr('zui','anim:normal');
+        },100);
         // hover事件和click更改active
         let sto;
         $li.off().hover(function(){
@@ -1566,16 +1568,16 @@ Zui.prototype.progress=dt=>{
 
     // 随机增长加载值，1～5
     const r_v=()=>Math.floor(Math.random()*5+1);
-    // 随机时间间隔，100～500
-    const r_t=()=>Math.floor(Math.random()*500+1);
+    // 随机时间间隔，100～300
+    const r_t=()=>Math.floor(Math.random()*300+1);
 
     // 进度增长
     const rise=(bar,d)=>{
         let p=Number(bar.find('.zui-progress-bar').attr('zui-progress'));
         let time=r_t();
         if(d==100){
-            time=30;
             if(p==d) return;
+            p=100;
         }else{
             if(p>d) return;
         };
@@ -1588,7 +1590,7 @@ Zui.prototype.progress=dt=>{
         if(p==100){
             setTimeout(()=>{
                 bar.remove();
-            },500);
+            },300);
         }else{
             setTimeout(()=>{
                 rise(bar,d);

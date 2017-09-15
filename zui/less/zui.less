@@ -113,10 +113,10 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-clearfix:after, [zui*="clearfix"]:after{ content:''; display:block; height:0; font-size:0; clear:both; visibility:hidden;}
 
 // 动画延时
-.zui-anim-no, [zui*="anim-no"]{ transition: all 0s;}
-.zui-anim-fast, [zui*="anim-fast"]{ transition: all 0.2s;}
-.zui-anim-normal, [zui*="anim-normal"]{ transition: all 0.4s;}
-.zui-anim-slow, [zui*="anim-slow"]{ transition: all 0.8s;}
+.zui-anim-no, [zui*="anim:no"]{ transition: all 0s;}
+.zui-anim-fast, [zui*="anim:fast"]{ transition: all 0.2s;}
+.zui-anim-normal, [zui*="anim:normal"]{ transition: all 0.4s;}
+.zui-anim-slow, [zui*="anim:slow"]{ transition: all 0.8s;}
 
 // 无边框
 .zui-nobor, [zui*="nobor"]{ border: none !important;}
@@ -1453,7 +1453,6 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     }
     &-sliding{
         position: absolute;
-        .zui-anim-normal;
         bottom: 0;
         left: 0;
         width: 80px;

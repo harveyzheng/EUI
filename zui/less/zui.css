@@ -187,19 +187,19 @@ body::-webkit-scrollbar-track-piece {
   visibility: hidden;
 }
 .zui-anim-no,
-[zui*="anim-no"] {
+[zui*="anim:no"] {
   transition: all 0s;
 }
 .zui-anim-fast,
-[zui*="anim-fast"] {
+[zui*="anim:fast"] {
   transition: all 0.2s;
 }
 .zui-anim-normal,
-[zui*="anim-normal"] {
+[zui*="anim:normal"] {
   transition: all 0.4s;
 }
 .zui-anim-slow,
-[zui*="anim-slow"] {
+[zui*="anim:slow"] {
   transition: all 0.8s;
 }
 .zui-nobor,
@@ -1569,7 +1569,6 @@ h6 {
 }
 .zui-nav-sliding {
   position: absolute;
-  transition: all 0.4s;
   bottom: 0;
   left: 0;
   width: 80px;
