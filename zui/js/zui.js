@@ -54,6 +54,19 @@ const Zui=function(){
                         zui.marquee($('.zui-switch'));
                         zui.select($('.zui-select'));
                         break;
+                    case '.zui-imgview':
+                        $('.zui-imgview-img').off('click').on('click',function(){
+                            zui.loading($('body'),true,'rgba(40,48,56,0.7)','#fff');
+                            const list=$(this).parents('.zui-imgview').find('img');
+                            const index=$(this).parent().index();
+                            zui.imgpopover({
+                                list:list,
+                                index:index
+                            });
+                            setTimeout(()=>{
+                                zui.loading($('body'),false);
+                            },300);
+                        });
                     default:
                         return console.error('%c初始化失败，没找到'+c, 'color:#f33');
                 };
@@ -77,6 +90,18 @@ const Zui=function(){
             });
             zui.precode($('.zui-pre'));
             zui.nav($('.zui-nav'));
+            $('.zui-imgview-img').off('click').on('click',function(){
+                zui.loading($('body'),true,'rgba(40,48,56,0.7)','#fff');
+                const list=$(this).parents('.zui-imgview').find('img');
+                const index=$(this).parent().index();
+                zui.imgpopover({
+                    list:list,
+                    index:index
+                });
+                setTimeout(()=>{
+                    zui.loading($('body'),false);
+                },300);
+            });
             console.info('%c搞定，全局完成初始化', 'color:#5b8');
         };
     };
@@ -84,30 +109,29 @@ const Zui=function(){
 };
 
 // 确认窗、询问窗
-Zui.prototype.popover=data=>{
-    // 先删除已存在窗口
-    $('.zui-popover').remove();
+Zui.prototype.popover=dt=>{
     // 获取类别
-    const type=data.type||'alert';
-    const title=data.title||'通知';
-    const style=data.style||'primary';
-    const okaytext=data.okaytext||'确定';
-    const canceltext=data.canceltext||'取消';
-    let dom='<div class="zui-popover zui-popover-shade"></div>'+
-            '<div class="zui-popover zui-popover-main">'+
-                '<div class="zui-popover-main-title" zui="'+style+'">'+title+'<i class="zui-popover-main-close zui-icon-guanbi"></i></div>'+
-                '<div class="zui-popover-main-info">'+data.info;
-                if(type=='prompt'){
-                    dom+='<input class="zui-ipt zui-popover-ipt" zui="sm" placeholder="请输入...">'+'</div>';
-                    // prompt 按钮组
-                    dom+='<div class="zui-popover-btn" zui="txt-right"><button zui="sm,'+style+'" class="zui-btn zui-popover-okay">'+okaytext+'</button><button zui="sm" class="zui-btn zui-popover-cancel">'+canceltext+'</button></div>';
-                }else if(type=='confirm'){
-                    // confirm 按钮组
-                    dom+='</div><div class="zui-popover-btn" zui="txt-right"><button zui="sm,'+style+'" class="zui-btn zui-popover-okay">'+okaytext+'</button><button zui="sm" class="zui-btn zui-popover-cancel">'+canceltext+'</button></div>';
-                }else{
-                    // alert 按钮组
-                    dom+='</div><div class="zui-popover-btn" zui="txt-right"><button zui="sm,'+style+'" class="zui-btn zui-popover-okay">'+okaytext+'<button></div>';
-                };
+    const type=dt.type||'alert';
+    const title=dt.title||'通知';
+    const style=dt.style||'primary';
+    const okaytext=dt.okaytext||'确定';
+    const canceltext=dt.canceltext||'取消';
+    let dom='';
+    if(!$('.zui-popover-shade').length) dom='<div class="zui-popover zui-popover-shade"></div>';
+    dom+='<div class="zui-popover zui-popover-main">'+
+            '<div class="zui-popover-main-title" zui="'+style+'">'+title+'<i class="zui-popover-main-close zui-icon-guanbi"></i></div>'+
+            '<div class="zui-popover-main-info">'+dt.info;
+            if(type=='prompt'){
+                dom+='<input class="zui-ipt zui-popover-ipt" zui="sm" placeholder="请输入...">'+'</div>';
+                // prompt 按钮组
+                dom+='<div class="zui-popover-btn" zui="text-right"><button zui="sm,'+style+'" class="zui-btn zui-popover-okay">'+okaytext+'</button><button zui="sm" class="zui-btn zui-popover-cancel">'+canceltext+'</button></div>';
+            }else if(type=='confirm'){
+                // confirm 按钮组
+                dom+='</div><div class="zui-popover-btn" zui="text-right"><button zui="sm,'+style+'" class="zui-btn zui-popover-okay">'+okaytext+'</button><button zui="sm" class="zui-btn zui-popover-cancel">'+canceltext+'</button></div>';
+            }else{
+                // alert 按钮组
+                dom+='</div><div class="zui-popover-btn" zui="text-right"><button zui="sm,'+style+'" class="zui-btn zui-popover-okay">'+okaytext+'<button></div>';
+            };
     dom+='</div>';
     // 插入dom
     const that=$(dom);
@@ -116,8 +140,8 @@ Zui.prototype.popover=data=>{
     const okay=that.find('.zui-popover-okay');
     const cancel=that.find('.zui-popover-cancel');
     // 回调
-    if(data.okaycall) okay.on('click',()=>data.okaycall(data.okayparam,that.find('.zui-popover-ipt').val()));
-    if(data.cancelcall) cancel.on('click',()=>data.cancelcall(data.cancelparam,that.find('.zui-popover-ipt').val()));
+    if(dt.okaycall) okay.on('click',()=>dt.okaycall(dt.okayparam,that.find('.zui-popover-ipt').val()));
+    if(dt.cancelcall) cancel.on('click',()=>dt.cancelcall(dt.cancelparam,that.find('.zui-popover-ipt').val()));
     // 进入动画
     setTimeout(()=>{
         that.eq(0).addClass('on');
@@ -152,20 +176,20 @@ Zui.prototype.prompts=info=>{
 };
 
 // message消息提示
-Zui.prototype.message=data=>{
+Zui.prototype.message=dt=>{
     // 生成dom
-    const tag=data.tag||'消息';
-    const style=data.style||'primary';
-    const title=data.title||'通知消息';
-    const url=data.url||'#';
-    const target=data.target||'self';
+    const tag=dt.tag||'消息';
+    const style=dt.style||'primary';
+    const title=dt.title||'通知消息';
+    const url=dt.url||'#';
+    const target=dt.target||'self';
     let dom='<div class="zui-tags-message">'+
                 '<a href="'+url+'" target="_'+target+'">'+
                     '<span class="zui-tags-message-type" zui="'+style+'"><em>'+tag+'</em></span>'+
                     '<span class="zui-tags-message-title">'+title+'</span>'+
-                    '<span class="zui-tags-message-info">'+data.info+'</span>'+
+                    '<span class="zui-tags-message-info">'+dt.info+'</span>'+
                 '</a>';
-                if(data.hide==false) dom+='<a class="zui-tags-message-close">&times;</a>';
+                if(dt.hide==false) dom+='<a class="zui-tags-message-close">&times;</a>';
     dom+='</div>';
     const that=$(dom);
     $('body').append(that);
@@ -183,7 +207,7 @@ Zui.prototype.message=data=>{
 
     // 动画效果及延时关闭
     setTimeout(()=>that.addClass('on'),100);
-    if(data.hide!=false){
+    if(dt.hide!=false){
         // 自动关闭
         let st=false; //用于判断是否hover
         let tm=false; //用于判断是否超出删除时常
@@ -234,7 +258,7 @@ Zui.prototype.message=data=>{
 Zui.prototype.marquee=el=>{
     el.each((i,n)=>{
         const $n=$(n);
-        if($n.parents('.zui-radio-label').length||$n.parents('.zui-checkbox-label').length||$n.parents('.zui-switch-label').length) return; //防止重复替换
+        if($n.parents('.zui-radio-label').length||$n.parents('.zui-checkbox-label').length||$n.parents('.zui-switch-label').length) return; //防止重复绘制结构
         let dom;
         const tit=$n.attr('title')||'无标题';
         const o_ab=n.attributes;
@@ -315,7 +339,7 @@ Zui.prototype.marquee=el=>{
 Zui.prototype.select=el=>{
     el.each((i,n)=>{
         const $n=$(n);
-        if($n.parents('.zui-select-wrap').length) return; //防止重复替换
+        if($n.parents('.zui-select-wrap').length) return; //防止重复绘制结构
         //获取select自定义属性
         const i_ab=n.attributes;
         let i_ar='';
@@ -358,16 +382,26 @@ Zui.prototype.select=el=>{
                 dd+
             '</dl>'+
         '</div> ';
-
         // 替换select
         let that=$(dom);
         $n.replaceWith(that);
 
         // 事件绑定
         that.on('click',function(){
-            if($(this).find('.zui-select').attr('disabled')) return;
+            const select=$(this).find('.zui-select');
+            if(select.attr('disabled')) return;
             $('.zui-select-wrap').not(this).removeClass('zui-select-open');
             $(this).toggleClass('zui-select-open');
+            // 自动调整位置
+            if(select.attr('zui') && select.attr('zui').indexOf('auto')>=0){
+                // 计算出现位置
+                zui.place({
+                    rel:select,
+                    abs:that.find('.zui-option-list'),
+                    interval:5,
+                    type:'select'
+                });
+            };
         });
         that.find('dd').on('click',function(){
             if($(this).attr('disabled')) return false;
@@ -386,28 +420,38 @@ Zui.prototype.select=el=>{
     return false;
 };
 
-// tab切换
-Zui.prototype.tabcut=data=>{
+// tab切换、手风琴
+Zui.prototype.tabcut=dt=>{
     // 初始化
-    const w=$(data.wrap);
+    const w=$(dt.wrap);
     w.each(function(){
         // 初始
-        const ime=$(this).find(data.menu).children();
-        const ima=$(this).find(data.main).children();
-        ime.eq(0).addClass('active');
-        ima.eq(0).addClass('active');
-        
+        let mu,ma;
+        if(dt.fold===true){
+            mu=$(this).find(dt.menu);
+            ma=$(this).find(dt.main);
+        }else{
+            mu=$(this).find(dt.menu).children();
+            ma=$(this).find(dt.main).children();
+        };
+        mu.eq(0).addClass('active');
+        ma.eq(0).addClass('active');
         // 事件类型，默认click，可设置值 hover
         let tar='click';
-        if(data.target=='hover')tar='mouseover';
+        if(dt.target==='hover') tar='mouseover';
 
         // 绑定事件
-        ime.off().on(tar,function(){
-            const index=$(this).index();
-            ime.removeClass('active');
+        mu.off().on(tar,function(){
+            let index;
+            if(dt.fold===true){
+                index=$(this).parent('.zui-fold-item').index();
+            }else{
+                index=$(this).index();
+            };
+            mu.removeClass('active');
             $(this).addClass('active');
-            ima.removeClass('active');
-            ima.eq(index).addClass('active');
+            ma.removeClass('active');
+            ma.eq(index).addClass('active');
         });
     });
 };
@@ -416,7 +460,7 @@ Zui.prototype.tabcut=data=>{
 Zui.prototype.precode=el=>{
     el.each((i,n)=>{
         const $n=$(n);
-        if($n.find('.zui-pre-title').length) return; //防止重复装载
+        if($n.find('.zui-pre-title').length) return; //防止重复绘制结构
         // 初始化内容：替换<>，分割成数组
         const str=$n.html().replace(/</g, "&lt;").replace(/>/g, "&gt;").split("\n");
         let dom='<ol class="zui-pre-ol">';
@@ -653,13 +697,13 @@ Zui.prototype.uploadimg=el=>{
         $n.find('.zui-img-see').off().click(function(){
             const list=el.find('img');
             const index=list.index($(this).parents('.zui-upload-item').find('img'));
-            zui.loading($('body'),true);
+            zui.loading($('body'),true,'rgba(40,48,56,0.7)','#fff');
             setTimeout(()=>{
                 // 开启图片查看
                 zui.imgpopover({list,index});
                 setTimeout(()=>{
                     zui.loading($('body'),false);
-                },100);
+                },300);
             },100);
             return false; // 阻止冒泡
         });
@@ -683,6 +727,7 @@ Zui.prototype.uploadimg=el=>{
 
 // 图片列表弹出层、调用轮播
 Zui.prototype.imgpopover=dt=>{
+    if(dt.index==undefined) dt.index=0;
     let li='';
     // 循环出图片
     dt.list.each((i,n)=>{
@@ -731,7 +776,7 @@ Zui.prototype.imgfocus=dt=>{
     const $ag=$wp.find(dt.item);
     const min=0;
     const max=$ag.length-1;
-    let index=dt.index;
+    let index=dt.index||0;
     // 只有一张图就隐藏切换按钮
     if(!max) $wp.find('.prev,.next').hide();
     let play;
@@ -744,11 +789,21 @@ Zui.prototype.imgfocus=dt=>{
         };
     };
     auto();
-
+    // 生成下标
+    if(dt.hd===true){
+        let li='';
+        for(let i=0;i<=max;i++){
+            let on='';
+            if(i==index) on='active';
+            li+='<li class="'+on+'"></li>';
+        };
+        $wp.find('.hd').html(li);
+    };
+    const $hd=$wp.find('.hd').children();
+    // 先点亮一张
+    $ag.eq(index).addClass('active');
     // 切换
     const next=()=>{
-        clearInterval(play);
-        auto();
         if(index==max){
             // 是否循环
             if(dt.loop!==false){
@@ -758,12 +813,9 @@ Zui.prototype.imgfocus=dt=>{
             };
         };
         index++;
-        $ag.removeClass('active');
-        return $ag.eq(index).addClass('active');;
+        return targ(index);
     };
     const prev=()=>{
-        clearInterval(play);
-        auto();
         if(index==min){
             // 是否循环
             if(dt.loop!==false){
@@ -773,9 +825,23 @@ Zui.prototype.imgfocus=dt=>{
             };
         };
         index--;
-        $ag.removeClass('active');
-        return $ag.eq(index).addClass('active');;
+        return targ(index);
     };
+    const targ=i=>{
+        clearInterval(play);
+        auto();
+        if(dt.hd===true){
+            $hd.removeClass('active');
+            $hd.eq(i).addClass('active');
+        };
+        $ag.removeClass('active');
+        return $ag.eq(i).addClass('active');
+    };
+    // 下标切换
+    $hd.click(function(){
+        index=$(this).index();
+        targ(index)
+    });
     // 切换事件
     $wp.find('.prev,.next').click(function(){
         if($(this).hasClass('prev')){
@@ -924,21 +990,17 @@ Zui.prototype.optiondate=el=>{
             k += "  </div>";
             k += "</div>";
             that=$(k);
-            
             $n.parent('.zui-date-wrap').append(that);
     
-            // 计算出现位置，是否超出可视范围
-            const t=()=>{
-                return n.innerHeight()+5;
-            };
-    
-            // 出现位置
-            that.css({
-                'top': t(),
-                'left':0
-            });
             // 加载时分秒选择功能
             hns(c.times);
+
+            // 计算出现位置
+            zui.place({
+                rel:n,
+                abs:that,
+                interval:5
+            });
     
             // 绑定选择日期
             bindDay();
@@ -959,10 +1021,10 @@ Zui.prototype.optiondate=el=>{
             };
     
             let t='';
-            t+='<div class="zui-calendar-times" zui="txt-left">';
+            t+='<div class="zui-calendar-times" zui="text-left">';
             t+=    '<div class="zui-calendar-times-item zui-calendar-times-show">';
             t+=        '<span class="zui-calendar-times-title">时间</span>';
-            t+=        '<span class="zui-calendar-times-con" zui="txt-right"><i id="zui-calendar-times-show-hh">'+sp[0]+'</i>:<i id="zui-calendar-times-show-nn">'+sp[1]+'</i>:<i id="zui-calendar-times-show-ss">'+sp[2]+'</i></span>';            
+            t+=        '<span class="zui-calendar-times-con" zui="text-right"><i id="zui-calendar-times-show-hh">'+sp[0]+'</i>:<i id="zui-calendar-times-show-nn">'+sp[1]+'</i>:<i id="zui-calendar-times-show-ss">'+sp[2]+'</i></span>';            
             t+=    '</div>';
             t+=    '<div class="zui-calendar-times-item">';
             t+=        '<span class="zui-calendar-times-title">小时</span>';
@@ -1139,12 +1201,12 @@ Zui.prototype.optiondate=el=>{
                         g += "<td><span class='" + l + "'>" + j + "</span></td>";
                     }else if(j <= 0) {
                         if(newDate.getFullYear() == e && newDate.getMonth() - 1 == f && h == q) l = "current";
-                        g += "<td><span class='" + l + "' " + t + ">" + h + "</span></td>";
+                        g += "<td><span class='" + l + "'>" + h + "</span></td>";
                         h++;
                     }else{
                         if(j > o) {
                             if(newDate.getFullYear() == e && newDate.getMonth() + 1 == f && d == q) l = "current";
-                            g += "<td><span class='" + l + "' " + t + ">" + d + "</span></td>";
+                            g += "<td><span class='" + l + "'>" + d + "</span></td>";
                             d++;
                         };
                     }else if(0 < j && j <= o) {
@@ -1154,15 +1216,15 @@ Zui.prototype.optiondate=el=>{
                     }else if(j <= 0) {
                         if(newDate.getFullYear() == e && newDate.getMonth() - 1 == f && h == q) l = "current";
                         if(newDate.getFullYear() == i.getFullYear() && newDate.getMonth() - 1 == i.getMonth() && h == i.getDate()) p = "select";
-                        g += "<td><a class='prevD " + p + " " + l + "' " + t + ">" + h + "</a></td>";
+                        g += "<td><a class='prevD " + p + " " + l + "'>" + h + "</a></td>";
                         h++;
                     }else if(j > o) {
                         if(newDate.getFullYear() == e && newDate.getMonth() + 1 == f && d == q) l = "current";
                         if(newDate.getFullYear() == i.getFullYear() && newDate.getMonth() + 1 == i.getMonth() && d == i.getDate()) p = "select";
-                        g += "<td><a class='nextD " + p + " " + l + "' " + t + ">" + d + "</a></td>";
+                        g += "<td><a class='nextD " + p + " " + l + "'>" + d + "</a></td>";
                         d++;
                     };
-                    g = g.replace("class=' '", "");
+                    g = g.replace("class=' '","");
                 };
                 g += "</tr>";
             };
@@ -1232,7 +1294,7 @@ Zui.prototype.optiondate=el=>{
             const enabled=that.find(".zui-calendar-enabled");
             if(s=='open'){
                 reserve.html(d);
-                reserve.css('top',36);
+                reserve.css('top',35);
             }else if(s=='close'){
                 reserve.empty();
                 reserve.css('top','-100%');
@@ -1320,13 +1382,14 @@ Zui.prototype.optiondate=el=>{
     };
     // input处理，添加icon以及绑定点击事件
     el.each((i,n)=>{
+        const $n=$(n);
+        if($n.parent('.zui-date-wrap').length) return; // 防止重复绘制结构
         // 获取自定义属性
         const o_ab=n.attributes;
         let o_ar='';
         for(let j=0;j<o_ab.length;j++){
             o_ar+=' '+o_ab[j].name+'="'+o_ab[j].value+'"';
         };
-        const $n=$(n);
         const dom=
             '<div class="zui-date-wrap">'+
                 '<input '+o_ar+' readonly>'+
@@ -1338,6 +1401,49 @@ Zui.prototype.optiondate=el=>{
         // 绑定插件
         calendar(that.find('.zui-date'));
     });
+};
+
+// 调整上下位置，用于日历控件和下拉框
+Zui.prototype.place=dt=>{
+    // 获取浏览器、滚动条高度
+    const win_h=$(window).height();
+    const scr_t=$(document).scrollTop();
+
+    // 获取rel高
+    const rel_h=dt.rel.outerHeight();
+    // 获取abs高
+    const abs_h=dt.abs.outerHeight();
+    // 获取rel位置
+    const rep=dt.rel.offset().top;
+
+    // 上下可显示空间
+    const usable={
+        up:rep-scr_t,
+        down:scr_t+win_h-rep-rel_h
+    };
+    // 调整间距
+    if(!dt.interval) dt.interval=0;
+    // 最终top值
+    let tp=0;
+    // 判断方向
+    const h=abs_h+dt.interval;
+    if(usable.down<h && usable.up>h){
+        // 上方
+        if(dt.type=='select'){
+            dt.rel.attr('zui',dt.rel.attr('zui')+' top');
+        }else{
+            tp=-(abs_h+dt.interval);
+        };
+    }else{
+        // 下方
+        if(dt.type=='select'){
+            let z=dt.rel.attr('zui');
+            dt.rel.attr('zui',z.replace('top',''));
+        }else{
+            tp=rel_h+dt.interval;
+        };
+    };
+    if(dt.type!='select') return dt.abs.css('top',tp);
 };
 
 // nav导航
@@ -1536,7 +1642,7 @@ Zui.prototype.paging=dt=>{
 };
 
 // loading加载
-Zui.prototype.loading=(n,b)=>{
+Zui.prototype.loading=(n,b,bg,cr)=>{
     let $n;
     if(typeof n!='string'){
         $n=n;
@@ -1544,8 +1650,8 @@ Zui.prototype.loading=(n,b)=>{
         $n=$(n);
     };
     if(b){
-        if($n.children().hasClass('zui-loading')) return; // 防止重复加载
-        const ld='<div class="zui-loading open"><i class="zui-icon-loading"></i></div>';
+        if($n.children().hasClass('zui-loading')) return; // 防止重复加载loading
+        const ld='<div class="zui-loading open" style="background:'+bg+';"><i class="zui-icon-loading" style="color:'+cr+'!important"></i></div>';
         if($n.css('position')=='static') $n.css('position','relative');
         const that=$(ld);
         $n.append(that);
@@ -2075,14 +2181,3 @@ Zui.prototype.validate=dt=>{
 
 // 实例化Zui
 const zui=new Zui();
-
-
-// 轮播方法
-//     zui.imgfocus({
-//         main:'.zui-imgpopover', //父标签
-//         item:'.zui-imgpopover-main li', //轮播体
-//         index:dt.index,  //默认焦点，可选，不填为0
-//         autoplay:true, //是否自动播放，可选，不填为false
-//         palytime:3000,  //播放间隔时间，默认为3000
-//         loop:true  //是否循环，可选，不填为true
-//     });

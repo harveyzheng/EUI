@@ -104,13 +104,13 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 @wrap:1140px;
 
 // 基本属性类
-.zui-pull-left,[zui*="pull-left"]{ float: left !important;}
-.zui-pull-right, [zui*="pull-right"]{ float: right !important;}
-.zui-txt-left, [zui*="txt-left"]{ text-align: left !important;}
-.zui-txt-center, [zui*="txt-center"]{ text-align: center !important;}
-.zui-txt-right, [zui*="txt-right"]{ text-align: right !important;}
-.zui-clearfix, [zui*="clearfix"]{ display:block; clear:both;}
-.zui-clearfix:after, [zui*="clearfix"]:after{ content:''; display:block; height:0; font-size:0; clear:both; visibility:hidden;}
+[zui*="pull-left"]{ float: left !important;}
+[zui*="pull-right"]{ float: right !important;}
+[zui*="text-left"]{ text-align: left !important;}
+[zui*="text-center"]{ text-align: center !important;}
+[zui*="text-right"]{ text-align: right !important;}
+[zui*="clearfix"]{ display:block; clear:both;}
+[zui*="clearfix"]:after{ content:''; display:block; height:0; font-size:0; clear:both; visibility:hidden;}
 
 // 动画延时
 .zui-anim-no, [zui*="anim:no"]{ transition: all 0s;}
@@ -128,12 +128,9 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-shadow, [zui*="shadow"]{ box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);}
 
 // h1-h6
-.zui-h1, h1{ font-size: 40px; line-height: 50px;}
-.zui-h2, h2{ font-size: 36px; line-height: 44px;}
-.zui-h3, h3{ font-size: 32px; line-height: 38px;}
-.zui-h4, h4{ font-size: 28px; line-height: 32px;}
-.zui-h5, h5{ font-size: 24px; line-height: 26px;}
-.zui-h6, h6{ font-size: 20px; line-height: 20px;}
+.zui-h1, h1, .zui-h2, h2{ font-size: 20px; line-height: 24px;}
+.zui-h3, h3, .zui-h4, h4{ font-size: 18px; line-height: 22px;}
+.zui-h5, h5, .zui-h6, h6{ font-size: 16px; line-height: 20px;}
 
 // 分割线
 .zui-parting{
@@ -165,20 +162,11 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     line-height: 44px;
 }
 
-// clear
-.zui-clearfix:after{
-    display:block;
-    height:0;
-    clear:both;
-    content: '';
-    visibility:hidden;
-}
-
 // button样式、input样式、背景样式
 // 默认按钮
 .zui-btn{
     display: inline-block; 
-    .zui-txt-center; 
+    text-align: center; 
     white-space: nowrap; 
     background: @white; 
     color: @black; 
@@ -1015,10 +1003,10 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 }
 
 // 图片上传
-.zui-upload{
-    &-item{
+.zui-upload, .zui-imgview{
+    .zui-upload-item, .zui-imgview-item{
         .zui-border;
-        .zui-txt-center;
+        text-align: center;
         display: inline-block;
         position: relative;
         width: 180px;
@@ -1026,11 +1014,8 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         padding: 5px;
         margin: 5px;
         vertical-align: top;
-        &-main{
-            position: relative;
-            height: 100%;
+        .zui-upload-item-main{
             color: @gray2;
-            overflow: hidden;
             input[type="file"]{
                 display: none;
             }
@@ -1057,12 +1042,17 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
                 font-size: 50px;
             }
         }
-        .zui-upload-img{
+        .zui-upload-img, .zui-imgview-img{
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+            cursor: pointer;
             label, img, span, i{
                 position: absolute;
                 width: 100%;
                 left: 0;
                 .zui-anim-fast; 
+                cursor: pointer;
             }
             img{
                 z-index: 1;
@@ -1072,8 +1062,6 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
             label{
                 z-index: 2;
                 height: 100%;
-                
-                cursor: pointer;
                 i{
                     color: @white;
                     font-size: 0;
@@ -1092,14 +1080,15 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
                 }
             }
         }
-        .zui-upload-img:hover{
+        .zui-upload-img:hover, .zui-imgview-img:hover{
             label{
                 background: rgba(0, 0, 0, 0.6);
                 i{
-                    font-size: 40px;
+                    font-size: 30px;
+                    font-weight: bold;
                 }
                 i:hover{
-                    font-size: 50px;
+                    font-size: 38px;
                 }
                 span{
                     height: 30px;
@@ -1119,8 +1108,37 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
             cursor: pointer;
             .zui-radius;
         }
+        .zui-imgview-img:after,.zui-imgview-img:before{
+            position: absolute;
+            .zui-anim-fast;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9;
+            color: @white;
+        }
+        .zui-imgview-img:after{
+            font-family:"iconfont" !important;
+            content: "\e62b";
+            font-size: 0;
+            line-height: 108px;
+            font-style: normal;
+            font-weight: normal;
+        }
+        .zui-imgview-img:hover:after{
+            font-size: 38px;
+        }
+        .zui-imgview-img:before{
+            content: '';
+            background: rgba(0, 0, 0, 0.6);
+            opacity: 0;
+        }
+        .zui-imgview-img:hover:before{
+            opacity: 1;
+        }
     }
-    &-item:hover{
+    .zui-upload-item:hover{
         .zui-upload-delete{display: block;};
     }
 }
@@ -1507,7 +1525,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     &-check + .zui-icon-item:before{
         content: "\e6e4";
     }
-    &-check:checked + .zui-icon-item:before{
+    &-check:checked + .zui-icon-item:before,&-check:checked + .zui-icon-item + .zui-tree-text{
         content: "\e6e5";
         color: @primary-dark;
     }
@@ -1554,13 +1572,13 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         color: @white;
     }
 }
-.zui-page[zui*="txt-right"]{
+.zui-page[zui*="text-right"]{
     a{ margin-left: 10px;}
 }
-.zui-page[zui*="txt-left"]{
+.zui-page[zui*="text-left"]{
     a{ margin-right: 10px;}
 }
-.zui-page[zui*="txt-center"]{
+.zui-page[zui*="text-center"]{
     a{ margin: 0 5px;}
 }
 
@@ -1712,4 +1730,135 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     }
 }
 @keyframes zui-progress{from{background-position:40px 0}to{background-position:0 0}}
-    
+
+// 手风琴
+.zui-fold.zui-list{
+    .zui-fold-item{
+        padding: 0 !important;
+    }
+    .zui-fold-title{
+        cursor: pointer;
+        padding: 0 10px;
+    }
+    .zui-fold-title.active,.zui-fold-title:hover{
+        color:@primary-dark;
+    }
+    .zui-fold-main{
+        line-height: 22px;
+        color: @gray2;
+        overflow: hidden;
+        height: 0;
+        padding: 0 10px;
+        background: @gray6;
+    }
+    .zui-fold-main.active{
+        height: auto;
+        padding: 10px;
+    }
+}
+
+// 横向-手风琴
+.zui-fold-show{
+    .zui-fold{
+        &-item{
+            float: left;
+        }
+        &-title,&-main{
+            height: 100%;
+            float: left;
+            overflow: hidden;
+        }
+        &-title{
+            white-space: normal;
+            text-align: center;
+            cursor: pointer;
+        }
+        &-main{
+            white-space: nowrap;
+            width: 0;
+        }
+    }
+}
+
+// 图片轮播
+.zui-imgfocus{
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 300px;
+    .bd{
+        position: relative;
+        height: 100%;
+        text-align: center;
+        li{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            left: 0;
+            top: 0;
+            .zui-anim-normal;
+            img{
+                width: 100%;
+            }
+        }
+        li.active{
+            opacity: 1;
+            z-index: 1;
+        }
+    }
+    .hd{
+        position: absolute;
+        z-index: 10;
+        bottom: 15px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        li{
+            display: inline-block;
+            margin: 0 5px;
+            width: 12px;
+            height: 12px;
+            .zui-radius;
+            border: 1px solid @white;
+            opacity: 0.7;
+            cursor: pointer;
+        }
+        li.active{
+            background: @primary;
+            border-color: @primary-dark;
+        }
+    }
+    .prev,.next{
+        position: absolute;
+        .zui-radius;
+        color: @white;
+        background: rgba(0, 0, 0, 0.3);
+        text-align: center;
+        line-height: 40px;
+        top: 50%;
+        width: 40px;
+        height: 40px;
+        z-index: 10;
+        font-size: 16px;
+        transform: translateY(-20px);
+    }
+    .prev:hover,.next:hover{
+        background: rgba(0, 0, 0, 0.7);
+    }
+    .prev{
+        left:10px;
+    }
+    .next{
+        right: 10px;
+    }
+    .prev:after,.next:after{
+        font-family: "iconfont";
+    }
+    .prev:after{
+        content: "\e661";
+    }
+    .next:after{
+        content: "\e65f";
+    }
+}
