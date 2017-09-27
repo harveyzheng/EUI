@@ -425,9 +425,12 @@ h6 {
   transition: all 0.2s;
   color: #434c56;
 }
-.zui-date-wrap .zui-icon-date:hover,
-.zui-date-wrap .zui-date:hover + .zui-icon-date {
-  color: #5be;
+.zui-date-wrap .zui-date:hover + .zui-icon-date:before,
+.zui-date-wrap .zui-icon-date:hover:before {
+  content: "\e637";
+}
+.zui-date-wrap .zui-icon-date:hover {
+  color: #e55;
 }
 .zui-radius,
 [zui*="radius"] {

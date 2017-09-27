@@ -958,22 +958,23 @@ Zui.prototype.optiondate=el=>{
             $n.val(v);
         };
         // 初始化
-        let today,e,f,q,that;
+        let today,vday,e,f,q,that;
         const cd=n=>{
             let nv=$n.val();
+            today = new Date();
             if(nv!=''){
                 if(c.times=='true'){
                     const av=nv.split(' ');
                     nv=av[0];
                     hhh=' '+av[1];
                 };
-                today = new Date(nv);
+                vday = new Date(nv);
             }else{
-                today = new Date();
+                vday = today;
             };
-            e = today.getFullYear();
-            f = today.getMonth();
-            q = today.getDate();
+            e = vday.getFullYear();
+            f = vday.getMonth();
+            q = vday.getDate();
             let k = "";
             k += "<div class='zui-calendar'>";
             k += "  <div class='zui-calendar-main'>";
@@ -1197,29 +1198,29 @@ Zui.prototype.optiondate=el=>{
                     let j = x * 7 + y + 1 - m;
                     p = l = "";
                     if(c.lower != NaN && c.lower > new Date(newDate.getFullYear(), newDate.getMonth(), j) || c.upper != NaN && new Date(newDate.getFullYear(), newDate.getMonth(), j) > c.upper) if(0 < j && j <= o) {
-                        if(newDate.getFullYear() == e && newDate.getMonth() == f && j == q) l = "current";
+                        if(today.getFullYear() == e && today.getMonth() == f && j == today.getDate()) l = "current";
                         g += "<td><span class='" + l + "'>" + j + "</span></td>";
                     }else if(j <= 0) {
-                        if(newDate.getFullYear() == e && newDate.getMonth() - 1 == f && h == q) l = "current";
+                        if(today.getFullYear() == e && today.getMonth() - 1 == f && h == today.getDate()) l = "current";
                         g += "<td><span class='" + l + "'>" + h + "</span></td>";
                         h++;
                     }else{
                         if(j > o) {
-                            if(newDate.getFullYear() == e && newDate.getMonth() + 1 == f && d == q) l = "current";
+                            if(today.getFullYear() == e && today.getMonth() + 1 == f && d == today.getDate()) l = "current";
                             g += "<td><span class='" + l + "'>" + d + "</span></td>";
                             d++;
                         };
                     }else if(0 < j && j <= o) {
-                        if(newDate.getFullYear() == e && newDate.getMonth() == f && j == q) l = "current";
+                        if(today.getFullYear() == e && today.getMonth() == f && j == today.getDate()) l = "current";
                         if(newDate.getFullYear() == i.getFullYear() && newDate.getMonth() == i.getMonth() && j == i.getDate()) p = "select";
                         g += "<td><a class='" + p + " " + l + "'>" + j + "</a></td>";
                     }else if(j <= 0) {
-                        if(newDate.getFullYear() == e && newDate.getMonth() - 1 == f && h == q) l = "current";
+                        if(today.getFullYear() == e && today.getMonth() - 1 == f && h == today.getDate()) l = "current";
                         if(newDate.getFullYear() == i.getFullYear() && newDate.getMonth() - 1 == i.getMonth() && h == i.getDate()) p = "select";
                         g += "<td><a class='prevD " + p + " " + l + "'>" + h + "</a></td>";
                         h++;
                     }else if(j > o) {
-                        if(newDate.getFullYear() == e && newDate.getMonth() + 1 == f && d == q) l = "current";
+                        if(today.getFullYear() == e && today.getMonth() + 1 == f && d == today.getDate()) l = "current";
                         if(newDate.getFullYear() == i.getFullYear() && newDate.getMonth() + 1 == i.getMonth() && d == i.getDate()) p = "select";
                         g += "<td><a class='nextD " + p + " " + l + "'>" + d + "</a></td>";
                         d++;
@@ -1401,6 +1402,10 @@ Zui.prototype.optiondate=el=>{
         
         // 绑定插件
         calendar(that.find('.zui-date'));
+        // 清空事件
+        that.find('.zui-icon-date').click(()=>{
+            that.find('.zui-date').val('');
+        });
     });
 };
 
