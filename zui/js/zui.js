@@ -21,6 +21,7 @@ const Zui=function(){
             this.path=s.substring(0,s.lastIndexOf("/")+1);
         };
     };
+    
     // init初始化
     this.init=c=>{
         if(c){
@@ -37,16 +38,16 @@ const Zui=function(){
                         break;
                     case '.zui-date': zui.optiondate($(n));
                         break;
-                    case '.zui-pre': zui.precode($(n));
-                        break;
-                    case '.zui-nav': zui.nav($(n));
-                        break;
                     case '.zui-tab': 
                         zui.tabcut({
                             wrap:'.zui-tab',
                             menu:'.zui-tab-menu',
                             main:'.zui-tab-main'
                         });
+                        break;
+                    case '.zui-pre': zui.precode($(n));
+                        break;
+                    case '.zui-nav': zui.nav($(n));
                         break;
                     case '.zui-form':
                         zui.marquee($('.zui-radio'));
@@ -55,7 +56,7 @@ const Zui=function(){
                         zui.select($('.zui-select'));
                         break;
                     case '.zui-imgview':
-                        $('.zui-imgview-img').off('click').on('click',function(){
+                        $('.zui-imgview-img').off('click').click(function(){
                             zui.loading($('body'),true,'rgba(40,48,56,0.7)','#fff');
                             const list=$(this).parents('.zui-imgview').find('img');
                             const index=$(this).parent().index();
@@ -67,6 +68,42 @@ const Zui=function(){
                                 zui.loading($('body'),false);
                             },300);
                         });
+                        break;
+                    case '.zui-tree':
+                        $('.zui-tree-node').off().click(function(){
+                            const check=$(this).children('.zui-tree-check');
+                            check.prop('checked',!check.prop('checked'));
+                            const st=check.prop('checked');
+                            const z=$(this).attr('zui');
+                            const sbs=$(this).siblings('.zui-tree-node');
+                            if(z && z.indexOf('control')!=-1){
+                                // 全选选项
+                                sbs.find('.zui-tree-check').prop('checked',st);
+                            }else{
+                                // 普通选项
+                                let t=0;
+                                let c=false;
+                                if(st) t++;
+                                sbs.each(function(){
+                                    const z=$(this).attr('zui');
+                                    // 找到全选选项
+                                    if(z && z.indexOf('control')!=-1){
+                                        c=$(this);
+                                    }else{
+                                        if($(this).children('.zui-tree-check').prop('checked')) t++;
+                                    };
+                                });
+                                if(c){
+                                    if(t==sbs.length){
+                                        c.children('.zui-tree-check').prop('checked',true);
+                                    }else{
+                                        c.children('.zui-tree-check').prop('checked',false);
+                                    };
+                                };
+                            };
+                            return false;
+                        });
+                        break;
                     default:
                         return console.error('%c初始化失败，没找到'+c, 'color:#f33');
                 };
@@ -76,13 +113,11 @@ const Zui=function(){
             zui.marquee($('.zui-radio'));
             zui.marquee($('.zui-checkbox'));
             zui.marquee($('.zui-switch'));
+
             zui.select($('.zui-select'));
             zui.uploadimg($('.zui-upload'));
             zui.optiondate($('.zui-date'));
-            $('img').one('error',function(){
-                let ph=zui.path;
-                $(this).attr("src", zui.path+"../images/transparency.png").addClass('zui-img-error');
-            });
+
             zui.tabcut({
                 wrap:'.zui-tab',
                 menu:'.zui-tab-menu',
@@ -90,7 +125,7 @@ const Zui=function(){
             });
             zui.precode($('.zui-pre'));
             zui.nav($('.zui-nav'));
-            $('.zui-imgview-img').off('click').on('click',function(){
+            $('.zui-imgview-img').off('click').click(function(){
                 zui.loading($('body'),true,'rgba(40,48,56,0.7)','#fff');
                 const list=$(this).parents('.zui-imgview').find('img');
                 const index=$(this).parent().index();
@@ -104,6 +139,11 @@ const Zui=function(){
             });
             console.info('%c搞定，全局完成初始化', 'color:#5b8');
         };
+        // 图破替换
+        $('img').one('error',function(){
+            let ph=zui.path;
+            $(this).attr("src", zui.path+"../images/transparency.png").addClass('zui-img-error');
+        });
     };
     return;
 };
@@ -258,7 +298,7 @@ Zui.prototype.message=dt=>{
 Zui.prototype.marquee=el=>{
     el.each((i,n)=>{
         const $n=$(n);
-        if($n.parents('.zui-radio-label').length||$n.parents('.zui-checkbox-label').length||$n.parents('.zui-switch-label').length) return; //防止重复绘制结构
+        if($n.parents('.zui-radio-wrap').length||$n.parents('.zui-checkbox-wrap').length||$n.parents('.zui-switch-wrap').length) return; //防止重复绘制结构
         let dom;
         const tit=$n.attr('title')||'无标题';
         const o_ab=n.attributes;
@@ -269,7 +309,7 @@ Zui.prototype.marquee=el=>{
         if($n.hasClass('zui-radio')){
             // zui-radio
             dom=
-            '<label class="zui-radio-label">'+
+            '<label class="zui-radio-wrap">'+
                 '<input '+o_ar+' type="radio">'+
                 '<i class="zui-icon-radio"></i>'+
                 '<span>'+tit+'</span>'+
@@ -277,7 +317,7 @@ Zui.prototype.marquee=el=>{
         }else if($n.hasClass('zui-checkbox')){
             // zui-checkbox
             dom=
-            '<label class="zui-checkbox-label">'+
+            '<label class="zui-checkbox-wrap">'+
                 '<input '+o_ar+' type="checkbox">'+
                 '<i class="zui-icon-checkbox"></i>'+
                 '<span>'+tit+'</span>'+
@@ -285,7 +325,7 @@ Zui.prototype.marquee=el=>{
         }else{
             // zui-switch
             dom=
-            '<label class="zui-switch-label">'+
+            '<label class="zui-switch-wrap">'+
                 '<input '+o_ar+' type="checkbox">'+
                 '<div class="zui-switch-view">'+
                     '<i class="zui-icon-switch"></i>'+

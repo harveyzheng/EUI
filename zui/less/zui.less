@@ -20,7 +20,7 @@ qq：269144551
 // 样式重置
 *{ box-sizing: border-box; padding: 0; margin: 0; font-family: 'Arial','Microsoft YaHei';}
 html, body{ width: 100%; color: @black; background: @white; line-height: 1; font-size: 14px;}
-:focus{ outline: none;}
+*:focus{ outline: none;}
 ul{ list-style: none;}
 h1, h2, h3, h4, h5, h6{ font-weight: normal;}
 table{ border-collapse: collapse; border-spacing: 0;}
@@ -31,7 +31,7 @@ ins{ text-decoration: none;}
 .zui-popover-shade, .zui-calendar, .zui-select, .zui-imgpopover, .zui-page{ user-select: none;}
 input[class*=".zui-"],input[type="range"],input[type="range"]::-webkit-slider-thumb,input[type=range]::-webkit-slider-runnable-track{ -webkit-appearance: none;}
 input[class*=".zui-"], button[class*=".zui-"]{ vertical-align: middle;}
-button, select, .zui-switch-label, .zui-btn, .zui-radio-label, .zui-checkbox-label{ cursor: pointer; user-select: none;}
+button, select, .zui-switch-wrap, .zui-btn, .zui-radio-wrap, .zui-checkbox-wrap{ cursor: pointer; user-select: none;}
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder{ color: @gray2;}
 .zui-upload-file[type="file"]{ color: transparent;}
 input[type="range"]::-webkit-slider-thumb{
@@ -101,7 +101,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 @white:#fff; //白色字体
 
 // 内容宽度
-@wrap:1140px;
+@wrap:1200px;
 
 // 基本属性类
 [zui*="pull-left"]{ float: left !important;}
@@ -219,41 +219,31 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 }
 
 // 大小
-[zui*="md"], .zui-btn, .zui-ipt, .zui-select, .zui-date, .zui-linkage{
-    padding: 0 15px; 
+.zui-btn, .zui-ipt, .zui-select, .zui-date, .zui-linkage{
+    padding: 0 12px; 
     height: 38px;
     line-height: 38px;
     font-size: 14px;
     i{ font-size: 16px;}
+    color: @black;
+    vertical-align: middle;
+    .zui-border;
+    text-indent: 0; 
+    background: @white;
 }
-[zui*="sm"]{
-    padding: 0 10px; 
+.zui-btn[zui*="sm"], .zui-ipt[zui*="sm"], .zui-select[zui*="sm"], .zui-date[zui*="sm"], .zui-linkage[zui*="sm"]{
+    padding: 0 8px; 
     height: 28px;
     line-height: 28px;
     font-size: 12px;
     i{ font-size: 16px;}
 }
-[zui*="lg"]{
-    padding: 0 20px;
+.zui-btn[zui*="lg"], .zui-ipt[zui*="lg"], .zui-select[zui*="lg"], .zui-date[zui*="lg"], .zui-linkage[zui*="lg"]{
+    padding: 0 15px;
     height: 44px; 
     line-height: 44px;
     font-size: 16px;
     i{ font-size: 22px;}
-}
-
-// input初始化
-.zui-ipt, .zui-date, .zui-select, .zui-linkage{ 
-    padding: 0; 
-    text-indent: 10px; 
-    .zui-border;
-    color: @black;
-    vertical-align: middle;
-}
-
-// zui-linkage联动select
-.zui-linkage{
-    text-indent: 0;
-    background: @white;
 }
 
 // zui-date时间选择
@@ -293,53 +283,53 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 .zui-select-wrap + .zui-select-wrap,
 .zui-btn + .zui-btn,
 .zui-btn + .zui-ipt,
-.zui-btn + .zui-radio-label,
-.zui-btn + .zui-checkbox-label,
+.zui-btn + .zui-radio-wrap,
+.zui-btn + .zui-checkbox-wrap,
 .zui-btn + .zui-date-wrap,
 .zui-btn + .zui-select-wrap,
-.zui-btn + .zui-switch-label,
+.zui-btn + .zui-switch-wrap,
 .zui-ipt + .zui-btn,
 .zui-ipt + .zui-ipt,
-.zui-ipt + .zui-radio-label,
-.zui-ipt + .zui-checkbox-label,
+.zui-ipt + .zui-radio-wrap,
+.zui-ipt + .zui-checkbox-wrap,
 .zui-ipt + .zui-date-wrap,
 .zui-ipt + .zui-select-wrap,
-.zui-ipt + .zui-switch-label,
-.zui-radio-label + .zui-btn,
-.zui-radio-label + .zui-ipt,
-.zui-radio-label + .zui-radio-label,
-.zui-radio-label + .zui-checkbox-label,
-.zui-radio-label + .zui-date-wrap,
-.zui-radio-label + .zui-select-wrap,
-.zui-radio-label + .zui-switch-label,
-.zui-checkbox-label + .zui-btn,
-.zui-checkbox-label + .zui-ipt,
-.zui-checkbox-label + .zui-radio-label,
-.zui-checkbox-label + .zui-checkbox-label,
-.zui-checkbox-label + .zui-date-wrap,
-.zui-checkbox-label + .zui-select-wrap,
-.zui-checkbox-label + .zui-switch-label,
+.zui-ipt + .zui-switch-wrap,
+.zui-radio-wrap + .zui-btn,
+.zui-radio-wrap + .zui-ipt,
+.zui-radio-wrap + .zui-radio-wrap,
+.zui-radio-wrap + .zui-checkbox-wrap,
+.zui-radio-wrap + .zui-date-wrap,
+.zui-radio-wrap + .zui-select-wrap,
+.zui-radio-wrap + .zui-switch-wrap,
+.zui-checkbox-wrap + .zui-btn,
+.zui-checkbox-wrap + .zui-ipt,
+.zui-checkbox-wrap + .zui-radio-wrap,
+.zui-checkbox-wrap + .zui-checkbox-wrap,
+.zui-checkbox-wrap + .zui-date-wrap,
+.zui-checkbox-wrap + .zui-select-wrap,
+.zui-checkbox-wrap + .zui-switch-wrap,
 .zui-date-wrap + .zui-btn,
 .zui-date-wrap + .zui-ipt,
-.zui-date-wrap + .zui-radio-label,
-.zui-date-wrap + .zui-checkbox-label,
+.zui-date-wrap + .zui-radio-wrap,
+.zui-date-wrap + .zui-checkbox-wrap,
 .zui-date-wrap + .zui-date-wrap,
 .zui-date-wrap + .zui-select-wrap,
-.zui-date-wrap + .zui-switch-label,
+.zui-date-wrap + .zui-switch-wrap,
 .zui-select-wrap + .zui-btn,
 .zui-select-wrap + .zui-ipt,
-.zui-select-wrap + .zui-radio-label,
-.zui-select-wrap + .zui-checkbox-label,
+.zui-select-wrap + .zui-radio-wrap,
+.zui-select-wrap + .zui-checkbox-wrap,
 .zui-select-wrap + .zui-date-wrap,
 .zui-select-wrap + .zui-select-wrap,
-.zui-select-wrap + .zui-switch-label,
-.zui-switch-label + .zui-btn,
-.zui-switch-label + .zui-ipt,
-.zui-switch-label + .zui-radio-label,
-.zui-switch-label + .zui-checkbox-label,
-.zui-switch-label + .zui-date-wrap,
-.zui-switch-label + .zui-select-wrap,
-.zui-switch-label + .zui-switch-label{ 
+.zui-select-wrap + .zui-switch-wrap,
+.zui-switch-wrap + .zui-btn,
+.zui-switch-wrap + .zui-ipt,
+.zui-switch-wrap + .zui-radio-wrap,
+.zui-switch-wrap + .zui-checkbox-wrap,
+.zui-switch-wrap + .zui-date-wrap,
+.zui-switch-wrap + .zui-select-wrap,
+.zui-switch-wrap + .zui-switch-wrap{ 
     margin-left: 10px;
 }
 
@@ -521,7 +511,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     display: none;
 }
 
-.zui-radio-label, .zui-checkbox-label{
+.zui-radio-wrap, .zui-checkbox-wrap{
     vertical-align: middle;
     display: inline-block;
     span{
@@ -554,7 +544,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 }
 
 // zui-switch开关按钮组件
-.zui-switch-label{
+.zui-switch-wrap{
     display: inline-block;
     vertical-align: middle;
     .zui-switch{ 
@@ -902,8 +892,8 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     }
 }
 
-// flex 流式布局
-.zui-row{
+// flex 填充布局
+.zui-fill{
     display: flex;
     flex-flow: row wrap;
     width: 100%;
@@ -911,59 +901,127 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     align-items: flex-start;
     .zui-col{
         flex: 1 1 auto;
+        position: relative;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .zui-col[zui*="fx:1"]{
+        flex: 1 1 100%;
+    }
+    .zui-col[zui*="fx:2"]{
+        flex: 1 1 50%;
+    }
+    .zui-col[zui*="fx:3"]{
+        flex: 1 1 33.33333%;
+    }
+    .zui-col[zui*="fx:4"]{
+        flex: 1 1 25%;
+    }
+    .zui-col[zui*="fx:5"]{
+        flex: 1 1 20%;
+    }
+    .zui-col[zui*="fx:6"]{
+        flex: 1 1 16.66666%;
+    }
+    .zui-col[zui*="fx:7"]{
+        flex: 1 1 14.28571%;
+    }
+    .zui-col[zui*="fx:8"]{
+        flex: 1 1 12.5%;
     }
 }
 
-[zui*="jc-start"]{
-    justify-content: flex-start;
+// 栅格布局
+.zui-grid{
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    .zui-row{
+        margin-left: -15px;
+        margin-right: -15px;
+        .zui-col{
+            padding-left: 15px;
+            padding-right: 15px;
+            position: relative;
+            float:left;
+        }
+        .zui-col[zui*="xs:0"]{ display: none;}
+        .zui-col[zui*="xs:1"]{ width: 8.33333333%;}
+        .zui-col[zui*="xs:2"]{ width: 16.66666667%;}
+        .zui-col[zui*="xs:3"]{ width: 25%;}
+        .zui-col[zui*="xs:4"]{ width: 33.33333333%;}
+        .zui-col[zui*="xs:5"]{ width: 41.66666667%;}
+        .zui-col[zui*="xs:6"]{ width: 50%;}
+        .zui-col[zui*="xs:7"]{ width: 58.33333333%;}
+        .zui-col[zui*="xs:8"]{ width: 66.66666667%;}
+        .zui-col[zui*="xs:9"]{ width: 75%;}
+        .zui-col[zui*="xs:10"]{ width: 83.33333333%;}
+        .zui-col[zui*="xs:11"]{ width: 91.66666667%;}
+        .zui-col[zui*="xs:12"]{ width: 100%;}
+    }
+    .zui-row:after{ content:''; display:block; height:0; font-size:0; clear:both; visibility:hidden;}
 }
-[zui*="jc-end"]{
-    justify-content: flex-end;
+@media (min-width: 768px){
+    .zui-grid{
+        width: 750px;
+        .zui-row{
+            .zui-col[zui*="sm:0"]{ display: none;}
+            .zui-col[zui*="sm:1"]{ width: 8.33333333%;}
+            .zui-col[zui*="sm:2"]{ width: 16.66666667%;}
+            .zui-col[zui*="sm:3"]{ width: 25%;}
+            .zui-col[zui*="sm:4"]{ width: 33.33333333%;}
+            .zui-col[zui*="sm:5"]{ width: 41.66666667%;}
+            .zui-col[zui*="sm:6"]{ width: 50%;}
+            .zui-col[zui*="sm:7"]{ width: 58.33333333%;}
+            .zui-col[zui*="sm:8"]{ width: 66.66666667%;}
+            .zui-col[zui*="sm:9"]{ width: 75%;}
+            .zui-col[zui*="sm:10"]{ width: 83.33333333%;}
+            .zui-col[zui*="sm:11"]{ width: 91.66666667%;}
+            .zui-col[zui*="sm:12"]{ width: 100%;}
+        }
+    }
 }
-[zui*="jc-center"]{
-    justify-content: center;
+@media (min-width: 992px){
+    .zui-grid{
+        width: 970px;
+        .zui-row{
+            .zui-col[zui*="md:0"]{ display: none;}
+            .zui-col[zui*="md:1"]{ width: 8.33333333%;}
+            .zui-col[zui*="md:2"]{ width: 16.66666667%;}
+            .zui-col[zui*="md:3"]{ width: 25%;}
+            .zui-col[zui*="md:4"]{ width: 33.33333333%;}
+            .zui-col[zui*="md:5"]{ width: 41.66666667%;}
+            .zui-col[zui*="md:6"]{ width: 50%;}
+            .zui-col[zui*="md:7"]{ width: 58.33333333%;}
+            .zui-col[zui*="md:8"]{ width: 66.66666667%;}
+            .zui-col[zui*="md:9"]{ width: 75%;}
+            .zui-col[zui*="md:10"]{ width: 83.33333333%;}
+            .zui-col[zui*="md:11"]{ width: 91.66666667%;}
+            .zui-col[zui*="md:12"]{ width: 100%;}
+        }
+    }
 }
-[zui*="jc-around"]{
-    justify-content: space-around;
-}
-[zui*="jc-between"]{
-    justify-content: space-between;
-}
-
-[zui*="ai-start"]{
-    align-items: flex-start;
-}
-[zui*="ai-end"]{
-    align-items: flex-end;
-}
-[zui*="ai-center"]{
-    align-items: center;
-}
-[zui*="ai-stretch"]{
-    align-items: stretch;
-}
-
-[zui*="fw-nowrap"]{
-    flex-wrap: nowrap;
-}
-[zui*="fw-wrap"]{
-    flex-wrap: wrap;
-}
-
-.zui-col[zui*="fx:1"]{
-    flex: 1 1 100%;
-}
-.zui-col[zui*="fx:2"]{
-    flex: 1 1 50%;
-}
-.zui-col[zui*="fx:3"]{
-    flex: 1 1 33.33333%;
-}
-.zui-col[zui*="fx:4"]{
-    flex: 1 1 25%;
-}
-.zui-col[zui*="fx:5"]{
-    flex: 1 1 20%;
+@media (min-width: 1200px){
+    .zui-grid{
+        width: 1200px;
+        .zui-row{
+            .zui-col[zui*="lg:0"]{ display: none;}
+            .zui-col[zui*="lg:1"]{ width: 8.33333333%;}
+            .zui-col[zui*="lg:2"]{ width: 16.66666667%;}
+            .zui-col[zui*="lg:3"]{ width: 25%;}
+            .zui-col[zui*="lg:4"]{ width: 33.33333333%;}
+            .zui-col[zui*="lg:5"]{ width: 41.66666667%;}
+            .zui-col[zui*="lg:6"]{ width: 50%;}
+            .zui-col[zui*="lg:7"]{ width: 58.33333333%;}
+            .zui-col[zui*="lg:8"]{ width: 66.66666667%;}
+            .zui-col[zui*="lg:9"]{ width: 75%;}
+            .zui-col[zui*="lg:10"]{ width: 83.33333333%;}
+            .zui-col[zui*="lg:11"]{ width: 91.66666667%;}
+            .zui-col[zui*="lg:12"]{ width: 100%;}
+        }
+    }
 }
 
 // 源码编辑器
@@ -1488,7 +1546,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     *{
         vertical-align: top;
     }
-    &-node{
+    &-node, &-fold{
         display: block;
         font-size: 0;
         cursor: pointer;
@@ -1498,7 +1556,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     &-node:hover{
         background: @gray6;
     }
-    &-node:hover > .zui-tree-text, &-node:hover > i{
+    &-fold:hover > &-text{
         color: @primary-dark;
     }
     &-check{
@@ -1514,7 +1572,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     &-check + .zui-icon-catalog:before{
         content: "\e667";
     }
-    &-check:checked + .zui-icon-catalog:before{
+    &-check:checked + .zui-icon-catalog:before, &-fold[zui*="unfurled"] .zui-icon-catalog:before{
         content: "\e64c";
         font-size: 18px;
     }
@@ -1538,7 +1596,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         line-height: 30px;
         padding: 0 5px;
     }
-    &-check:checked + i + span + .zui-tree-context{
+    &-check:checked + i + span + &-context, &-fold[zui*="unfurled"] &-context{
         height: auto;
     }
     &-context{
@@ -1743,12 +1801,9 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         cursor: pointer;
         padding: 0 10px;
     }
-    .zui-fold-title.active,.zui-fold-title:hover{
-        color:@primary-dark;
-    }
     .zui-fold-main{
         line-height: 22px;
-        color: @gray2;
+        color: @gray1;
         overflow: hidden;
         height: 0;
         padding: 0 10px;
