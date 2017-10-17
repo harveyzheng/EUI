@@ -263,13 +263,23 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         transform: translateY(-50%);
         cursor: pointer;
         .zui-anim-fast;
-        color: @gray1;
+        color: @gray2;
+        font-size: 21px;
+    }
+    .zui-date[zui*="sm"] + .zui-icon-date{
+        font-size: 17px;
+    }
+    .zui-date[zui*="lg"] + .zui-icon-date{
+        font-size: 25px;
     }
     .zui-date:hover + .zui-icon-date:before,.zui-icon-date:hover:before{
         content: "\e637";
     }
     .zui-icon-date:hover{
         color: @danger-dark;
+    }
+    .zui-date[disabled] + .zui-icon-date{
+        display: none;
     }
 }
 
@@ -370,6 +380,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         line-height: 24px; 
         font-size: 14px;
         dd{
+            position: relative;
             cursor: pointer;
             padding: 7px 10px;
             .zui-select-img,.zui-select-txt{
@@ -382,29 +393,99 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
             .zui-select-img+.zui-select-txt,.zui-select-txt+.zui-select-img{
                 margin-left: 5px;
             }
+            .zui-icon-editor, .zui-icon-delete, .zui-icon-complete{
+                position: absolute;
+                right: 10px;
+                opacity: 0;
+                z-index: 1;
+            }
+            .zui-icon-complete{
+                opacity: 1;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            .zui-icon-complete:hover{
+                color: @done-dark;
+            }
+            .zui-icon-add{
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+            }
+            .zui-option-ipt{
+                display: block;
+                width: 100%;
+                border: none;
+                border-bottom: 1px solid @gray4;
+            }
         }
         dd[disabled]{
             background: @gray5 !important;
             cursor: not-allowed;
-            color: @gray3;
+            color: @gray2;
         }
         dd:hover{
             background: @gray6;
+            .zui-icon-editor,.zui-icon-delete{
+                opacity: 1;
+            }
+            .zui-icon-editor:hover,.zui-icon-add:hover{
+                color: @primary-dark;
+            }
+            .zui-icon-delete:hover{
+                color: @danger-dark;
+            }
         }
         .zui-option,.zui-option:hover{
             background: @primary;
             color: @white;
+            .zui-icon-editor,.zui-icon-delete,.zui-icon-editor:hover,.zui-icon-delete:hover{
+                color: @white;
+            }
+            .zui-icon-delete,.zui-icon-editor{
+                display: none;
+            }
         }
     }
     .zui-select[zui*="md"] + i + .zui-option-list{ 
         top: 42px; 
         line-height: 24px; 
         font-size: 14px;
+        .zui-icon-editor,.zui-icon-delete,.zui-icon-add,.zui-icon-complete{
+            font-size: 16px;
+        }
+        .zui-icon-delete + .zui-icon-editor{
+            right: 30px;
+        }
+        .zui-option-ipt{
+            height: 24px;
+            font-size: 14px;
+        }
+        .zui-option-add{
+            height: 38px;
+            line-height: 38px;
+        }
     }
     .zui-select[zui*="sm"] + i + .zui-option-list{ 
         top: 30px; 
         line-height: 14px; 
         font-size: 12px;
+        .zui-icon-editor,.zui-icon-delete,.zui-icon-add,.zui-icon-complete{
+            font-size: 12px;
+        }
+        .zui-icon-delete + .zui-icon-editor{
+            right: 26px;
+        }
+        .zui-option-ipt{
+            height: 14px;
+            font-size: 12px;
+        }
+        .zui-option-add{
+            height: 28px;
+            line-height: 28px;
+        }
     }
     .zui-select[zui*="lg"] + i + .zui-option-list{ 
         top: 48px; 
@@ -412,6 +493,20 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         font-size: 16px;
         dd{
             padding: 10px;
+        }
+        .zui-icon-editor,.zui-icon-delete,.zui-icon-add,.zui-icon-complete{
+            font-size: 18px;
+        }
+        .zui-icon-delete + .zui-icon-editor{
+            right: 32px;
+        }
+        .zui-option-ipt{
+            height: 24px;
+            font-size: 16px;
+        }
+        .zui-option-add{
+            height: 44px;
+            line-height: 44px;
         }
     }
     .zui-select-arrow{
@@ -1088,7 +1183,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
                 cursor: pointer;
             }
             i{ 
-                font-size: 40px; 
+                font-size: 44px; 
                 height: 75px;
                 padding-top: 15px;
             }
@@ -1191,7 +1286,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
             font-size: 38px;
         }
         .zui-imgview-img:before{
-            content: '';
+            content: '';
             background: rgba(0, 0, 0, 0.6);
             opacity: 0;
         }
@@ -1207,9 +1302,10 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
 // 弹出图轮播
 .zui-imgpopover{
     position: absolute;
-    left: 0;
+    left: 50%;
     top: 100%;
-    width: 100%;
+    margin-left: -@wrap/2;
+    width: @wrap;
     height: 100%;
     z-index: 1001;
     .zui-anim-normal;
@@ -1229,23 +1325,23 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
         position: absolute;
         top: 50%;
         font-size: 60px;
-        transform: translateY(-50%);
-        left: 50%;
-        margin-left: -@wrap/2-60px;
+        margin-top: -30px;
+        left: 0;
         color: @white;
         .zui-anim-fast;
         font-weight: bold;
         z-index: 11;
     }
     &-next{
-        margin-left: @wrap/2;
-        transform: translateY(-50%) rotateY(180deg);
+        left: auto;
+        right: 0;
+        transform: rotateY(180deg);
     }
     &-prev:hover,&-next:hover{
         color: @primary;
     }
     &-main{
-        width: @wrap;
+        width: @wrap - 140;
         height: 100%;
         margin: 0 auto;
         text-align: center;
@@ -1648,7 +1744,7 @@ body::-webkit-scrollbar-track-piece{ background: @gray4;}
     position: absolute;
     white-space: nowrap;
     opacity: 0.9;
-    z-index: 11;
+    z-index: 1;
     padding: 0px 10px;
     border-radius: 4px;
     font-size: 12px;
