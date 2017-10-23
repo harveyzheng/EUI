@@ -1,9 +1,9 @@
-# Z-UI模块化前端框架
+# ZUI前端框架
 
-一款前后台都可以用的模块化前端UI框架
+开发文档：http://www.zjw7.com/doc.html?doc=introduction
 
-官网:http://www.zjw7.com
+交流Q群：523772110
 
-交流Q群:523772110
+当前版本：1.0
 
-当前版本:1.0
+发布日期：待定
