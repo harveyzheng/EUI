@@ -2569,13 +2569,12 @@ h6 {
 .eui-progress-wrap {
   position: fixed;
   z-index: 1112;
-  background: rgba(255, 255, 255, 0.95);
 }
 .eui-progress-wrap .eui-progress {
   position: absolute;
   top: 50%;
-  width: 90%;
-  left: 5%;
+  width: 60%;
+  left: 20%;
   background: #dde3e9;
   transform: translateY(-50%);
   border-radius: 300px !important;

@@ -1064,7 +1064,6 @@ Eui.prototype.optiondate=el=>{
                     c.lower=new Date(c.lower);
                 };
             };
-            
             cd($n);
             // 点击外部隐藏
             $(document).mouseup(e=>{
@@ -1078,12 +1077,12 @@ Eui.prototype.optiondate=el=>{
             });
             // 现在时间
             $(document).on('click','.eui-calendar .now',()=>{
-                vto(c.times);
+                $('.eui-calendar').siblings('.eui-date').val(vto());
                 that.remove();
             });
         });
         // 输出现在时间
-        let vto=zt=>{
+        let vto=()=>{
             let tod=new Date();
             let m=tod.getMonth()+1;
             if(m<10) m='0'+m;
@@ -1091,17 +1090,15 @@ Eui.prototype.optiondate=el=>{
             if(d<10) d='0'+d;
             let h,n,s,v;
             v=tod.getFullYear()+'-'+m+'-'+d;
-            if(zt){
-                h=tod.getHours();
-                if(h<10) h='0'+h;
-                n=tod.getMinutes();
-                if(n<10) n='0'+n;
-                s=tod.getSeconds();
-                if(s<10) s='0'+s;
-                v+=' '+h+':'+n+':'+s;
-            };
             ttt=v;
-            $n.val(v);
+            h=tod.getHours();
+            if(h<10) h='0'+h;
+            n=tod.getMinutes();
+            if(n<10) n='0'+n;
+            s=tod.getSeconds();
+            if(s<10) s='0'+s;
+            v+=' '+h+':'+n+':'+s;
+            return v;
         };
         // 初始化
         let today,vday,e,f,q,that;
@@ -1260,9 +1257,7 @@ Eui.prototype.optiondate=el=>{
                 });
                 $dom.find('.on').removeClass('on');
                 // 如果还没选ttt，输出当天
-                if(!ttt){
-                    vto();
-                };
+                if(!ttt) vto();
                 $n.val(ttt+hhh);
             };
         };
@@ -1860,7 +1855,7 @@ Eui.prototype.progress=dt=>{
         el:dt.el,
         type:dt.type,
         max:dt.max,
-        bg:dt.bg || '',
+        bg:dt.bg || 'rgba(255,255,255,0.9)',
         // 随机增长加载值，1～5
         v:()=>Math.floor(Math.random()*5+1),
         // 随机时间间隔，100～300
@@ -1868,7 +1863,6 @@ Eui.prototype.progress=dt=>{
     };
     if(typeof z.el=='string') z.el=$(z.el);
     if(!z.max) z.max=80;
-
     // 进度增长
     const rise=(bar,d)=>{
         let p=Number(bar.find('.eui-progress-bar').attr('eui-progress'));
