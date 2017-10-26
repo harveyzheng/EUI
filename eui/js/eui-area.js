@@ -1,12 +1,12 @@
-/*
-2017-08-29
-name：zui框架-全国地址数据，用于导入linkage模块
-by：harvey
-qq：269144551
-官网：http://www.zjw7.com/
-*/
+/**
+ * time：2017-10-26
+ * by：  harvey
+ * qq：  269144551
+ * name：eui框架-全国地址数据
+ * 官网： http://www.zjw7.com/
+ */
 
-zui.area=[
+eui.area=[
     [
         //一级
         "北京市",
