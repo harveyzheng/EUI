@@ -6,7 +6,6 @@
  * 官网： http://www.zjw7.com/
  */
 
-// eui 采用es6语法
 "use strict";
 console.info('%cEUI开发文档 http://www.zjw7.com/doc.html', 'color:#5be');
 
@@ -521,7 +520,7 @@ Eui.prototype.select=el=>{
             const dd=$(this).parent('dd');
             const txt=dd.text();
             if(tp==elm.add){
-                dd.before('<dd><input class="'+elm.ipt+'" type="text"><a class="'+elm.done+'"></a></dd>');
+                dd.before('<dd><input class="'+elm.ipt+' add" type="text"><a class="'+elm.done+'"></a></dd>');
                 dd.prev().children('.'+elm.ipt).focus();
             }else if(tp==elm.del){
                 dd.remove();
@@ -533,9 +532,9 @@ Eui.prototype.select=el=>{
             };
             $('.'+elm.list+' .'+elm.ipt).off().blur(function(){
                 let v=$(this).val();
-                 // 新增却未输入，删除新增
-                if(txt=='') return $(this).parent().remove();
-                 // 修改却未输入，还原值
+                // 新增却未输入，删除新增
+                if(txt=='' && !$(this).hasClass('add')) return $(this).parent().remove();
+                // 修改却未输入，还原值
                 if(v=='') v=txt;
                 const dd=$(this).parent('dd');
                 const st=$(this).parents('.'+elm.wrap).find('.'+elm.slt);
@@ -1774,7 +1773,6 @@ Eui.prototype.paging=dt=>{
             if(current!=z.total && z.next!=''){
                 dom+='<a class="next" href="javascript:;">'+z.next+'</a>';
             };
-            console.log(z.show)
             z.el.html(dom);
         }
     };
